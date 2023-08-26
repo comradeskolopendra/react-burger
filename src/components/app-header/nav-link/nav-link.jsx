@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styles from "./nav-link.module.css";
 import {
     BurgerIcon,
@@ -5,33 +6,28 @@ import {
     ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-const NavLink = ({ to, icon, title, isActive }) => {
-    const getIconByType = () => {
-        switch (icon) {
-            case "burger":
-                return <BurgerIcon type="primary" />;
+const NavLink = ({ to, icon, title }) => {
+    const [active, setActive] = useState({ icon: "secondary", class: styles.textColorInactive });
 
-            case "profile":
-                return <ProfileIcon type="secondary" />;
+    const handlerOnMouseEnter = () => {
+        setActive({ icon: "primary", class: styles.textColorActive })
+    }
 
-            case "list":
-                return <ListIcon type="secondary" />;
-
-            default:
-                break;
-        }
-    };
+    const handlerOnMouseLeave = () => {
+        setActive({ icon: "secondary", class: styles.textColorInactive })
+    }
 
     return (
-        <a href={to} className={styles.link}>
-            {getIconByType(icon)}
-            <p
-                className={`text secondary text_type_main-default ${
-                    isActive ? "" : "text_color_inactive"
-                }`}
-            >
-                {title}
-            </p>
+        <a
+            href={to}
+            onMouseLeave={handlerOnMouseLeave}
+            onMouseEnter={handlerOnMouseEnter}
+            className={`${styles.link} text text_type_main-default ${active.class}`}
+        >
+            {icon === "burger" && <BurgerIcon type={active.icon} />}
+            {icon === "profile" && <ProfileIcon type={active.icon} />}
+            {icon === "list" && <ListIcon type={active.icon} />}
+            {title}
         </a>
     );
 };

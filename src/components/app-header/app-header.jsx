@@ -11,13 +11,11 @@ const AppHeader = () => {
                     <NavLink
                         to={"#"}
                         icon={"burger"}
-                        isActive={true}
                         title={"Конструктор"}
                     />
                     <NavLink
                         to={"#"}
                         icon={"list"}
-                        isActive={false}
                         title={"Лента заказов"}
                     />
                 </div>
@@ -28,7 +26,6 @@ const AppHeader = () => {
                     <NavLink
                         to={"#"}
                         icon={"profile"}
-                        isActive={false}
                         title={"Личный кабинет"}
                     />
                 </div>

@@ -1,4 +1,11 @@
 .wrapper {
+    box-sizing: border-box;
     width: 100%;
     max-width: 600px;
+}
+
+.ingredients {
+    max-height: 65vh;
+    overflow-y: scroll;
+    scrollbar-width: thin;
 }

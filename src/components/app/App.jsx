@@ -1,10 +1,14 @@
 import AppHeader from "../app-header/app-header";
+import { data } from "../../utils/data";
 
 import "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app.module.css";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 
 function App() {
+    const buns = data.filter((element) => element.type === "bun");
+    const sauces = data.filter((element) => element.type === "sauce");
+    const mains = data.filter((element) => element.type === "main");
     return (
         <div>
             <AppHeader />
@@ -14,7 +18,7 @@ function App() {
                 </h1>
 
                 <div className={styles.wrapper}>
-                    <BurgerIngredients />
+                    <BurgerIngredients buns={buns} sauces={sauces} mains={mains} />
                 </div>
             </main>
         </div>
