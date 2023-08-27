@@ -1,0 +1,13 @@
+.wrapper {
+    display: grid;
+    grid-template-rows: auto;
+    gap: 16px;
+}
+
+.ingredientsWrapper {
+    overflow-y: scroll;
+    max-height: 464px;
+    scrollbar-width: thin;
+    display: grid;
+    gap: 16px;
+}

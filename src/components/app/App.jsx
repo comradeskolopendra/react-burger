@@ -4,6 +4,7 @@ import { data } from "../../utils/data";
 import "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app.module.css";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
+import BurgerConstructor from "../burger-constructor/burger-constructor";
 
 function App() {
     const buns = data.filter((element) => element.type === "bun");
@@ -19,6 +20,9 @@ function App() {
 
                 <div className={styles.wrapper}>
                     <BurgerIngredients buns={buns} sauces={sauces} mains={mains} />
+                    <BurgerConstructor
+                        ingredients={[...mains, ...sauces]}
+                    />
                 </div>
             </main>
         </div>
