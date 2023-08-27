@@ -1,13 +1,35 @@
 .wrapper {
-    display: grid;
-    grid-template-rows: auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.constructor {
+    display: flex;
     gap: 16px;
+    flex-direction: column;
 }
 
 .ingredientsWrapper {
     overflow-y: scroll;
-    max-height: 464px;
+    max-height: calc(100vh - 490px);
     scrollbar-width: thin;
     display: grid;
     gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.orderBlock {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
+    justify-content: flex-end;
+}
+
+.price {
+    display: flex;
+    align-items: center;
 }
