@@ -11,6 +11,7 @@ const TabsWrapper = ({ tabsInfo, current, updateCurrent }) => {
                         value={tab.value}
                         active={current === tab.value}
                         onClick={() => updateCurrent(tab.value)}
+                        key={tab.value}
                     >
                         {tab.title}
                     </Tab>

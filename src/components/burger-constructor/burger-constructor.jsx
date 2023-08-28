@@ -19,7 +19,7 @@ const BurgerConstructor = ({ ingredients }) => {
                 <ul className={`${styles.ingredientsWrapper}`}>
                     {
                         ingredients.map((ingredient) => (
-                            <li style={{ display: "flex", alignItems: "center" }}>
+                            <li key={ingredient._id} style={{ display: "flex", alignItems: "center" }}>
                                 <div className="mr-2">
                                     <DragIcon />
                                 </div>

@@ -7,7 +7,7 @@ const IngredientsWrapper = ({ title, ingredients }) => {
             <h3 className="text text_type_main-medium">{title}</h3>
             <div className={`${styles.wrapper} pl-4 pr-4 pt-6 pb-10`}>
                 {ingredients.map((ingredient) => (
-                    <IngredientCard ingredient={ingredient} />
+                    <IngredientCard key={ingredient._id} ingredient={ingredient} />
                 ))}
             </div>
         </>
