@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import IngredientDetails from "../modal/ingredient-details/ingredient-details";
-import OrderDetails from "../modal/order-details/order-detail";
+import IngredientDetails from "../ingredient-details/ingredient-details";
+import OrderDetails from "../order-details/order-detail";
 import Modal from "../modal/modal";
 
 import { getIngredients } from "../../helpers/helpers";
@@ -15,8 +15,10 @@ import styles from "./app.module.css";
 function App() {
     const [visibleIngredient, setVisibleIngredient] = useState(false);
     const [visibleOrder, setVisibleOrder] = useState(false);
+
     const [currentIngredient, setCurrentIngredient] = useState(null);
     const bodyRef = useRef(document.body);
+
     const [ingredients, setIngredients] = useState({
         hasError: false,
         data: [],
@@ -59,8 +61,8 @@ function App() {
     );
 
     const modalOrder = (
-        <Modal handleBackgroundClick={() => setVisibleIngredient(false)}>
-            <OrderDetails changeVisibility={setVisibleOrder}/>
+        <Modal handleBackgroundClick={() => setVisibleOrder(false)}>
+            <OrderDetails changeVisibility={setVisibleOrder} />
         </Modal>
     );
 
@@ -84,9 +86,9 @@ function App() {
                             />
                             <BurgerConstructor
                                 handleOrderClick={setVisibleOrder}
-                                ingredients={ingredients.data.filter(
+                                ingredients={[...ingredients.data.filter(
                                     (ingredient) => ingredient.type !== "bun"
-                                )}
+                                )]}
                             />
                         </div>
                     </main>

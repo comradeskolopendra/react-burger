@@ -1,5 +1,5 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-
+import PropTypes from "prop-types";
 import styles from "./ingredient-card.module.css";
 
 const IngredientCard = ({ ingredient, onClick }) => {
@@ -20,5 +20,10 @@ const IngredientCard = ({ ingredient, onClick }) => {
         </div>
     );
 };
+
+IngredientCard.propTypes = {
+    ingredient: PropTypes.object,
+    onClick: PropTypes.func
+}
 
 export default IngredientCard;

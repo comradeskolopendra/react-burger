@@ -1,7 +1,8 @@
 import IngredientCard from "./ingredient-card/ingredient-card";
-import styles from "./ingredients-wrapper.module.css";
+import PropTypes from "prop-types";
+import styles from "./ingredients-section.module.css";
 
-const IngredientsWrapper = ({ title, ingredients, onClick }) => {
+const IngredientsSection = ({ title, ingredients, onClick }) => {
     return (
         <>
             <h3 className="text text_type_main-medium">{title}</h3>
@@ -14,4 +15,10 @@ const IngredientsWrapper = ({ title, ingredients, onClick }) => {
     );
 };
 
-export default IngredientsWrapper;
+IngredientsSection.propTypes = {
+    title: PropTypes.string,
+    ingredients: PropTypes.arrayOf(PropTypes.object),
+    onClick: PropTypes.func
+}
+
+export default IngredientsSection;

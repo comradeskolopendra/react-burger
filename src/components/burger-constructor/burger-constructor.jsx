@@ -1,11 +1,11 @@
 import {
-    ConstructorElement,
-    Button,
-    CurrencyIcon,
+    ConstructorElement
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from "prop-types";
+import IngredientsWrapper from "./ingredients-wrapper/ingredients-wrapper";
+import PriceInfo from "./price-info/price-info";
 
 import styles from "./burger-constructor.module.css";
-import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 const BurgerConstructor = ({ ingredients, handleOrderClick }) => {
     return (
@@ -20,24 +20,7 @@ const BurgerConstructor = ({ ingredients, handleOrderClick }) => {
                     extraClass="ml-8"
                 />
 
-                <ul className={`${styles.ingredientsWrapper}`}>
-                    {ingredients.map((ingredient) => (
-                        <li
-                            key={ingredient._id}
-                            style={{ display: "flex", alignItems: "center" }}
-                        >
-                            <div className="mr-2">
-                                <DragIcon />
-                            </div>
-                            <ConstructorElement
-                                isLocked={false}
-                                price={ingredient.price}
-                                thumbnail={ingredient.image}
-                                text={ingredient.name}
-                            />
-                        </li>
-                    ))}
-                </ul>
+                <IngredientsWrapper ingredients={ingredients} />
 
                 <ConstructorElement
                     type="bottom"
@@ -49,23 +32,14 @@ const BurgerConstructor = ({ ingredients, handleOrderClick }) => {
                 />
             </section>
 
-            <section className={styles.orderBlock}>
-                <div className={styles.price}>
-                    <p className="mr-2 text text_type_digits-medium">123</p>
-                    <CurrencyIcon type="primary" />
-                </div>
-
-                <Button
-                    onClick={() => handleOrderClick(true)}
-                    htmlType="button"
-                    type="primary"
-                    size="large"
-                >
-                    Оформить заказ
-                </Button>
-            </section>
+            <PriceInfo handleOrderClick={handleOrderClick} />
         </div>
     );
 };
+
+BurgerConstructor.propTypes = {
+    ingredients: PropTypes.arrayOf(PropTypes.object),
+    handleOrderClick: PropTypes.func
+}
 
 export default BurgerConstructor;

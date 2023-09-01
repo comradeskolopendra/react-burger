@@ -1,6 +1,7 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 
-import IngredientsWrapper from "./ingredients-wrapper/ingredients-wrapper";
+import IngredientsSection from "./ingredients-section/ingredients-section";
 import TabsWrapper from "./tabs-wrapper/tabs-wrapper";
 
 import styles from "./burger-ingredients.module.css";
@@ -38,17 +39,17 @@ const BurgerIngredients = ({ ingredients, handleIngredientClick }) => {
                 updateCurrent={setCurrent}
             />
             <section className={styles.ingredients}>
-                <IngredientsWrapper
+                <IngredientsSection
                     onClick={handleIngredientClick}
                     title={"Булки"}
                     ingredients={buns}
                 />
-                <IngredientsWrapper
+                <IngredientsSection
                     onClick={handleIngredientClick}
                     title={"Соусы"}
                     ingredients={sauces}
                 />
-                <IngredientsWrapper
+                <IngredientsSection
                     onClick={handleIngredientClick}
                     title={"Начинки"}
                     ingredients={mains}
@@ -57,5 +58,10 @@ const BurgerIngredients = ({ ingredients, handleIngredientClick }) => {
         </div>
     );
 };
+
+BurgerIngredients.propTypes = {
+    ingredients: PropTypes.arrayOf(PropTypes.object),
+    handleIngredientClick: PropTypes.func
+}
 
 export default BurgerIngredients;

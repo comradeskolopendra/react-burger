@@ -18,12 +18,6 @@
     align-items: center;
 }
 
-.closeButton {
-    border: none;
-    background: unset;
-    cursor: pointer;
-}
-
 .wrapperBody {
     display: flex;
     flex-direction: column;
@@ -39,4 +33,8 @@
 .image {
     width: 480px;
     height: 240px;
+}
+
+.ingredientName {
+    text-align: center;
 }

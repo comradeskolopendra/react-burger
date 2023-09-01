@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import styles from "./energy-item.module.css";
 
 const EnergyItem = ({ title, value }) => {
@@ -10,5 +11,10 @@ const EnergyItem = ({ title, value }) => {
         </div>
     );
 };
+
+EnergyItem.propTypes = {
+    title: PropTypes.string,
+    value: PropTypes.string
+}
 
 export default EnergyItem;
