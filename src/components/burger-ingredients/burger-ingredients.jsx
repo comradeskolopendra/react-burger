@@ -5,8 +5,16 @@ import TabsWrapper from "./tabs-wrapper/tabs-wrapper";
 
 import styles from "./burger-ingredients.module.css";
 
-const BurgerIngredients = ({ buns, sauces, mains }) => {
+const BurgerIngredients = ({ ingredients, handleIngredientClick }) => {
     const [current, setCurrent] = useState("buns");
+
+    const buns = ingredients.filter((ingredient) => ingredient.type === "bun");
+    const sauces = ingredients.filter(
+        (ingredient) => ingredient.type === "sauce"
+    );
+    const mains = ingredients.filter(
+        (ingredient) => ingredient.type === "main"
+    );
 
     const tabsInfo = [
         {
@@ -24,11 +32,27 @@ const BurgerIngredients = ({ buns, sauces, mains }) => {
     ];
     return (
         <div className={styles.wrapper}>
-            <TabsWrapper tabsInfo={tabsInfo} current={current} updateCurrent={setCurrent} />
+            <TabsWrapper
+                tabsInfo={tabsInfo}
+                current={current}
+                updateCurrent={setCurrent}
+            />
             <section className={styles.ingredients}>
-                <IngredientsWrapper title={"Булки"} ingredients={buns} />
-                <IngredientsWrapper title={"Соусы"} ingredients={sauces} />
-                <IngredientsWrapper title={"Начинки"} ingredients={mains} />
+                <IngredientsWrapper
+                    onClick={handleIngredientClick}
+                    title={"Булки"}
+                    ingredients={buns}
+                />
+                <IngredientsWrapper
+                    onClick={handleIngredientClick}
+                    title={"Соусы"}
+                    ingredients={sauces}
+                />
+                <IngredientsWrapper
+                    onClick={handleIngredientClick}
+                    title={"Начинки"}
+                    ingredients={mains}
+                />
             </section>
         </div>
     );

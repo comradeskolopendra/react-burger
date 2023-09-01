@@ -1,52 +1,62 @@
+import { useEffect, useRef, useState } from "react";
+
 import AppHeader from "../app-header/app-header";
-import { URL_API } from "../../utils/data";
+import BurgerIngredients from "../burger-ingredients/burger-ingredients";
+import BurgerConstructor from "../burger-constructor/burger-constructor";
+import Modal from "../modal/modal";
+
+import { getIngredients } from "../../helpers/helpers";
 
 import "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app.module.css";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
-import { useEffect, useState } from "react";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 
 function App() {
+    const [visibleIngredient, setVisibleIngredient] = useState(false);
+    const [currentIngredient, setCurrentIngredient] = useState(null);
+    const bodyRef = useRef(document.body);
     const [ingredients, setIngredients] = useState({
         hasError: false,
         data: [],
         isLoading: false,
     });
 
-    const getIngredients = async () => {
-        setIngredients({ ...ingredients, isLoading: true });
-        console.log(ingredients);
-        try {
-            const response = await fetch(URL_API);
-
-            if (!response.ok) throw new Error("fetch error");
-
-            const { data } = await response.json();
-            console.log(data, response.ok);
-
-            setIngredients({ ...ingredients, data });
-        } catch (error) {
-            setIngredients({ ...ingredients, hasError: true });
-            console.error(error);
-        } finally {
-            setIngredients({ ...ingredients, isLoading: false });
-        }
+    const handleIngredientClick = (ingredient) => {
+        setCurrentIngredient(ingredient);
+        setVisibleIngredient(true);
     };
 
     useEffect(() => {
-        getIngredients();
+        getIngredients(setIngredients);
     }, []);
 
     useEffect(() => {
-        console.log(ingredients)
-    }, [ingredients]);
+        if (visibleIngredient) {
+            bodyRef.current.style.overflow = "hidden";
+        } else {
+            bodyRef.current.style.overflow = "";
+            setCurrentIngredient(null);
+        }
+    }, [visibleIngredient]);
 
-    const buns = ingredients.data.filter((element) => element.type === "bun");
-    const sauces = ingredients.data.filter(
-        (element) => element.type === "sauce"
+    const modalIngredient = (
+        <Modal handleBackgroundClick={() => setVisibleIngredient(false)}>
+            <IngredientDetails
+                ingredient={currentIngredient}
+                changeVisibility={setVisibleIngredient}
+            />
+        </Modal>
     );
-    const mains = ingredients.data.filter((element) => element.type === "main");
+
+    const modalOrder = (
+        <Modal handleBackgroundClick={() => setVisibleIngredient(false)}>
+            <IngredientDetails
+                ingredient={currentIngredient}
+                changeVisibility={setVisibleIngredient}
+            />
+        </Modal>
+    );
+
     return (
         <div>
             <AppHeader />
@@ -62,16 +72,19 @@ function App() {
 
                         <div className={styles.wrapper}>
                             <BurgerIngredients
-                                buns={buns}
-                                sauces={sauces}
-                                mains={mains}
+                                handleIngredientClick={handleIngredientClick}
+                                ingredients={ingredients.data}
                             />
                             <BurgerConstructor
-                                ingredients={[...mains, ...sauces]}
+                                changeModalVisibility={setVisibleIngredient}
+                                ingredients={ingredients.data.filter(
+                                    (ingredient) => ingredient.type !== "bun"
+                                )}
                             />
                         </div>
                     </main>
                 )}
+            {visibleIngredient && modalIngredient}
         </div>
     );
 }
