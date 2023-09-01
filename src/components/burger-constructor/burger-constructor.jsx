@@ -7,7 +7,7 @@ import {
 import styles from "./burger-constructor.module.css";
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
-const BurgerConstructor = ({ ingredients, changeModalVisibility }) => {
+const BurgerConstructor = ({ ingredients, handleOrderClick }) => {
     return (
         <div className={styles.wrapper}>
             <section className={`${styles.constructor} pb-10 pr-4`}>
@@ -56,7 +56,7 @@ const BurgerConstructor = ({ ingredients, changeModalVisibility }) => {
                 </div>
 
                 <Button
-                    onClick={() => changeModalVisibility(true)}
+                    onClick={() => handleOrderClick(true)}
                     htmlType="button"
                     type="primary"
                     size="large"

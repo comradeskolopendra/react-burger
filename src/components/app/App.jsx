@@ -3,16 +3,18 @@ import { useEffect, useRef, useState } from "react";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
+import IngredientDetails from "../modal/ingredient-details/ingredient-details";
+import OrderDetails from "../modal/order-details/order-detail";
 import Modal from "../modal/modal";
 
 import { getIngredients } from "../../helpers/helpers";
 
 import "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app.module.css";
-import IngredientDetails from "../ingredient-details/ingredient-details";
 
 function App() {
     const [visibleIngredient, setVisibleIngredient] = useState(false);
+    const [visibleOrder, setVisibleOrder] = useState(false);
     const [currentIngredient, setCurrentIngredient] = useState(null);
     const bodyRef = useRef(document.body);
     const [ingredients, setIngredients] = useState({
@@ -29,6 +31,14 @@ function App() {
     useEffect(() => {
         getIngredients(setIngredients);
     }, []);
+
+    useEffect(() => {
+        if (visibleOrder) {
+            bodyRef.current.style.overflow = "hidden";
+        } else {
+            bodyRef.current.style.overflow = "";
+        }
+    }, [visibleOrder]);
 
     useEffect(() => {
         if (visibleIngredient) {
@@ -50,10 +60,7 @@ function App() {
 
     const modalOrder = (
         <Modal handleBackgroundClick={() => setVisibleIngredient(false)}>
-            <IngredientDetails
-                ingredient={currentIngredient}
-                changeVisibility={setVisibleIngredient}
-            />
+            <OrderDetails changeVisibility={setVisibleOrder}/>
         </Modal>
     );
 
@@ -76,7 +83,7 @@ function App() {
                                 ingredients={ingredients.data}
                             />
                             <BurgerConstructor
-                                changeModalVisibility={setVisibleIngredient}
+                                handleOrderClick={setVisibleOrder}
                                 ingredients={ingredients.data.filter(
                                     (ingredient) => ingredient.type !== "bun"
                                 )}
@@ -85,6 +92,7 @@ function App() {
                     </main>
                 )}
             {visibleIngredient && modalIngredient}
+            {visibleOrder && modalOrder}
         </div>
     );
 }
