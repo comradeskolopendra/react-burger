@@ -25,9 +25,9 @@ TabsWrapper.propTypes = {
     tabsInfo: PropTypes.arrayOf(PropTypes.shape({
         value: PropTypes.string,
         title: PropTypes.string
-    })),
+    }).isRequired).isRequired,
     current: PropTypes.string,
-    updateCurrent: PropTypes.func
+    updateCurrent: PropTypes.func.isRequired
 }
 
 export default TabsWrapper;

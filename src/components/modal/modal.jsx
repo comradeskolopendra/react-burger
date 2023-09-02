@@ -4,10 +4,10 @@ import ReactDOM from "react-dom";
 
 import ModalOverlay from "../modal-overlay/modal-overlay";
 
-const Modal = ({ children, handleBackgroundClick }) => {
+const Modal = ({ children, onClose, visible, body }) => {
     const handleEscPress = (event) => {
         if (event.key === "Escape") {
-            handleBackgroundClick();
+            onClose();
         }
     };
 
@@ -16,9 +16,17 @@ const Modal = ({ children, handleBackgroundClick }) => {
         return () => document.removeEventListener("keydown", handleEscPress)
     }, [])
 
+    useEffect(() => {
+        if (visible) {
+            body.style.overflow = "hidden";
+        } else {
+            body.style.overflow = "";
+        }
+    }, [visible]);
+
     return ReactDOM.createPortal(
         <div>
-            <ModalOverlay handleBackgroundClick={handleBackgroundClick} />
+            <ModalOverlay onClose={onClose} />
             {children}
         </div>,
         document.getElementById("react-modals")
@@ -26,8 +34,8 @@ const Modal = ({ children, handleBackgroundClick }) => {
 };
 
 Modal.propTypes = {
-    children: PropTypes.node,
-    handleBackgroundClick: PropTypes.func
+    children: PropTypes.node.isRequired,
+    onClose: PropTypes.func.isRequired
 }
 
 export default Modal;

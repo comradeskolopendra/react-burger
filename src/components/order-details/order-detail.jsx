@@ -22,7 +22,7 @@ const OrderDetails = ({ changeVisibility }) => {
 };
 
 OrderDetails.propTypes = {
-    changeVisibility: PropTypes.func
+    changeVisibility: PropTypes.func.isRequired
 }
 
 export default OrderDetails;

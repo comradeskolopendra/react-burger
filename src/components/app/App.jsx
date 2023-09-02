@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
@@ -30,29 +30,18 @@ function App() {
         setVisibleIngredient(true);
     };
 
+    const constructorIngredients = useMemo(() => {
+        return ingredients.data.filter(
+            (ingredient) => ingredient.type !== "bun"
+        )
+    }, [ingredients])
+
     useEffect(() => {
         getIngredients(setIngredients);
     }, []);
 
-    useEffect(() => {
-        if (visibleOrder) {
-            bodyRef.current.style.overflow = "hidden";
-        } else {
-            bodyRef.current.style.overflow = "";
-        }
-    }, [visibleOrder]);
-
-    useEffect(() => {
-        if (visibleIngredient) {
-            bodyRef.current.style.overflow = "hidden";
-        } else {
-            bodyRef.current.style.overflow = "";
-            setCurrentIngredient(null);
-        }
-    }, [visibleIngredient]);
-
     const modalIngredient = (
-        <Modal handleBackgroundClick={() => setVisibleIngredient(false)}>
+        <Modal visible={visibleIngredient} body={bodyRef.current} onClose={() => setVisibleIngredient(false)}>
             <IngredientDetails
                 ingredient={currentIngredient}
                 changeVisibility={setVisibleIngredient}
@@ -61,7 +50,7 @@ function App() {
     );
 
     const modalOrder = (
-        <Modal handleBackgroundClick={() => setVisibleOrder(false)}>
+        <Modal visible={visibleOrder} body={bodyRef.current} onClose={() => setVisibleOrder(false)}>
             <OrderDetails changeVisibility={setVisibleOrder} />
         </Modal>
     );
@@ -86,9 +75,7 @@ function App() {
                             />
                             <BurgerConstructor
                                 handleOrderClick={setVisibleOrder}
-                                ingredients={[...ingredients.data.filter(
-                                    (ingredient) => ingredient.type !== "bun"
-                                )]}
+                                ingredients={constructorIngredients}
                             />
                         </div>
                     </main>

@@ -34,9 +34,9 @@ const NavLink = ({ to, icon, title }) => {
 };
 
 NavLink.propTypes = {
-    to: PropTypes.string,
+    to: PropTypes.string.isRequired,
     icon: PropTypes.string,
-    title: PropTypes.string
+    title: PropTypes.string.isRequired
 }
 
 export default NavLink;

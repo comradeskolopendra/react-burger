@@ -23,7 +23,7 @@ const PriceInfo = ({ handleOrderClick }) => {
 };
 
 PriceInfo.propTypes = {
-    handleOrderClick: PropTypes.func
+    handleOrderClick: PropTypes.func.isRequired
 }
 
 export default PriceInfo;

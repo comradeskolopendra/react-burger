@@ -22,8 +22,21 @@ const IngredientCard = ({ ingredient, onClick }) => {
 };
 
 IngredientCard.propTypes = {
-    ingredient: PropTypes.object,
-    onClick: PropTypes.func
+    ingredient: PropTypes.shape({
+        __v: PropTypes.number,
+        _id: PropTypes.string,
+        calories: PropTypes.number,
+        carbohydrates: PropTypes.number,
+        fat: PropTypes.number,
+        image: PropTypes.string,
+        image_large: PropTypes.string,
+        image_mobile: PropTypes.string,
+        name: PropTypes.string,
+        price: PropTypes.number,
+        proteins: PropTypes.number,
+        type: PropTypes.string
+    }).isRequired,
+    onClick: PropTypes.func.isRequired
 }
 
 export default IngredientCard;

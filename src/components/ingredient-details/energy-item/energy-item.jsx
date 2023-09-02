@@ -13,8 +13,8 @@ const EnergyItem = ({ title, value }) => {
 };
 
 EnergyItem.propTypes = {
-    title: PropTypes.string,
-    value: PropTypes.string
+    title: PropTypes.string.isRequired,
+    value: PropTypes.number.isRequired
 }
 
 export default EnergyItem;
