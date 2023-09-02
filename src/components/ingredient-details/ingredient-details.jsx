@@ -59,7 +59,7 @@ IngredientDetails.propTypes = {
         price: PropTypes.number,
         proteins: PropTypes.number,
         type: PropTypes.string
-    }).isRequired
+    })
 }
 
 export default IngredientDetails;
