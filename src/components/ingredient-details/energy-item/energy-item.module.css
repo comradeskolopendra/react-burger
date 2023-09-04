@@ -1,0 +1,7 @@
+.energyItem {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    row-gap: 8px;
+    color: #8585AD;
+    text-align: center;
+}

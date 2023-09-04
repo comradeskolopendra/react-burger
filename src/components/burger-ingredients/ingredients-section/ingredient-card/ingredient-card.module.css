@@ -1,0 +1,23 @@
+.card {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    max-width: 272px;
+    max-height: 208px;
+    height: 100%;
+    text-align: center;
+    cursor: pointer;
+}
+
+.ingredientImage {
+    width: 100%;
+    max-width: 240px;
+    height: 120px;
+}
+
+.price {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}

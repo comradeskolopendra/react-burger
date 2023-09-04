@@ -1,0 +1,11 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.constructor {
+    display: flex;
+    gap: 16px;
+    flex-direction: column;
+}
