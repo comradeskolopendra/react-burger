@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { BurgerContext } from "../../../context/burgerContext";
+import { BurgerContext } from "../../../context/context";
 import {
     DragIcon,
     ConstructorElement,
@@ -13,9 +13,7 @@ const IngredientsWrapper = ({ dispatch }) => {
     const { constructorData, setConstructorData } = useContext(BurgerContext);
     const handleClose = (ingredient) => {
         setConstructorData(
-            [...constructorData].filter(
-                (element) => element._id !== ingredient._id
-            )
+            [...constructorData].filter(item => item._id !== ingredient._id)
         );
         dispatch({ type: "delete", payload: ingredient.price });
     };

@@ -3,17 +3,14 @@ import { useContext, useEffect } from "react";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import done from "../../images/done.png";
-import { BurgerContext } from "../../context/burgerContext";
+import { ModalContext } from "../../context/context";
 
 import { modalContentTypes } from "../../utils/types";
 import styles from "./order-details.module.css";
 
 const OrderDetails = ({ changeVisibility }) => {
-    const { order } = useContext(BurgerContext);
+    const { order } = useContext(ModalContext);
 
-    useEffect(() => {
-        console.log(order);
-    }, [order])
     return (
         <div className={`${styles.modalBlock} pt-30 pb-30`}>
             <div className={`${styles.closeWrapper}`}>

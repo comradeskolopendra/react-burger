@@ -4,7 +4,7 @@ import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-comp
 import { burgerSidesTypes } from "../../utils/types";
 import IngredientsWrapper from "./ingredients-wrapper/ingredients-wrapper";
 import PriceInfo from "./price-info/price-info";
-import { BurgerContext } from "../../context/burgerContext";
+import { BurgerContext } from "../../context/context";
 import { priceReducer } from "../../reducer/reducers";
 
 import styles from "./burger-constructor.module.css";

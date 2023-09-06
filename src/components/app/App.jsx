@@ -8,7 +8,7 @@ import OrderDetails from "../order-details/order-detail";
 import Modal from "../modal/modal";
 
 import { createOrder, getIngredients } from "../../helpers/helpers";
-import { BurgerContext } from "../../context/burgerContext";
+import { BurgerContext, ModalContext } from "../../context/context";
 
 import "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app.module.css";
@@ -41,7 +41,7 @@ function App() {
     const handleOrderClick = async () => {
         const ingredientIds = constructorData.map((element) => element._id);
         await createOrder(setOrder, ingredientIds);
-        if (order.hasError) {
+        if (order.hasError || constructorData.length === 0) {
             return;
         }
         return setVisibleOrder(true);
@@ -68,41 +68,42 @@ function App() {
 
     return (
         <>
-            <BurgerContext.Provider
-                value={{
-                    ingredients: ingredients.data,
-                    constructorData,
-                    setConstructorData,
-                    constructorBun,
-                    setConstructorBun,
-                    currentIngredient,
-                    order,
-                }}
-            >
-                <AppHeader />
-                {ingredients.isLoading && "Идет загрузка"}
-                {ingredients.hasError && "Что-то пошло не так!"}
-                {ingredients.data.length !== 0 &&
-                    !ingredients.hasError &&
-                    !ingredients.isLoading && (
-                        <main className={styles.main}>
-                            <h1 className="text text_type_main-large mt-10 mb-5">
-                                Соберите бургер
-                            </h1>
+            <AppHeader />
+            {ingredients.isLoading && "Идет загрузка"}
+            {ingredients.hasError && "Что-то пошло не так!"}
+            {ingredients.data.length !== 0 &&
+                !ingredients.hasError &&
+                !ingredients.isLoading && (
+                    <main className={styles.main}>
+                        <h1 className="text text_type_main-large mt-10 mb-5">
+                            Соберите бургер
+                        </h1>
 
-                            <div className={styles.wrapper}>
+                        <div className={styles.wrapper}>
+                            <BurgerContext.Provider
+                                value={{
+                                    ingredients: ingredients.data,
+                                    constructorData,
+                                    setConstructorData,
+                                    constructorBun,
+                                    setConstructorBun,
+                                    currentIngredient,
+                                }}
+                            >
                                 <BurgerIngredients
                                     onOpenModal={handleIngredientClick}
                                 />
                                 <BurgerConstructor
                                     onOpenModal={handleOrderClick}
                                 />
-                            </div>
-                        </main>
-                    )}
+                            </BurgerContext.Provider>
+                        </div>
+                    </main>
+                )}
+            <ModalContext.Provider value={{ order, currentIngredient }}>
                 {visibleIngredient && modalIngredient}
                 {visibleOrder && modalOrder}
-            </BurgerContext.Provider>
+            </ModalContext.Provider>
         </>
     );
 }

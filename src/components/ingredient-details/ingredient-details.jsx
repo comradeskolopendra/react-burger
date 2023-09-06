@@ -2,7 +2,7 @@ import { useContext } from "react";
 import EnergyItem from "./energy-item/energy-item";
 
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { BurgerContext } from "../../context/burgerContext";
+import { ModalContext } from "../../context/context";
 
 import { modalContentTypes } from "../../utils/types";
 
@@ -10,7 +10,7 @@ import "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./ingredient-details.module.css";
 
 const IngredientDetails = ({ changeVisibility }) => {
-    const { currentIngredient } = useContext(BurgerContext);
+    const { currentIngredient } = useContext(ModalContext);
     return (
         <section className={styles.modalBlock}>
             <div className={styles.wrapperHeading}>

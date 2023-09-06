@@ -2,7 +2,7 @@ import { useMemo, useState, useContext } from "react";
 
 import IngredientsSection from "./ingredients-section/ingredients-section";
 import TabsWrapper from "./tabs-wrapper/tabs-wrapper";
-import { BurgerContext } from "../../context/burgerContext";
+import { BurgerContext } from "../../context/context";
 import { burgerSidesTypes } from "../../utils/types";
 
 import styles from "./burger-ingredients.module.css";
