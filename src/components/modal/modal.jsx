@@ -1,15 +1,18 @@
-import { useEffect } from "react";
-import PropTypes from "prop-types";
+import { useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
+
+import { modalTypes } from '../../utils/types';
 
 import ModalOverlay from "../modal-overlay/modal-overlay";
 
-const Modal = ({ children, onClose, visible, body }) => {
+const Modal = ({ children, onClose, visible }) => {
     const handleEscPress = (event) => {
         if (event.key === "Escape") {
             onClose();
         }
     };
+
+    const body = useRef(document.body);
 
     useEffect(() => {
         document.addEventListener("keydown", handleEscPress);
@@ -18,9 +21,9 @@ const Modal = ({ children, onClose, visible, body }) => {
 
     useEffect(() => {
         if (visible) {
-            body.style.overflow = "hidden";
+            body.current.style.overflow = "hidden";
         } else {
-            body.style.overflow = "";
+            body.current.style.overflow = "";
         }
     }, [visible]);
 
@@ -33,9 +36,6 @@ const Modal = ({ children, onClose, visible, body }) => {
     );
 };
 
-Modal.propTypes = {
-    children: PropTypes.node.isRequired,
-    onClose: PropTypes.func.isRequired
-}
+Modal.propTypes = modalTypes;
 
 export default Modal;

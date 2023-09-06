@@ -1,5 +1,6 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
+
+import { ingredientCardTypes } from '../../../../utils/types';
 import styles from "./ingredient-card.module.css";
 
 const IngredientCard = ({ ingredient, onClick }) => {
@@ -21,22 +22,6 @@ const IngredientCard = ({ ingredient, onClick }) => {
     );
 };
 
-IngredientCard.propTypes = {
-    ingredient: PropTypes.shape({
-        __v: PropTypes.number,
-        _id: PropTypes.string,
-        calories: PropTypes.number,
-        carbohydrates: PropTypes.number,
-        fat: PropTypes.number,
-        image: PropTypes.string,
-        image_large: PropTypes.string,
-        image_mobile: PropTypes.string,
-        name: PropTypes.string,
-        price: PropTypes.number,
-        proteins: PropTypes.number,
-        type: PropTypes.string
-    }).isRequired,
-    onClick: PropTypes.func.isRequired
-}
+IngredientCard.propTypes = ingredientCardTypes;
 
 export default IngredientCard;

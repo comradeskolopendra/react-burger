@@ -1,21 +1,35 @@
-import { DragIcon, ConstructorElement, } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
+import { useContext } from "react";
+import { BurgerContext } from "../../../context/burgerContext";
+import {
+    DragIcon,
+    ConstructorElement,
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import { ingrediensWrapperTypes } from "../../../utils/types";
+
+import { v4 as uuid4 } from "uuid";
 import styles from "./ingredients-wrapper.module.css";
 
-const IngredientsWrapper = ({ ingredients }) => {
+const IngredientsWrapper = ({ dispatch }) => {
+    const { constructorData, setConstructorData } = useContext(BurgerContext);
+    const handleClose = (ingredient) => {
+        setConstructorData(
+            [...constructorData].filter(
+                (element) => element._id !== ingredient._id
+            )
+        );
+        dispatch({ type: "delete", payload: ingredient.price });
+    };
     return (
         <ul className={`${styles.ingredientsWrapper}`}>
-            {ingredients.map((ingredient) => (
-                <li
-                    key={ingredient._id}
-                    className={styles.ingredient}
-                >
+            {constructorData.map((ingredient) => (
+                <li key={uuid4()} className={styles.ingredient}>
                     <div className="mr-2">
                         <DragIcon />
                     </div>
                     <ConstructorElement
                         isLocked={false}
                         price={ingredient.price}
+                        handleClose={() => handleClose(ingredient)}
                         thumbnail={ingredient.image}
                         text={ingredient.name}
                     />
@@ -25,21 +39,6 @@ const IngredientsWrapper = ({ ingredients }) => {
     );
 };
 
-IngredientsWrapper.propTypes = {
-    ingredients: PropTypes.arrayOf(PropTypes.shape({
-        __v: PropTypes.number,
-        _id: PropTypes.string,
-        calories: PropTypes.number,
-        carbohydrates: PropTypes.number,
-        fat: PropTypes.number,
-        image: PropTypes.string,
-        image_large: PropTypes.string,
-        image_mobile: PropTypes.string,
-        name: PropTypes.string,
-        price: PropTypes.number,
-        proteins: PropTypes.number,
-        type: PropTypes.string
-    }).isRequired).isRequired
-}
+IngredientsWrapper.propTypes = ingrediensWrapperTypes;
 
 export default IngredientsWrapper;

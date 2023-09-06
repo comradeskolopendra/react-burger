@@ -1,5 +1,6 @@
 import IngredientCard from "./ingredient-card/ingredient-card";
-import PropTypes from "prop-types";
+
+import { ingredientsSectionTypes } from '../../../utils/types';
 import styles from "./ingredients-section.module.css";
 
 const IngredientsSection = ({ title, ingredients, onClick }) => {
@@ -15,23 +16,6 @@ const IngredientsSection = ({ title, ingredients, onClick }) => {
     );
 };
 
-IngredientsSection.propTypes = {
-    title: PropTypes.string,
-    ingredients: PropTypes.arrayOf(PropTypes.shape({
-        __v: PropTypes.number,
-        _id: PropTypes.string,
-        calories: PropTypes.number,
-        carbohydrates: PropTypes.number,
-        fat: PropTypes.number,
-        image: PropTypes.string,
-        image_large: PropTypes.string,
-        image_mobile: PropTypes.string,
-        name: PropTypes.string,
-        price: PropTypes.number,
-        proteins: PropTypes.number,
-        type: PropTypes.string
-    }).isRequired).isRequired,
-    onClick: PropTypes.func.isRequired
-}
+IngredientsSection.propTypes = ingredientsSectionTypes;
 
 export default IngredientsSection;

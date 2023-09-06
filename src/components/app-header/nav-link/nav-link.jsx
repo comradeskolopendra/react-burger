@@ -1,5 +1,5 @@
 import { useState } from "react";
-import PropTypes from "prop-types";
+import { navLinkTypes } from '../../../utils/types';
 import styles from "./nav-link.module.css";
 import {
     BurgerIcon,
@@ -33,10 +33,6 @@ const NavLink = ({ to, icon, title }) => {
     );
 };
 
-NavLink.propTypes = {
-    to: PropTypes.string.isRequired,
-    icon: PropTypes.string,
-    title: PropTypes.string.isRequired
-}
+NavLink.propTypes = navLinkTypes;
 
 export default NavLink;
