@@ -1,13 +1,16 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useContext } from "react";
 import PropTypes from "prop-types";
 
 import IngredientsSection from "./ingredients-section/ingredients-section";
 import TabsWrapper from "./tabs-wrapper/tabs-wrapper";
+import { BurgerIngredientsContext } from '../../context/burgerContext';
 
 import styles from "./burger-ingredients.module.css";
 
-const BurgerIngredients = ({ ingredients, handleIngredientClick }) => {
+const BurgerIngredients = ({ handleIngredientClick }) => {
     const [current, setCurrent] = useState("buns");
+
+    const { ingredients } = useContext(BurgerIngredientsContext);
 
     const { mains, sauces, buns } = useMemo(() => {
         return {

@@ -8,6 +8,10 @@ import OrderDetails from "../order-details/order-detail";
 import Modal from "../modal/modal";
 
 import { getIngredients } from "../../helpers/helpers";
+import {
+    BurgerConstructorContext,
+    BurgerIngredientsContext,
+} from "../../context/burgerContext";
 
 import "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app.module.css";
@@ -30,18 +34,22 @@ function App() {
         setVisibleIngredient(true);
     };
 
-    const constructorIngredients = useMemo(() => {
-        return ingredients.data.filter(
-            (ingredient) => ingredient.type !== "bun"
-        )
-    }, [ingredients])
-
     useEffect(() => {
         getIngredients(setIngredients);
     }, []);
 
+    const constructorIngredients = useMemo(() => {
+        return ingredients.data.filter(
+            (ingredient) => ingredient.type !== "bun"
+        );
+    }, [ingredients]);
+
     const modalIngredient = (
-        <Modal visible={visibleIngredient} body={bodyRef.current} onClose={() => setVisibleIngredient(false)}>
+        <Modal
+            visible={visibleIngredient}
+            body={bodyRef.current}
+            onClose={() => setVisibleIngredient(false)}
+        >
             <IngredientDetails
                 ingredient={currentIngredient}
                 changeVisibility={setVisibleIngredient}
@@ -50,7 +58,11 @@ function App() {
     );
 
     const modalOrder = (
-        <Modal visible={visibleOrder} body={bodyRef.current} onClose={() => setVisibleOrder(false)}>
+        <Modal
+            visible={visibleOrder}
+            body={bodyRef.current}
+            onClose={() => setVisibleOrder(false)}
+        >
             <OrderDetails changeVisibility={setVisibleOrder} />
         </Modal>
     );
@@ -69,14 +81,28 @@ function App() {
                         </h1>
 
                         <div className={styles.wrapper}>
-                            <BurgerIngredients
-                                handleIngredientClick={handleIngredientClick}
-                                ingredients={ingredients.data}
-                            />
-                            <BurgerConstructor
-                                handleOrderClick={setVisibleOrder}
-                                ingredients={constructorIngredients}
-                            />
+                            <BurgerConstructorContext.Provider
+                                value={{
+                                    constructorIngredients:
+                                        constructorIngredients,
+                                }}
+                            >
+                                <BurgerIngredientsContext.Provider
+                                    value={{
+                                        ingredients: ingredients.data,
+                                        setIngredients,
+                                    }}
+                                >
+                                    <BurgerIngredients
+                                        handleIngredientClick={
+                                            handleIngredientClick
+                                        }
+                                    />
+                                    <BurgerConstructor
+                                        handleOrderClick={setVisibleOrder}
+                                    />
+                                </BurgerIngredientsContext.Provider>
+                            </BurgerConstructorContext.Provider>
                         </div>
                     </main>
                 )}

@@ -1,13 +1,17 @@
+import { useContext } from 'react';
+
 import {
     ConstructorElement
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import IngredientsWrapper from "./ingredients-wrapper/ingredients-wrapper";
 import PriceInfo from "./price-info/price-info";
+import { BurgerConstructorContext } from '../../context/burgerContext';
 
 import styles from "./burger-constructor.module.css";
 
-const BurgerConstructor = ({ ingredients, handleOrderClick }) => {
+const BurgerConstructor = ({ handleOrderClick }) => {
+    const { constructorIngredients } = useContext(BurgerConstructorContext);
     return (
         <div className={styles.wrapper}>
             <section className={`${styles.constructor} pb-10 pr-4`}>
@@ -20,7 +24,7 @@ const BurgerConstructor = ({ ingredients, handleOrderClick }) => {
                     extraClass="ml-8"
                 />
 
-                <IngredientsWrapper ingredients={ingredients} />
+                <IngredientsWrapper ingredients={constructorIngredients} />
 
                 <ConstructorElement
                     type="bottom"
