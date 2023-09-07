@@ -1,6 +1,8 @@
+import PropTypes from "prop-types";
+
 import IngredientCard from "./ingredient-card/ingredient-card";
 
-import { ingredientsSectionTypes } from '../../../utils/types';
+import { ingredientType } from '../../../utils/types';
 import styles from "./ingredients-section.module.css";
 
 const IngredientsSection = ({ title, ingredients, onClick }) => {
@@ -16,6 +18,10 @@ const IngredientsSection = ({ title, ingredients, onClick }) => {
     );
 };
 
-IngredientsSection.propTypes = ingredientsSectionTypes;
+IngredientsSection.propTypes = {
+    title: PropTypes.string,
+    ingredients: PropTypes.arrayOf(ingredientType).isRequired,
+    onClick: PropTypes.func.isRequired,
+};
 
 export default IngredientsSection;

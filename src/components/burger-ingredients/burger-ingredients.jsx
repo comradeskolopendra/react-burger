@@ -1,10 +1,10 @@
 import { useMemo, useState, useContext } from "react";
-import {v4 as uuidv4} from "uuid";
+import { v4 as uuidv4 } from "uuid";
+import PropTypes from "prop-types";
 
 import IngredientsSection from "./ingredients-section/ingredients-section";
 import TabsWrapper from "./tabs-wrapper/tabs-wrapper";
 import { BurgerContext } from "../../context/context";
-import { burgerSidesTypes } from "../../utils/types";
 
 import styles from "./burger-ingredients.module.css";
 
@@ -19,7 +19,7 @@ const BurgerIngredients = ({ onOpenModal }) => {
         if (ingredient.type !== "bun") {
             return setConstructorData([
                 ...constructorData,
-                {...ingredient, uuid: uuidv4()},
+                { ...ingredient, uuid: uuidv4() },
             ]);
         }
         return setConstructorData([
@@ -82,6 +82,8 @@ const BurgerIngredients = ({ onOpenModal }) => {
     );
 };
 
-BurgerIngredients.propTypes = burgerSidesTypes;
+BurgerIngredients.propTypes = {
+    onOpenModal: PropTypes.func.isRequired,
+};
 
 export default BurgerIngredients;

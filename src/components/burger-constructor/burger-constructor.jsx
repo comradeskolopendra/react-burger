@@ -1,7 +1,7 @@
 import { useContext, useEffect, useReducer, useMemo, useState } from "react";
+import PropTypes from "prop-types"
 
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-import { burgerSidesTypes } from "../../utils/types";
 import IngredientsWrapper from "./ingredients-wrapper/ingredients-wrapper";
 import PriceInfo from "./price-info/price-info";
 import { BurgerContext } from "../../context/context";
@@ -86,6 +86,8 @@ const BurgerConstructor = ({ onOpenModal }) => {
     );
 };
 
-BurgerConstructor.propTypes = burgerSidesTypes;
+BurgerConstructor.propTypes = {
+    onOpenModal: PropTypes.func.isRequired,
+};
 
 export default BurgerConstructor;

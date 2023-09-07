@@ -1,6 +1,7 @@
+import PropTypes from "prop-types";
+
 import { CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { priceInfoTypes } from '../../../utils/types';
 import styles from "./price-info.module.css";
 
 const PriceInfo = ({ priceState, onOpenModal }) => {
@@ -25,6 +26,10 @@ const PriceInfo = ({ priceState, onOpenModal }) => {
     );
 };
 
-PriceInfo.propTypes = priceInfoTypes;
-
+PriceInfo.propTypes = {
+    onOpenModal: PropTypes.func.isRequired,
+    priceState: PropTypes.shape({
+        price: PropTypes.number,
+    }),
+};
 export default PriceInfo;

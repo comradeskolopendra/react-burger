@@ -1,9 +1,9 @@
-import { URL_API, URL_ORDER } from "../utils/constants";
+import { BASE_URL } from "../utils/constants";
 
 const getIngredients = async (updateState) => {
     updateState((prevState) => ({ ...prevState, isLoading: true }));
     try {
-        const response = await fetch(URL_API);
+        const response = await fetch(`${BASE_URL}/ingredients`);
 
         if (!response.ok) throw new Error("fetch get ingredients error");
 
@@ -23,7 +23,7 @@ const createOrder = async (updateState, ingredientsIds) => {
 
     try {
         console.log(ingredientsIds)
-        const response = await fetch(URL_ORDER, {
+        const response = await fetch(`${BASE_URL}/orders`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json;charset=utf-8",

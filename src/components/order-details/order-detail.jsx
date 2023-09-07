@@ -1,11 +1,10 @@
 import { useContext, useEffect } from "react";
+import PropTypes from "prop-types"
 
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import done from "../../images/done.png";
 import { ModalContext } from "../../context/context";
-
-import { modalContentTypes } from "../../utils/types";
 import styles from "./order-details.module.css";
 
 const OrderDetails = ({ changeVisibility }) => {
@@ -38,6 +37,8 @@ const OrderDetails = ({ changeVisibility }) => {
     );
 };
 
-OrderDetails.propTypes = modalContentTypes;
+OrderDetails.propTypes = {
+    changeVisibility: PropTypes.func.isRequired,
+};;
 
 export default OrderDetails;

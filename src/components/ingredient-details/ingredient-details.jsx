@@ -1,10 +1,9 @@
 import { useContext } from "react";
-import EnergyItem from "./energy-item/energy-item";
+import PropTypes from "prop-types";
 
+import EnergyItem from "./energy-item/energy-item";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ModalContext } from "../../context/context";
-
-import { modalContentTypes } from "../../utils/types";
 
 import "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./ingredient-details.module.css";
@@ -55,6 +54,8 @@ const IngredientDetails = ({ changeVisibility }) => {
     );
 };
 
-IngredientDetails.propTypes = modalContentTypes;
+IngredientDetails.propTypes = {
+    changeVisibility: PropTypes.func.isRequired,
+};
 
 export default IngredientDetails;

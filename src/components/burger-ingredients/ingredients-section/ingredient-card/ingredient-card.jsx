@@ -1,6 +1,8 @@
+import PropTypes from "prop-types";
+
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { ingredientCardTypes } from '../../../../utils/types';
+import { ingredientType } from '../../../../utils/types';
 import styles from "./ingredient-card.module.css";
 
 const IngredientCard = ({ ingredient, onClick }) => {
@@ -22,6 +24,9 @@ const IngredientCard = ({ ingredient, onClick }) => {
     );
 };
 
-IngredientCard.propTypes = ingredientCardTypes;
+IngredientCard.propTypes = {
+    ingredient: ingredientType,
+    onClick: PropTypes.func.isRequired,
+};
 
 export default IngredientCard;

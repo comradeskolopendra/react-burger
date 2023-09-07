@@ -1,10 +1,11 @@
 import { useContext } from "react";
+import PropTypes from "prop-types";
 import { BurgerContext } from "../../../context/context";
 import {
     DragIcon,
     ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { ingrediensWrapperTypes } from "../../../utils/types";
+import { ingredientType } from "../../../utils/types";
 
 import { v4 as uuid4 } from "uuid";
 import styles from "./ingredients-wrapper.module.css";
@@ -40,6 +41,9 @@ const IngredientsWrapper = ({ dispatch, ingredients }) => {
     );
 };
 
-IngredientsWrapper.propTypes = ingrediensWrapperTypes;
+IngredientsWrapper.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    ingredients: PropTypes.arrayOf(ingredientType)
+};
 
 export default IngredientsWrapper;
