@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
@@ -19,7 +20,6 @@ function App() {
 
     const [currentIngredient, setCurrentIngredient] = useState(null);
     const [constructorData, setConstructorData] = useState([]);
-    const [constructorBun, setConstructorBun] = useState(null);
 
     const [ingredients, setIngredients] = useState({
         hasError: false,
@@ -34,7 +34,7 @@ function App() {
     });
 
     const handleIngredientClick = (ingredient) => {
-        setCurrentIngredient(ingredient);
+        setCurrentIngredient({...ingredient});
         setVisibleIngredient(true);
     };
 
@@ -47,6 +47,11 @@ function App() {
         return setVisibleOrder(true);
     };
 
+    const handleCloseIngredientModal = () => {
+        setVisibleIngredient(false);
+        setCurrentIngredient(null);
+    };
+
     useEffect(() => {
         getIngredients(setIngredients);
     }, []);
@@ -54,7 +59,7 @@ function App() {
     const modalIngredient = (
         <Modal
             visible={visibleIngredient}
-            onClose={() => setVisibleIngredient(false)}
+            onClose={handleCloseIngredientModal}
         >
             <IngredientDetails changeVisibility={setVisibleIngredient} />
         </Modal>
@@ -85,9 +90,8 @@ function App() {
                                     ingredients: ingredients.data,
                                     constructorData,
                                     setConstructorData,
-                                    constructorBun,
-                                    setConstructorBun,
                                     currentIngredient,
+                                    setCurrentIngredient,
                                 }}
                             >
                                 <BurgerIngredients

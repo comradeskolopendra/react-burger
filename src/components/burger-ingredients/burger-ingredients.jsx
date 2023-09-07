@@ -1,4 +1,5 @@
 import { useMemo, useState, useContext } from "react";
+import {v4 as uuidv4} from "uuid";
 
 import IngredientsSection from "./ingredients-section/ingredients-section";
 import TabsWrapper from "./tabs-wrapper/tabs-wrapper";
@@ -10,23 +11,21 @@ import styles from "./burger-ingredients.module.css";
 const BurgerIngredients = ({ onOpenModal }) => {
     const [current, setCurrent] = useState("buns");
 
-    const {
-        ingredients,
-        constructorData,
-        setConstructorData,
-        setConstructorBun,
-    } = useContext(BurgerContext);
+    const { ingredients, constructorData, setConstructorData } =
+        useContext(BurgerContext);
 
     const handleOnClick = (ingredient) => {
         onOpenModal(ingredient);
-        if (ingredient.type === "bun") {
-            return setConstructorBun(ingredient);
+        if (ingredient.type !== "bun") {
+            return setConstructorData([
+                ...constructorData,
+                {...ingredient, uuid: uuidv4()},
+            ]);
         }
-        return setConstructorData(
-            [...constructorData, ingredient].filter(
-                (element) => element.type !== "bun"
-            )
-        );
+        return setConstructorData([
+            ...constructorData.filter((element) => element.type !== "bun"),
+            ingredient,
+        ]);
     };
 
     const { mains, sauces, buns } = useMemo(() => {

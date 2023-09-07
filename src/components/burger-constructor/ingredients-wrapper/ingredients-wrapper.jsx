@@ -9,17 +9,20 @@ import { ingrediensWrapperTypes } from "../../../utils/types";
 import { v4 as uuid4 } from "uuid";
 import styles from "./ingredients-wrapper.module.css";
 
-const IngredientsWrapper = ({ dispatch }) => {
+const IngredientsWrapper = ({ dispatch, ingredients }) => {
     const { constructorData, setConstructorData } = useContext(BurgerContext);
+
     const handleClose = (ingredient) => {
+        console.log(ingredient, constructorData)
         setConstructorData(
-            [...constructorData].filter(item => item._id !== ingredient._id)
+            [...constructorData].filter((item) => item.uuid !== ingredient.uuid)
         );
         dispatch({ type: "delete", payload: ingredient.price });
     };
+
     return (
         <ul className={`${styles.ingredientsWrapper}`}>
-            {constructorData.map((ingredient) => (
+            {ingredients.map((ingredient) => (
                 <li key={uuid4()} className={styles.ingredient}>
                     <div className="mr-2">
                         <DragIcon />
