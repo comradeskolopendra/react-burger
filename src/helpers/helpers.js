@@ -1,45 +1,31 @@
 import { BASE_URL } from "../utils/constants";
 
-const getIngredients = async (updateState) => {
-    updateState((prevState) => ({ ...prevState, isLoading: true }));
+const checkResponse = (res) =>
+    res.ok ? res.json() : new Error(`Ошибка: ${res.status}`);
+
+const request = (url, options = {}) => fetch(url, options).then(checkResponse);
+
+const getIngredients = async () => {
     try {
-        const response = await fetch(`${BASE_URL}/ingredients`);
-
-        if (!response.ok) throw new Error("fetch get ingredients error");
-
-        const { data } = await response.json();
-
-        updateState((prevState) => ({ ...prevState, data }));
+        const { data } = await request(`${BASE_URL}/ingredients`);
+        return data;
     } catch (error) {
-        updateState((prevState) => ({ ...prevState, hasError: true }));
         console.error(error);
-    } finally {
-        updateState((prevState) => ({ ...prevState, isLoading: false }));
     }
 };
 
-const createOrder = async (updateState, ingredientsIds) => {
-    updateState((prevState) => ({ ...prevState, isLoading: true }));
-
+const createOrder = async (ingredientsIds) => {
     try {
-        console.log(ingredientsIds)
-        const response = await fetch(`${BASE_URL}/orders`, {
+        const data = await request(`${BASE_URL}/orders`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json;charset=utf-8",
             },
-            body: JSON.stringify({ ingredients: ingredientsIds })
+            body: JSON.stringify({ ingredients: ingredientsIds }),
         });
-
-        if (!response.ok) throw new Error("fetch create order error");
-
-        const data = await response.json();
-
-        updateState((prevState) => ({ ...prevState, data }));
+        return data;
     } catch (error) {
-        updateState((prevState) => ({ ...prevState, hasError: true }));
-    } finally {
-        updateState((prevState) => ({ ...prevState, isLoading: false }));
+        console.error(error)
     }
 };
 

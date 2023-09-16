@@ -1,35 +1,35 @@
-import { useContext, useEffect, useReducer, useMemo, useState } from "react";
+import { useEffect, useReducer, useMemo, useState } from "react";
 import PropTypes from "prop-types"
+import { useSelector } from "react-redux";
 
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientsWrapper from "./ingredients-wrapper/ingredients-wrapper";
 import PriceInfo from "./price-info/price-info";
-import { BurgerContext } from "../../context/context";
 import { priceReducer } from "../../reducer/reducers";
 
 import styles from "./burger-constructor.module.css";
 
 const BurgerConstructor = ({ onOpenModal }) => {
     const [priceState, priceDispatch] = useReducer(priceReducer, { price: 0 });
-    const { constructorData, currentIngredient } = useContext(BurgerContext);
+    const { currentIngredient, constructorIngredients } = useSelector(store => store.ingredients);
     const [bun, setBun] = useState(null);
 
     const { ingredients } = useMemo(() => {
         return {
-            ingredients: constructorData.filter(
+            ingredients: constructorIngredients.filter(
                 (element) => element.type !== "bun"
             ),
         };
-    }, [constructorData]);
+    }, [constructorIngredients]);
 
     useEffect(() => {
         setBun((prevState) => {
             if (prevState && currentIngredient.type === "bun") {
                 priceDispatch({ type: "delete", payload: prevState.price * 2 });
             }
-            return constructorData.find((element) => element.type === "bun");
+            return constructorIngredients.find((element) => element.type === "bun");
         });
-    }, [constructorData]);
+    }, [constructorIngredients]);
 
     useEffect(() => {
         if (bun) {
@@ -41,7 +41,6 @@ const BurgerConstructor = ({ onOpenModal }) => {
     }, [bun]);
 
     useEffect(() => {
-        console.log(currentIngredient)
         if (currentIngredient && currentIngredient.type !== "bun") {
             priceDispatch({
                 type: "add",
@@ -66,7 +65,7 @@ const BurgerConstructor = ({ onOpenModal }) => {
 
                 <IngredientsWrapper
                     ingredients={ingredients}
-                    dispatch={priceDispatch}
+                    dispatchPrice={priceDispatch}
                 />
 
                 {bun && (

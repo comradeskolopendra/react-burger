@@ -1,31 +1,40 @@
-import { useMemo, useState, useContext } from "react";
+import { useMemo, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import PropTypes from "prop-types";
 
+import { setConstructorIngredients } from "../../services/store/ingredients";
+
 import IngredientsSection from "./ingredients-section/ingredients-section";
 import TabsWrapper from "./tabs-wrapper/tabs-wrapper";
-import { BurgerContext } from "../../context/context";
 
 import styles from "./burger-ingredients.module.css";
 
 const BurgerIngredients = ({ onOpenModal }) => {
     const [current, setCurrent] = useState("buns");
+    const dispatch = useDispatch();
 
-    const { ingredients, constructorData, setConstructorData } =
-        useContext(BurgerContext);
+    const { ingredients, constructorIngredients } = useSelector(store => store.ingredients);
 
     const handleOnClick = (ingredient) => {
         onOpenModal(ingredient);
+
+
         if (ingredient.type !== "bun") {
-            return setConstructorData([
-                ...constructorData,
-                { ...ingredient, uuid: uuidv4() },
-            ]);
+            return dispatch(
+                setConstructorIngredients([
+                    ...constructorIngredients,
+                    { ...ingredient, uuid: uuidv4() },
+                ])
+            );
         }
-        return setConstructorData([
-            ...constructorData.filter((element) => element.type !== "bun"),
-            ingredient,
-        ]);
+
+        return dispatch(
+            setConstructorIngredients([
+                ...constructorIngredients.filter((element) => element.type !== "bun"),
+                ingredient,
+            ])
+        );
     };
 
     const { mains, sauces, buns } = useMemo(() => {
@@ -54,6 +63,7 @@ const BurgerIngredients = ({ onOpenModal }) => {
             title: "Начинки",
         },
     ];
+
     return (
         <div className={styles.wrapper}>
             <TabsWrapper

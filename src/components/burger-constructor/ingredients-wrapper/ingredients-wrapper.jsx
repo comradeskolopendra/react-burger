@@ -1,24 +1,26 @@
-import { useContext } from "react";
 import PropTypes from "prop-types";
-import { BurgerContext } from "../../../context/context";
+import { useSelector, useDispatch } from "react-redux";
 import {
     DragIcon,
     ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { setConstructorIngredients } from "../../../services/store/ingredients";
 import { ingredientType } from "../../../utils/types";
 
 import { v4 as uuid4 } from "uuid";
 import styles from "./ingredients-wrapper.module.css";
 
-const IngredientsWrapper = ({ dispatch, ingredients }) => {
-    const { constructorData, setConstructorData } = useContext(BurgerContext);
+const IngredientsWrapper = ({ dispatchPrice, ingredients }) => {
+    const dispatch = useDispatch();
+    const { constructorIngredients } = useSelector(store => store.ingredients);
 
     const handleClose = (ingredient) => {
-        console.log(ingredient, constructorData)
-        setConstructorData(
-            [...constructorData].filter((item) => item.uuid !== ingredient.uuid)
+        dispatch(
+            setConstructorIngredients(
+                [...constructorIngredients].filter((item) => item.uuid !== ingredient.uuid)
+            )
         );
-        dispatch({ type: "delete", payload: ingredient.price });
+        dispatchPrice({ type: "delete", payload: ingredient.price });
     };
 
     return (
@@ -42,7 +44,7 @@ const IngredientsWrapper = ({ dispatch, ingredients }) => {
 };
 
 IngredientsWrapper.propTypes = {
-    dispatch: PropTypes.func.isRequired,
+    dispatchPrice: PropTypes.func.isRequired,
     ingredients: PropTypes.arrayOf(ingredientType)
 };
 

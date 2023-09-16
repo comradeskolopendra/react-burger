@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { useSelector, useDispatch } from "react-redux";
+
+import { getIngredientsThunk } from "../../services/actions/ingredients";
+import { setCurrentIngredient } from "../../services/store/ingredients";
+import { clearOrder } from "../../services/store/order";
+import { createOrderThunk } from "../../services/actions/order";
 
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
@@ -8,40 +13,26 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import OrderDetails from "../order-details/order-detail";
 import Modal from "../modal/modal";
 
-import { createOrder, getIngredients } from "../../helpers/helpers";
-import { BurgerContext, ModalContext } from "../../context/context";
-
 import "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app.module.css";
+
 
 function App() {
     const [visibleIngredient, setVisibleIngredient] = useState(false);
     const [visibleOrder, setVisibleOrder] = useState(false);
-
-    const [currentIngredient, setCurrentIngredient] = useState(null);
-    const [constructorData, setConstructorData] = useState([]);
-
-    const [ingredients, setIngredients] = useState({
-        hasError: false,
-        data: [],
-        isLoading: false,
-    });
-
-    const [order, setOrder] = useState({
-        hasError: false,
-        data: [],
-        isLoading: false,
-    });
+    const dispatch = useDispatch();
+    const { ingredients, ingredientsRequest, ingredientsError, constructorIngredients } = useSelector(store => store.ingredients);
+    const { orderFailed } = useSelector(store => store.order);
 
     const handleIngredientClick = (ingredient) => {
-        setCurrentIngredient({ ...ingredient });
+        dispatch(setCurrentIngredient(ingredient));
         setVisibleIngredient(true);
     };
 
     const handleOrderClick = async () => {
-        const ingredientIds = constructorData.map((element) => element._id);
-        await createOrder(setOrder, ingredientIds);
-        if (order.hasError || constructorData.length === 0) {
+        const ingredientIds = constructorIngredients.map((element) => element._id);
+        dispatch(createOrderThunk(ingredientIds));
+        if (orderFailed || constructorIngredients.length === 0) {
             return;
         }
         return setVisibleOrder(true);
@@ -49,12 +40,17 @@ function App() {
 
     const handleCloseIngredientModal = () => {
         setVisibleIngredient(false);
-        setCurrentIngredient(null);
+        dispatch(setCurrentIngredient(null));
     };
 
     useEffect(() => {
-        getIngredients(setIngredients);
+        dispatch(getIngredientsThunk());
     }, []);
+
+    const handleCloseOrderModal = () => {
+        setVisibleOrder(false)
+        dispatch(clearOrder())
+    }
 
     const modalIngredient = (
         <Modal
@@ -66,7 +62,7 @@ function App() {
     );
 
     const modalOrder = (
-        <Modal visible={visibleOrder} onClose={() => setVisibleOrder(false)}>
+        <Modal visible={visibleOrder} onClose={handleCloseOrderModal}>
             <OrderDetails changeVisibility={setVisibleOrder} />
         </Modal>
     );
@@ -74,40 +70,28 @@ function App() {
     return (
         <>
             <AppHeader />
-            {ingredients.isLoading && "Идет загрузка"}
-            {ingredients.hasError && "Что-то пошло не так!"}
-            {ingredients.data.length !== 0 &&
-                !ingredients.hasError &&
-                !ingredients.isLoading && (
+            {ingredientsRequest && "Идет загрузка"}
+            {ingredientsError && "Что-то пошло не так!"}
+            {ingredients.length !== 0 &&
+                !ingredientsRequest &&
+                !ingredientsError && (
                     <main className={styles.main}>
                         <h1 className="text text_type_main-large mt-10 mb-5">
                             Соберите бургер
                         </h1>
 
                         <div className={styles.wrapper}>
-                            <BurgerContext.Provider
-                                value={{
-                                    ingredients: ingredients.data,
-                                    constructorData,
-                                    setConstructorData,
-                                    currentIngredient,
-                                    setCurrentIngredient,
-                                }}
-                            >
-                                <BurgerIngredients
-                                    onOpenModal={handleIngredientClick}
-                                />
-                                <BurgerConstructor
-                                    onOpenModal={handleOrderClick}
-                                />
-                            </BurgerContext.Provider>
+                            <BurgerIngredients
+                                onOpenModal={handleIngredientClick}
+                            />
+                            <BurgerConstructor
+                                onOpenModal={handleOrderClick}
+                            />
                         </div>
                     </main>
                 )}
-            <ModalContext.Provider value={{ order, currentIngredient }}>
-                {visibleIngredient && modalIngredient}
-                {visibleOrder && modalOrder}
-            </ModalContext.Provider>
+            {visibleIngredient && modalIngredient}
+            {visibleOrder && modalOrder}
         </>
     );
 }
