@@ -1,5 +1,6 @@
-import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
+
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./tabs-wrapper.module.css";
 
 const TabsWrapper = ({ tabsInfo, current, updateCurrent }) => {
@@ -22,12 +23,14 @@ const TabsWrapper = ({ tabsInfo, current, updateCurrent }) => {
 };
 
 TabsWrapper.propTypes = {
-    tabsInfo: PropTypes.arrayOf(PropTypes.shape({
-        value: PropTypes.string,
-        title: PropTypes.string
-    }).isRequired).isRequired,
+    tabsInfo: PropTypes.arrayOf(
+        PropTypes.shape({
+            value: PropTypes.string,
+            title: PropTypes.string,
+        }).isRequired
+    ).isRequired,
     current: PropTypes.string,
-    updateCurrent: PropTypes.func.isRequired
-}
+    updateCurrent: PropTypes.func.isRequired,
+};
 
 export default TabsWrapper;

@@ -1,15 +1,16 @@
-import { URL_API } from "../utils/constants";
+import { BASE_URL } from "../utils/constants";
+
+const checkResponse = (res) =>
+    res.ok ? res.json() : new Error(`Ошибка: ${res.status}`);
+
+const request = (url, options = {}) => fetch(url, options).then(checkResponse);
 
 const getIngredients = async (updateState) => {
     updateState((prevState) => ({ ...prevState, isLoading: true }));
     try {
-        const response = await fetch(URL_API);
-
-        if (!response.ok) throw new Error("fetch error");
-
-        const { data } = await response.json();
-
+        const { data } = await request(`${BASE_URL}/ingredients`);
         updateState((prevState) => ({ ...prevState, data }));
+        console.log(data);
     } catch (error) {
         updateState((prevState) => ({ ...prevState, hasError: true }));
         console.error(error);
@@ -18,4 +19,23 @@ const getIngredients = async (updateState) => {
     }
 };
 
-export { getIngredients };
+const createOrder = async (updateState, ingredientsIds) => {
+    updateState((prevState) => ({ ...prevState, isLoading: true }));
+    try {
+        console.log(ingredientsIds);
+        const data = await request(`${BASE_URL}/orders`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json;charset=utf-8",
+            },
+            body: JSON.stringify({ ingredients: ingredientsIds }),
+        });
+        updateState((prevState) => ({ ...prevState, data }));
+    } catch (error) {
+        updateState((prevState) => ({ ...prevState, hasError: true }));
+    } finally {
+        updateState((prevState) => ({ ...prevState, isLoading: false }));
+    }
+};
+
+export { getIngredients, createOrder };

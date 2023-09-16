@@ -1,3 +1,3 @@
-const URL_API = "https://norma.nomoreparties.space/api/ingredients";
+const BASE_URL = "https://norma.nomoreparties.space/api";
 
-export { URL_API };
+export { BASE_URL };

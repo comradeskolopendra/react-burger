@@ -1,17 +1,19 @@
+import { useContext } from "react";
 import PropTypes from "prop-types";
+
 import EnergyItem from "./energy-item/energy-item";
-
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./ingredient-details.module.css";
-import "@ya.praktikum/react-developer-burger-ui-components";
+import { ModalContext } from "../../context/context";
 
-const IngredientDetails = ({ changeVisibility, ingredient }) => {
+import "@ya.praktikum/react-developer-burger-ui-components";
+import styles from "./ingredient-details.module.css";
+
+const IngredientDetails = ({ changeVisibility }) => {
+    const { currentIngredient } = useContext(ModalContext);
     return (
         <section className={styles.modalBlock}>
             <div className={styles.wrapperHeading}>
-                <h3 className="text text_type_main-large">
-                    Детали игредиента
-                </h3>
+                <h3 className="text text_type_main-large">Детали игредиента</h3>
                 <button
                     className="closeButton"
                     onClick={() => changeVisibility(false)}
@@ -20,23 +22,31 @@ const IngredientDetails = ({ changeVisibility, ingredient }) => {
                 </button>
             </div>
             <div className={`${styles.wrapperBody} ml-15 mr-15`}>
-                <img src={ingredient.image_large} alt={ingredient.name} />
-                <p className={`${styles.ingredientName} text text_type_main-medium pt-4 pb-8`}>
-                    {ingredient.name}
+                <img
+                    src={currentIngredient.image_large}
+                    alt={currentIngredient.name}
+                />
+                <p
+                    className={`${styles.ingredientName} text text_type_main-medium pt-4 pb-8`}
+                >
+                    {currentIngredient.name}
                 </p>
                 <section className={styles.energyItems}>
                     <EnergyItem
                         title={"Калории,ккал"}
-                        value={ingredient.calories}
+                        value={currentIngredient.calories}
                     />
                     <EnergyItem
                         title={"Белки, г"}
-                        value={ingredient.proteins}
+                        value={currentIngredient.proteins}
                     />
-                    <EnergyItem title={"Жиры, г"} value={ingredient.fat} />
+                    <EnergyItem
+                        title={"Жиры, г"}
+                        value={currentIngredient.fat}
+                    />
                     <EnergyItem
                         title={"Углеводы, г"}
-                        value={ingredient.carbohydrates}
+                        value={currentIngredient.carbohydrates}
                     />
                 </section>
             </div>
@@ -46,20 +56,6 @@ const IngredientDetails = ({ changeVisibility, ingredient }) => {
 
 IngredientDetails.propTypes = {
     changeVisibility: PropTypes.func.isRequired,
-    ingredient: PropTypes.shape({
-        __v: PropTypes.number,
-        _id: PropTypes.string,
-        calories: PropTypes.number,
-        carbohydrates: PropTypes.number,
-        fat: PropTypes.number,
-        image: PropTypes.string,
-        image_large: PropTypes.string,
-        image_mobile: PropTypes.string,
-        name: PropTypes.string,
-        price: PropTypes.number,
-        proteins: PropTypes.number,
-        type: PropTypes.string
-    })
-}
+};
 
 export default IngredientDetails;

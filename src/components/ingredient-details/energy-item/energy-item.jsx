@@ -1,4 +1,4 @@
-import PropTypes from "prop-types";
+import PropTypes from "prop-types"
 import styles from "./energy-item.module.css";
 
 const EnergyItem = ({ title, value }) => {
@@ -14,7 +14,7 @@ const EnergyItem = ({ title, value }) => {
 
 EnergyItem.propTypes = {
     title: PropTypes.string.isRequired,
-    value: PropTypes.number.isRequired
-}
+    value: PropTypes.number.isRequired,
+};;
 
 export default EnergyItem;
