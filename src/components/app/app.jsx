@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { getIngredientsThunk } from "../../services/actions/ingredients";
-import { setCurrentIngredient } from "../../services/store/ingredients";
+import { setCurrentIngredient, setPrice } from "../../services/store/ingredients";
 import { clearOrder } from "../../services/store/order";
 import { createOrderThunk } from "../../services/actions/order";
 
@@ -23,6 +23,17 @@ function App() {
     const dispatch = useDispatch();
     const { ingredients, ingredientsRequest, ingredientsError, constructorIngredients } = useSelector(store => store.ingredients);
     const { orderFailed } = useSelector(store => store.order);
+    const price = useMemo(() => {
+        return constructorIngredients.reduce((prev, cur) => {
+            if (cur.type === "bun") {
+                prev += +cur.price * 2;
+            } else {
+                prev += +cur.price;
+            }
+
+            return prev;
+        }, 0);
+    }, [constructorIngredients])
 
     const handleIngredientClick = (ingredient) => {
         dispatch(setCurrentIngredient(ingredient));
@@ -43,10 +54,6 @@ function App() {
         dispatch(setCurrentIngredient(null));
     };
 
-    useEffect(() => {
-        dispatch(getIngredientsThunk());
-    }, []);
-
     const handleCloseOrderModal = () => {
         setVisibleOrder(false)
         dispatch(clearOrder())
@@ -66,6 +73,14 @@ function App() {
             <OrderDetails changeVisibility={setVisibleOrder} />
         </Modal>
     );
+
+    useEffect(() => {
+        dispatch(getIngredientsThunk());
+    }, []);
+
+    useEffect(() => {
+        dispatch(setPrice(price));
+    }, [price])
 
     return (
         <>

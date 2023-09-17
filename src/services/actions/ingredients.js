@@ -1,11 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getIngredients } from "../../helpers/helpers";
+import { request } from "../../helpers/helpers";
+import { BASE_URL } from "../../utils/constants";
 
 const getIngredientsThunk = createAsyncThunk(
     "normaapi/ingredients",
     async () => {
-        const response = await getIngredients();
-        return response
+        try {
+            const { data } = await request(`${BASE_URL}/ingredients`);
+            return data;
+        } catch (error) {
+            console.error(error);
+        }
     }
 )
 

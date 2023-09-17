@@ -16,6 +16,8 @@ const initialState = {
     constructorIngredients: [],
 
     currentIngredient: null,
+
+    price: 0
 };
 
 export const ingredientsSlice = createSlice({
@@ -34,6 +36,15 @@ export const ingredientsSlice = createSlice({
             state = {
                 ...state,
                 currentIngredient: action.payload
+            }
+
+            return state;
+        },
+        setPrice(state, action) {
+            console.log(action.payload)
+            state = {
+                ...state,
+                price: action.payload
             }
 
             return state;
@@ -72,6 +83,6 @@ export const ingredientsSlice = createSlice({
     }
 })
 
-export const { setCurrentIngredient, setConstructorIngredients } = ingredientsSlice.actions;
+export const { setCurrentIngredient, setConstructorIngredients, setPrice } = ingredientsSlice.actions;
 
 export default ingredientsSlice.reducer;

@@ -3,6 +3,8 @@ import ReactDOM from "react-dom/client";
 import App from "./components/app/app";
 import "./index.css";
 import { Provider } from "react-redux";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import { store } from "./services";
 
 const root = ReactDOM.createRoot(
@@ -10,8 +12,10 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <DndProvider backend={HTML5Backend}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </DndProvider>
   </React.StrictMode>
 );

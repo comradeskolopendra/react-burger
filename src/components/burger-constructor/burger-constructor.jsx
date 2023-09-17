@@ -1,16 +1,18 @@
 import { useEffect, useReducer, useMemo, useState } from "react";
 import PropTypes from "prop-types"
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useDrop } from "react-dnd";
+import { setConstructorIngredients, setCurrentIngredient } from "../../services/store/ingredients";
 
-import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientsWrapper from "./ingredients-wrapper/ingredients-wrapper";
 import PriceInfo from "./price-info/price-info";
 import { priceReducer } from "../../reducer/reducers";
 
 import styles from "./burger-constructor.module.css";
+import BunWrapper from "./bun-wrapper/bun-wrapper";
 
 const BurgerConstructor = ({ onOpenModal }) => {
-    const [priceState, priceDispatch] = useReducer(priceReducer, { price: 0 });
+    const dispatch = useDispatch();
     const { currentIngredient, constructorIngredients } = useSelector(store => store.ingredients);
     const [bun, setBun] = useState(null);
 
@@ -22,65 +24,56 @@ const BurgerConstructor = ({ onOpenModal }) => {
         };
     }, [constructorIngredients]);
 
+    const [{ isHoverBun }, bunRef] = useDrop({
+        accept: "bun",
+        drop: (item, monitor) => {
+            console.log(item);
+            dispatch(setCurrentIngredient(item.ingredient));
+            dispatch(setConstructorIngredients([...constructorIngredients.filter(element => element.type !== "bun"), item.ingredient]))
+        },
+        collect: monitor => ({
+            isHoverBun: monitor.isOver()
+        })
+    })
+
     useEffect(() => {
+        console.log(constructorIngredients)
         setBun((prevState) => {
-            if (prevState && currentIngredient.type === "bun") {
-                priceDispatch({ type: "delete", payload: prevState.price * 2 });
-            }
             return constructorIngredients.find((element) => element.type === "bun");
         });
     }, [constructorIngredients]);
 
-    useEffect(() => {
-        if (bun) {
-            return priceDispatch({
-                type: "add",
-                payload: bun.price * 2,
-            });
-        }
-    }, [bun]);
+    // useEffect(() => {
+    //     if (bun) {
+    //         return priceDispatch({
+    //             type: "add",
+    //             payload: bun.price * 2,
+    //         });
+    //     }
+    // }, [bun]);
 
-    useEffect(() => {
-        if (currentIngredient && currentIngredient.type !== "bun") {
-            priceDispatch({
-                type: "add",
-                payload: currentIngredient.price,
-            });
-        }
-    }, [currentIngredient]);
+    // useEffect(() => {
+    //     if (currentIngredient && currentIngredient.type !== "bun") {
+    //         priceDispatch({
+    //             type: "add",
+    //             payload: currentIngredient.price,
+    //         });
+    //     }
+    // }, [currentIngredient]);
 
     return (
         <div className={styles.wrapper}>
             <section className={`${styles.constructor} pb-10 pr-4`}>
-                {bun && (
-                    <ConstructorElement
-                        type="top"
-                        isLocked={true}
-                        price={bun.price}
-                        text={`${bun.name} (верх)`}
-                        thumbnail={bun.image}
-                        extraClass="ml-8"
-                    />
-                )}
+                <BunWrapper bun={bun} side={"top"} bunRef={bunRef} isHoverBun={isHoverBun} />
 
                 <IngredientsWrapper
                     ingredients={ingredients}
-                    dispatchPrice={priceDispatch}
                 />
 
-                {bun && (
-                    <ConstructorElement
-                        type="bottom"
-                        isLocked={true}
-                        price={bun.price}
-                        text={`${bun.name} (низ)`}
-                        thumbnail={bun.image}
-                        extraClass="ml-8"
-                    />
-                )}
+                <BunWrapper bun={bun} side={"bottom"} isHoverBun={isHoverBun} />
             </section>
 
-            <PriceInfo priceState={priceState} onOpenModal={onOpenModal} />
+            <PriceInfo onOpenModal={onOpenModal} />
         </div>
     );
 };

@@ -1,12 +1,22 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { createOrder } from "../../helpers/helpers";
+import { request } from "../../helpers/helpers";
+import { BASE_URL } from "../../utils/constants";
 
 const createOrderThunk = createAsyncThunk(
     "normaapi/order",
     async (ingredientsIds) => {
-        console.log(ingredientsIds)
-        const order = await createOrder(ingredientsIds);
-        return order;
+        try {
+            const data = await request(`${BASE_URL}/orders`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json;charset=utf-8",
+                },
+                body: JSON.stringify({ ingredients: ingredientsIds }),
+            });
+            return data;
+        } catch (error) {
+            console.error(error)
+        }
     }
 );
 
