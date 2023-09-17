@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { getIngredientsThunk } from "../../services/actions/ingredients";
-import { setCurrentIngredient, setPrice } from "../../services/store/ingredients";
+import { setCurrentIngredient } from "../../services/store/ingredients";
 import { clearOrder } from "../../services/store/order";
+import { setVisibleIngredient, setVisibleOrder } from "../../services/store/modal";
 import { createOrderThunk } from "../../services/actions/order";
 
 import AppHeader from "../app-header/app-header";
@@ -16,28 +17,15 @@ import Modal from "../modal/modal";
 import "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app.module.css";
 
-
 function App() {
-    const [visibleIngredient, setVisibleIngredient] = useState(false);
-    const [visibleOrder, setVisibleOrder] = useState(false);
     const dispatch = useDispatch();
     const { ingredients, ingredientsRequest, ingredientsError, constructorIngredients } = useSelector(store => store.ingredients);
     const { orderFailed } = useSelector(store => store.order);
-    const price = useMemo(() => {
-        return constructorIngredients.reduce((prev, cur) => {
-            if (cur.type === "bun") {
-                prev += +cur.price * 2;
-            } else {
-                prev += +cur.price;
-            }
-
-            return prev;
-        }, 0);
-    }, [constructorIngredients])
+    const { visibleOrder, visibleIngredient } = useSelector(store => store.modal)
 
     const handleIngredientClick = (ingredient) => {
         dispatch(setCurrentIngredient(ingredient));
-        setVisibleIngredient(true);
+        dispatch(setVisibleIngredient(true));
     };
 
     const handleOrderClick = async () => {
@@ -46,16 +34,16 @@ function App() {
         if (orderFailed || constructorIngredients.length === 0) {
             return;
         }
-        return setVisibleOrder(true);
+        return dispatch(setVisibleOrder(true));
     };
 
     const handleCloseIngredientModal = () => {
-        setVisibleIngredient(false);
+        dispatch(setVisibleIngredient(false));
         dispatch(setCurrentIngredient(null));
     };
 
     const handleCloseOrderModal = () => {
-        setVisibleOrder(false)
+        dispatch(setVisibleOrder(false));
         dispatch(clearOrder())
     }
 
@@ -64,23 +52,22 @@ function App() {
             visible={visibleIngredient}
             onClose={handleCloseIngredientModal}
         >
-            <IngredientDetails changeVisibility={setVisibleIngredient} />
+            <IngredientDetails onClose={handleCloseIngredientModal} />
         </Modal>
     );
 
     const modalOrder = (
-        <Modal visible={visibleOrder} onClose={handleCloseOrderModal}>
-            <OrderDetails changeVisibility={setVisibleOrder} />
+        <Modal
+            visible={visibleOrder}
+            onClose={handleCloseOrderModal}
+        >
+            <OrderDetails onClose={handleCloseOrderModal} />
         </Modal>
     );
 
     useEffect(() => {
         dispatch(getIngredientsThunk());
     }, []);
-
-    useEffect(() => {
-        dispatch(setPrice(price));
-    }, [price])
 
     return (
         <>

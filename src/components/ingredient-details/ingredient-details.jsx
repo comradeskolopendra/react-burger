@@ -7,7 +7,7 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./ingredient-details.module.css";
 
-const IngredientDetails = ({ changeVisibility }) => {
+const IngredientDetails = ({ onClose }) => {
     const { currentIngredient } = useSelector(store => store.ingredients);
     return (
         <section className={styles.modalBlock}>
@@ -15,7 +15,7 @@ const IngredientDetails = ({ changeVisibility }) => {
                 <h3 className="text text_type_main-large">Детали игредиента</h3>
                 <button
                     className="closeButton"
-                    onClick={() => changeVisibility(false)}
+                    onClick={onClose}
                 >
                     <CloseIcon type={"primary"} />
                 </button>

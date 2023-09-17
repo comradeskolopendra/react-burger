@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd/dist/hooks";
-import { setCurrentIngredient } from "../../../services/store/ingredients";
 import {
     DragIcon,
     ConstructorElement,
@@ -19,8 +18,7 @@ const IngredientsWrapper = ({ ingredients }) => {
     const [{ isHoverIngredient }, ingredientsRef] = useDrop({
         accept: "ingredients",
         drop: (item, monitor) => {
-            dispatch(setCurrentIngredient(item.ingredient));
-            dispatch(setConstructorIngredients([...constructorIngredients, item.ingredient]))
+            dispatch(setConstructorIngredients([...constructorIngredients, { ...item.ingredient, uuid: uuid4() }]))
         },
         collect: monitor => ({
             isHoverIngredient: monitor.isOver()
@@ -28,10 +26,8 @@ const IngredientsWrapper = ({ ingredients }) => {
     })
 
     const handleClose = (ingredient) => {
-        dispatch(
-            setConstructorIngredients(
-                [...constructorIngredients].filter((item) => item.uuid !== ingredient.uuid)
-            )
+        dispatch(setConstructorIngredients(
+            [...constructorIngredients].filter((item) => item.uuid !== ingredient.uuid))
         );
     };
 

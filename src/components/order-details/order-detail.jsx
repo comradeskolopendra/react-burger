@@ -6,7 +6,7 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import done from "../../images/done.png";
 import styles from "./order-details.module.css";
 
-const OrderDetails = ({ changeVisibility }) => {
+const OrderDetails = ({ onClose }) => {
     const { order, orderRequest } = useSelector(store => store.order);
 
     return (
@@ -14,7 +14,7 @@ const OrderDetails = ({ changeVisibility }) => {
             <div className={`${styles.closeWrapper}`}>
                 <button
                     className="closeButton"
-                    onClick={() => changeVisibility(false)}
+                    onClick={onClose}
                 >
                     <CloseIcon />
                 </button>
