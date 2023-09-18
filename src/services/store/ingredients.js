@@ -44,6 +44,23 @@ export const ingredientsSlice = createSlice({
             return state;
         },
 
+        sortConstuctorIngredient(state, action) {
+            const { hoverIndex, dragIndex } = action.payload;
+            const ingredients = [...state.constructorIngredients.selectedIngredients];
+
+            [ingredients[dragIndex], ingredients[hoverIndex]] = [ingredients[hoverIndex], ingredients[dragIndex]];
+
+            state = {
+                ...state,
+                constructorIngredients: {
+                    ...state.constructorIngredients,
+                    selectedIngredients: ingredients
+                }
+            }
+
+            return state;
+        },
+
         removeConstructorIngredient(state, action) {
             state = {
                 ...state,
@@ -125,7 +142,8 @@ export const {
     setPrice,
     setConstructorBun,
     clearConstructor,
-    removeConstructorIngredient
+    removeConstructorIngredient,
+    sortConstuctorIngredient
 } = ingredientsSlice.actions;
 
 export default ingredientsSlice.reducer;

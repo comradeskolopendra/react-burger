@@ -19,11 +19,6 @@
     background: #8585AD;
 }
 
-.ingredient {
-    display: flex;
-    align-items: center;
-}
-
 .nullIngredients {
     display: flex;
     min-height: calc(100vh - 500px);

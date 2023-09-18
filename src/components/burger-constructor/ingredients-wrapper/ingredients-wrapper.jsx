@@ -1,11 +1,9 @@
+import { useCallback, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { useDrop } from "react-dnd/dist/hooks";
-import {
-    DragIcon,
-    ConstructorElement,
-} from "@ya.praktikum/react-developer-burger-ui-components";
-import { setConstructorIngredient, removeConstructorIngredient } from "../../../services/store/ingredients";
+import IngredientElement from "./ingredient-element/ingredient-element";
+import { setConstructorIngredient, sortConstuctorIngredient } from "../../../services/store/ingredients";
 import { ingredientType } from "../../../utils/types";
 
 import { v4 as uuid4 } from "uuid";
@@ -24,9 +22,13 @@ const IngredientsWrapper = ({ ingredients }) => {
         })
     })
 
-    const handleClose = (ingredient) => {
-        dispatch(removeConstructorIngredient(ingredient.uuid));
-    };
+    const moveCard = useCallback((dragIndex, hoverIndex) => {
+        dispatch(sortConstuctorIngredient({ dragIndex, hoverIndex }))
+    }, [])
+
+    useEffect(() => {
+        console.log(ingredients)
+    }, [ingredients])
 
     return (
         <div ref={ingredientsRef}>
@@ -36,19 +38,8 @@ const IngredientsWrapper = ({ ingredients }) => {
                 </div>
                 :
                 <ul className={`${styles.ingredientsWrapper}`}>
-                    {ingredients.map((ingredient) => (
-                        <li key={ingredient.uuid} className={styles.ingredient}>
-                            <div className="mr-2">
-                                <DragIcon />
-                            </div>
-                            <ConstructorElement
-                                isLocked={false}
-                                price={ingredient.price}
-                                handleClose={() => handleClose(ingredient)}
-                                thumbnail={ingredient.image}
-                                text={ingredient.name}
-                            />
-                        </li>
+                    {ingredients.map((ingredient, index) => (
+                        <IngredientElement key={ingredient.uuid} ingredient={ingredient} index={index} moveCard={moveCard} />
                     ))}
                 </ul>
             }
