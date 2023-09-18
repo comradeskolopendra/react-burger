@@ -64,12 +64,10 @@ const IngredientElement = ({ ingredient, index, moveCard }) => {
         })
     })
 
-    const opacity = isDragging ? 0.5 : 1
-
     drag(drop(ref))
 
     return (
-        <li style={{ opacity }} ref={ref} className={styles.ingredient} data-handler-id={handlerId}>
+        <li ref={ref} className={styles.ingredient} data-handler-id={handlerId}>
             <div className="mr-2">
                 <DragIcon />
             </div>
@@ -79,6 +77,7 @@ const IngredientElement = ({ ingredient, index, moveCard }) => {
                 handleClose={() => handleClose(ingredient)}
                 thumbnail={ingredient.image}
                 text={ingredient.name}
+                extraClass={isDragging ? styles.dragging : ""}
             />
         </li>
     );
