@@ -1,6 +1,6 @@
 .ingredientsWrapper {
     overflow-y: scroll;
-    max-height: calc(100vh - 490px);
+    max-height: calc(100vh - 520px);
     scrollbar-width: thin;
     display: grid;
     gap: 16px;
