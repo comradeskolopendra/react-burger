@@ -26,10 +26,6 @@ const IngredientsWrapper = ({ ingredients }) => {
         dispatch(sortConstuctorIngredient({ dragIndex, hoverIndex }))
     }, [])
 
-    useEffect(() => {
-        console.log(ingredients)
-    }, [ingredients])
-
     return (
         <div ref={ingredientsRef}>
             {ingredients.length === 0 ?
