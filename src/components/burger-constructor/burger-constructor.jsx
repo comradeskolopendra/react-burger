@@ -13,22 +13,19 @@ import BunWrapper from "./bun-wrapper/bun-wrapper";
 
 const BurgerConstructor = ({ onOpenModal }) => {
     const dispatch = useDispatch();
-    const constructorIngredients= useSelector(getStateConstructorIngredients);
+    const constructorIngredients = useSelector(getStateConstructorIngredients);
     const { selectedIngredients, selectedBun } = constructorIngredients;
 
     const price = useMemo(() => {
-        return [...selectedIngredients, selectedBun].reduce((prev, cur) => {
-            if (cur) {
-                if (cur.type === "bun") {
-                    return (prev += +cur.price * 2);
-                }
+        return selectedIngredients.reduce((prev, cur) => {
+            return prev + (cur ? cur.price : 0)
+        }, 0) + (selectedBun ? selectedBun.price * 2 : 0)
+    }, [selectedIngredients, selectedBun])
 
-                return (prev += +cur.price);
-            }
+    useEffect(() => {
+        dispatch(setPrice(price));
+    }, [constructorIngredients, price, dispatch]);
 
-            return 0;
-        }, 0);
-    }, [constructorIngredients]);
 
     const [{ isHoverBun }, bunRef] = useDrop({
         accept: "bun",
@@ -39,10 +36,6 @@ const BurgerConstructor = ({ onOpenModal }) => {
             isHoverBun: monitor.isOver(),
         }),
     });
-
-    useEffect(() => {
-        dispatch(setPrice(price));
-    }, [price]);
 
     return (
         <div className={styles.wrapper}>

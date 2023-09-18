@@ -5,7 +5,7 @@ import {
     DragIcon,
     ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { setConstructorIngredients } from "../../../services/store/ingredients";
+import { setConstructorIngredient, removeConstructorIngredient } from "../../../services/store/ingredients";
 import { ingredientType } from "../../../utils/types";
 
 import { v4 as uuid4 } from "uuid";
@@ -17,7 +17,7 @@ const IngredientsWrapper = ({ ingredients }) => {
     const [{ isHoverIngredient }, ingredientsRef] = useDrop({
         accept: "ingredients",
         drop: (item, monitor) => {
-            dispatch(setConstructorIngredients([...ingredients, { ...item.ingredient, uuid: uuid4() }]))
+            dispatch(setConstructorIngredient({ ...item.ingredient, uuid: uuid4() }))
         },
         collect: monitor => ({
             isHoverIngredient: monitor.isOver()
@@ -25,11 +25,7 @@ const IngredientsWrapper = ({ ingredients }) => {
     })
 
     const handleClose = (ingredient) => {
-        dispatch(
-            setConstructorIngredients(
-                [...ingredients].filter((item) => item.uuid !== ingredient.uuid)
-            )
-        );
+        dispatch(removeConstructorIngredient(ingredient.uuid));
     };
 
     return (

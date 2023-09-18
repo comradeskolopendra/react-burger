@@ -32,12 +32,24 @@ export const ingredientsSlice = createSlice({
             return state;
         },
 
-        setConstructorIngredients(state, action) {
+        setConstructorIngredient(state, action) {
             state = {
                 ...state,
                 constructorIngredients: {
                     ...state.constructorIngredients,
-                    selectedIngredients: action.payload,
+                    selectedIngredients: [...state.constructorIngredients.selectedIngredients, action.payload],
+                },
+            };
+
+            return state;
+        },
+
+        removeConstructorIngredient(state, action) {
+            state = {
+                ...state,
+                constructorIngredients: {
+                    ...state.constructorIngredients,
+                    selectedIngredients: [...state.constructorIngredients.selectedIngredients].filter(element => element.uuid !== action.payload),
                 },
             };
 
@@ -109,10 +121,11 @@ export const ingredientsSlice = createSlice({
 
 export const {
     setCurrentIngredient,
-    setConstructorIngredients,
+    setConstructorIngredient,
     setPrice,
     setConstructorBun,
     clearConstructor,
+    removeConstructorIngredient
 } = ingredientsSlice.actions;
 
 export default ingredientsSlice.reducer;
