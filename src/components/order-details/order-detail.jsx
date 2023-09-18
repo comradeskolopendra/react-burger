@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { getStateOrderRequest, getStateOrder } from '../../selectors/order-selectors';
 import PropTypes from "prop-types"
 
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -7,7 +8,8 @@ import done from "../../images/done.png";
 import styles from "./order-details.module.css";
 
 const OrderDetails = ({ onClose }) => {
-    const { order, orderRequest } = useSelector(store => store.order);
+    const order = useSelector(getStateOrder);
+    const orderRequest = useSelector(getStateOrderRequest)
 
     return (
         <div className={`${styles.modalBlock} pt-30 pb-30`}>
@@ -37,7 +39,7 @@ const OrderDetails = ({ onClose }) => {
 };
 
 OrderDetails.propTypes = {
-    changeVisibility: PropTypes.func.isRequired,
-};;
+    onClose: PropTypes.func.isRequired,
+};
 
 export default OrderDetails;

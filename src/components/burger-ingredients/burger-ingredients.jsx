@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { getStateIngredients } from '../../selectors/ingredients-selectors';
 import PropTypes from "prop-types";
 
 import IngredientsSection from "./ingredients-section/ingredients-section";
@@ -9,9 +10,8 @@ import styles from "./burger-ingredients.module.css";
 
 const BurgerIngredients = ({ onOpenModal }) => {
     const [current, setCurrent] = useState("buns");
-    const dispatch = useDispatch();
 
-    const { ingredients } = useSelector(store => store.ingredients);
+    const ingredients = useSelector(getStateIngredients);
 
     const handleOnClick = (ingredient) => {
         onOpenModal(ingredient);

@@ -1,54 +1,78 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getIngredientsThunk } from "../actions/ingredients";
 
-// store:
-// 1. ingredients, done
-// 2. constructorIngredients, done
-// 3. setConstructorIngredients, done
-// 4. currentIngredient, done
-// 5. setCurrentIngredient; done
-
 const initialState = {
     ingredientsRequest: false,
     ingredientsFailed: false,
     ingredients: [],
 
-    constructorIngredients: [],
+    constructorIngredients: {
+        selectedBun: null,
+        selectedIngredients: [],
+    },
 
     currentIngredient: null,
 
-    price: 0
+    price: 0,
 };
 
 export const ingredientsSlice = createSlice({
     name: "ingredients",
     initialState,
     reducers: {
+        clearConstructor(state, action) {
+            state = {
+                ...state,
+                constructorIngredients: {
+                    selectedBun: null,
+                    selectedIngredients: []
+                }
+            }
+
+            return state;
+        },
+
         setConstructorIngredients(state, action) {
             state = {
                 ...state,
-                constructorIngredients: action.payload
-            }
+                constructorIngredients: {
+                    ...state.constructorIngredients,
+                    selectedIngredients: action.payload,
+                },
+            };
+
+            return state;
+        },
+
+        setConstructorBun(state, action) {
+            state = {
+                ...state,
+                constructorIngredients: {
+                    ...state.constructorIngredients,
+                    selectedBun: action.payload,
+                },
+            };
+
             return state;
         },
 
         setCurrentIngredient(state, action) {
             state = {
                 ...state,
-                currentIngredient: action.payload
-            }
+                currentIngredient: action.payload,
+            };
 
             return state;
         },
+
         setPrice(state, action) {
-            console.log(action.payload)
             state = {
                 ...state,
-                price: action.payload
-            }
+                price: action.payload,
+            };
 
             return state;
-        }
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -56,8 +80,8 @@ export const ingredientsSlice = createSlice({
                 state = {
                     ...state,
                     ingredientsFailed: false,
-                    ingredientsRequest: true
-                }
+                    ingredientsRequest: true,
+                };
 
                 return state;
             })
@@ -65,8 +89,8 @@ export const ingredientsSlice = createSlice({
                 state = {
                     ...state,
                     ingredientsFailed: true,
-                    ingredientsRequest: false
-                }
+                    ingredientsRequest: false,
+                };
 
                 return state;
             })
@@ -76,13 +100,19 @@ export const ingredientsSlice = createSlice({
                     ingredientsFailed: false,
                     ingredientsRequest: false,
                     ingredients: [...action.payload],
-                }
+                };
 
                 return state;
-            })
-    }
-})
+            });
+    },
+});
 
-export const { setCurrentIngredient, setConstructorIngredients, setPrice } = ingredientsSlice.actions;
+export const {
+    setCurrentIngredient,
+    setConstructorIngredients,
+    setPrice,
+    setConstructorBun,
+    clearConstructor,
+} = ingredientsSlice.actions;
 
 export default ingredientsSlice.reducer;

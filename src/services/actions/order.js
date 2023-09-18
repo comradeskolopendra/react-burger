@@ -1,10 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { request } from "../../helpers/helpers";
 import { BASE_URL } from "../../utils/constants";
+import { clearConstructor } from '../store/ingredients';
 
 const createOrderThunk = createAsyncThunk(
     "normaapi/order",
-    async (ingredientsIds) => {
+    async (ingredientsIds, {dispatch}) => {
         try {
             const data = await request(`${BASE_URL}/orders`, {
                 method: "POST",
@@ -16,6 +17,8 @@ const createOrderThunk = createAsyncThunk(
             return data;
         } catch (error) {
             console.error(error)
+        } finally {
+            dispatch(clearConstructor());
         }
     }
 );

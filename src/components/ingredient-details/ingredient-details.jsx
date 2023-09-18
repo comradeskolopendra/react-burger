@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
+import { getStateCurrentIngredient } from '../../selectors/ingredients-selectors';
 
 import EnergyItem from "./energy-item/energy-item";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -8,7 +9,7 @@ import "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./ingredient-details.module.css";
 
 const IngredientDetails = ({ onClose }) => {
-    const { currentIngredient } = useSelector(store => store.ingredients);
+    const currentIngredient = useSelector(getStateCurrentIngredient);
     return (
         <section className={styles.modalBlock}>
             <div className={styles.wrapperHeading}>
@@ -54,7 +55,7 @@ const IngredientDetails = ({ onClose }) => {
 };
 
 IngredientDetails.propTypes = {
-    changeVisibility: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired,
 };
 
 export default IngredientDetails;

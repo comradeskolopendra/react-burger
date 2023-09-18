@@ -1,9 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createOrderThunk } from "../actions/order";
 
-// store:
-// 1. order
-
 const initialState = {
     order: {},
     orderRequest: false,

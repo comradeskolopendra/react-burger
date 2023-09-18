@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useDrop } from "react-dnd/dist/hooks";
 import {
     DragIcon,
@@ -13,12 +13,11 @@ import styles from "./ingredients-wrapper.module.css";
 
 const IngredientsWrapper = ({ ingredients }) => {
     const dispatch = useDispatch();
-    const { constructorIngredients } = useSelector(store => store.ingredients);
 
     const [{ isHoverIngredient }, ingredientsRef] = useDrop({
         accept: "ingredients",
         drop: (item, monitor) => {
-            dispatch(setConstructorIngredients([...constructorIngredients, { ...item.ingredient, uuid: uuid4() }]))
+            dispatch(setConstructorIngredients([...ingredients, { ...item.ingredient, uuid: uuid4() }]))
         },
         collect: monitor => ({
             isHoverIngredient: monitor.isOver()
@@ -26,8 +25,10 @@ const IngredientsWrapper = ({ ingredients }) => {
     })
 
     const handleClose = (ingredient) => {
-        dispatch(setConstructorIngredients(
-            [...constructorIngredients].filter((item) => item.uuid !== ingredient.uuid))
+        dispatch(
+            setConstructorIngredients(
+                [...ingredients].filter((item) => item.uuid !== ingredient.uuid)
+            )
         );
     };
 
@@ -35,12 +36,12 @@ const IngredientsWrapper = ({ ingredients }) => {
         <div ref={ingredientsRef}>
             {ingredients.length === 0 ?
                 <div className={`${styles.nullIngredients} ${isHoverIngredient ? styles.selectedIngredient : ""} text text_type_main-small`}>
-                    Попробуйте нажать или перетащить ингредиент!
+                    Попробуйте перетащить ингредиент!
                 </div>
                 :
                 <ul className={`${styles.ingredientsWrapper}`}>
                     {ingredients.map((ingredient) => (
-                        <li key={uuid4()} className={styles.ingredient}>
+                        <li key={ingredient.uuid} className={styles.ingredient}>
                             <div className="mr-2">
                                 <DragIcon />
                             </div>
