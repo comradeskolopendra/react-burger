@@ -1,15 +1,18 @@
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
 import { CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from "./price-info.module.css";
 
-const PriceInfo = ({ priceState, onOpenModal }) => {
+const PriceInfo = ({ onOpenModal }) => {
+    const { price } = useSelector(store => store.ingredients);
+
     return (
         <section className={styles.orderBlock}>
             <div className={styles.price}>
                 <p className="mr-2 text text_type_digits-medium">
-                    {priceState.price}
+                    {price}
                 </p>
                 <CurrencyIcon type="primary" />
             </div>

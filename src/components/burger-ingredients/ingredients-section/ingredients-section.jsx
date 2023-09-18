@@ -6,6 +6,7 @@ import { ingredientType } from '../../../utils/types';
 import styles from "./ingredients-section.module.css";
 
 const IngredientsSection = ({ title, ingredients, onClick }) => {
+
     return (
         <>
             <h3 className="text text_type_main-medium">{title}</h3>

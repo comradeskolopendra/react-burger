@@ -1,0 +1,13 @@
+.nullIngredientsBun {
+    display: flex;
+    min-height: 75px;
+    border-radius: 15px;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.17);
+    border: 1px solid rgba(255, 255, 255, 0.17)
+}
+
+.selectedIngredient {
+    border: 1px solid rgba(255, 255, 255, 0.5)
+}
