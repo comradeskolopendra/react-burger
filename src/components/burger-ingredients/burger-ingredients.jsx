@@ -1,32 +1,47 @@
-import { useMemo, useState, useContext } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { useMemo, useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import { getStateIngredients } from '../../selectors/ingredients-selectors';
 import PropTypes from "prop-types";
 
 import IngredientsSection from "./ingredients-section/ingredients-section";
 import TabsWrapper from "./tabs-wrapper/tabs-wrapper";
-import { BurgerContext } from "../../context/context";
 
 import styles from "./burger-ingredients.module.css";
 
 const BurgerIngredients = ({ onOpenModal }) => {
     const [current, setCurrent] = useState("buns");
+    const bunRef = useRef(null);
+    const sauceRef = useRef(null);
+    const mainRef = useRef(null);
+    const ingredientsRef = useRef(null);
 
-    const { ingredients, constructorData, setConstructorData } =
-        useContext(BurgerContext);
+    const ingredients = useSelector(getStateIngredients);
 
     const handleOnClick = (ingredient) => {
         onOpenModal(ingredient);
-        if (ingredient.type !== "bun") {
-            return setConstructorData([
-                ...constructorData,
-                { ...ingredient, uuid: uuidv4() },
-            ]);
-        }
-        return setConstructorData([
-            ...constructorData.filter((element) => element.type !== "bun"),
-            ingredient,
-        ]);
     };
+
+    const handleScroll = () => {
+        if (sauceRef.current.getBoundingClientRect().top < 0) {
+            return setCurrent("mains")
+        }
+        if (bunRef.current.getBoundingClientRect().top < 10) {
+            return setCurrent("sauces");
+        }
+
+        return setCurrent("buns")
+    }
+
+    const scrollToBlock = (value) => {
+        setCurrent(value);
+        if (value === "buns") {
+            ingredientsRef.current.scrollTo({ top: 0, behavior: "smooth" })
+        } else if (value === "sauces") {
+            ingredientsRef.current.scrollTo({ top: bunRef.current.scrollHeight, behavior: "smooth" })
+        } else if (value === "mains") {
+            ingredientsRef.current.scrollTo({ top: bunRef.current.scrollHeight + sauceRef.current.scrollHeight, behavior: "smooth" })
+        }
+    }
 
     const { mains, sauces, buns } = useMemo(() => {
         return {
@@ -46,39 +61,43 @@ const BurgerIngredients = ({ onOpenModal }) => {
             title: "Булки",
         },
         {
-            value: "sauce",
+            value: "sauces",
             title: "Соусы",
         },
         {
-            value: "main",
+            value: "mains",
             title: "Начинки",
         },
     ];
+
     return (
         <div className={styles.wrapper}>
             <TabsWrapper
                 tabsInfo={tabsInfo}
                 current={current}
-                updateCurrent={setCurrent}
+                updateCurrent={scrollToBlock}
             />
-            <section className={styles.ingredients}>
+            <section ref={ingredientsRef} className={styles.ingredients} onScroll={handleScroll}>
                 <IngredientsSection
                     onClick={handleOnClick}
                     title={"Булки"}
                     ingredients={buns}
+                    ref={bunRef}
                 />
                 <IngredientsSection
                     onClick={handleOnClick}
                     title={"Соусы"}
                     ingredients={sauces}
+                    ref={sauceRef}
                 />
                 <IngredientsSection
                     onClick={handleOnClick}
                     title={"Начинки"}
                     ingredients={mains}
+                    ref={mainRef}
                 />
             </section>
-        </div>
+        </div >
     );
 };
 

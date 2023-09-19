@@ -1,21 +1,22 @@
-import { useContext, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { getStateOrderRequest, getStateOrder } from '../../selectors/order-selectors';
 import PropTypes from "prop-types"
 
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import done from "../../images/done.png";
-import { ModalContext } from "../../context/context";
 import styles from "./order-details.module.css";
 
-const OrderDetails = ({ changeVisibility }) => {
-    const { order } = useContext(ModalContext);
+const OrderDetails = ({ onClose }) => {
+    const order = useSelector(getStateOrder);
+    const orderRequest = useSelector(getStateOrderRequest)
 
     return (
         <div className={`${styles.modalBlock} pt-30 pb-30`}>
             <div className={`${styles.closeWrapper}`}>
                 <button
                     className="closeButton"
-                    onClick={() => changeVisibility(false)}
+                    onClick={onClose}
                 >
                     <CloseIcon />
                 </button>
@@ -23,7 +24,7 @@ const OrderDetails = ({ changeVisibility }) => {
             <p
                 className={`${styles.glowBigNumbers} mb-8 text text_type_digits-large`}
             >
-                {order.data.order.number}
+                {!orderRequest ? order.order.number : "0000"}
             </p>
             <p className="text text_type_main-medium">идентификатор заказа</p>
             <img src={done} alt="done" className="mt-15 mb-15" />
@@ -38,7 +39,7 @@ const OrderDetails = ({ changeVisibility }) => {
 };
 
 OrderDetails.propTypes = {
-    changeVisibility: PropTypes.func.isRequired,
-};;
+    onClose: PropTypes.func.isRequired,
+};
 
 export default OrderDetails;

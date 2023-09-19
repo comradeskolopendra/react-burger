@@ -8,6 +8,7 @@
     height: 100%;
     text-align: center;
     cursor: pointer;
+    position: relative
 }
 
 .ingredientImage {

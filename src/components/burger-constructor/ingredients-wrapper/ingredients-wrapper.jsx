@@ -1,48 +1,49 @@
-import { useContext } from "react";
+import { useCallback, useEffect } from "react";
 import PropTypes from "prop-types";
-import { BurgerContext } from "../../../context/context";
-import {
-    DragIcon,
-    ConstructorElement,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { useDispatch } from "react-redux";
+import { useDrop } from "react-dnd/dist/hooks";
+import IngredientElement from "./ingredient-element/ingredient-element";
+import { setConstructorIngredient, sortConstuctorIngredient } from "../../../services/store/ingredients";
 import { ingredientType } from "../../../utils/types";
 
 import { v4 as uuid4 } from "uuid";
 import styles from "./ingredients-wrapper.module.css";
 
-const IngredientsWrapper = ({ dispatch, ingredients }) => {
-    const { constructorData, setConstructorData } = useContext(BurgerContext);
+const IngredientsWrapper = ({ ingredients }) => {
+    const dispatch = useDispatch();
 
-    const handleClose = (ingredient) => {
-        console.log(ingredient, constructorData)
-        setConstructorData(
-            [...constructorData].filter((item) => item.uuid !== ingredient.uuid)
-        );
-        dispatch({ type: "delete", payload: ingredient.price });
-    };
+    const [{ isHoverIngredient }, ingredientsRef] = useDrop({
+        accept: "ingredients",
+        drop: (item, monitor) => {
+            dispatch(setConstructorIngredient({ ...item.ingredient, uuid: uuid4() }))
+        },
+        collect: monitor => ({
+            isHoverIngredient: monitor.isOver()
+        })
+    })
+
+    const moveCard = useCallback((dragIndex, hoverIndex) => {
+        dispatch(sortConstuctorIngredient({ dragIndex, hoverIndex }))
+    }, [])
 
     return (
-        <ul className={`${styles.ingredientsWrapper}`}>
-            {ingredients.map((ingredient) => (
-                <li key={uuid4()} className={styles.ingredient}>
-                    <div className="mr-2">
-                        <DragIcon />
-                    </div>
-                    <ConstructorElement
-                        isLocked={false}
-                        price={ingredient.price}
-                        handleClose={() => handleClose(ingredient)}
-                        thumbnail={ingredient.image}
-                        text={ingredient.name}
-                    />
-                </li>
-            ))}
-        </ul>
+        <div ref={ingredientsRef}>
+            {ingredients.length === 0 ?
+                <div className={`${styles.nullIngredients} ${isHoverIngredient ? styles.selectedIngredient : ""} text text_type_main-small`}>
+                    Попробуйте перетащить ингредиент!
+                </div>
+                :
+                <ul className={`${styles.ingredientsWrapper}`}>
+                    {ingredients.map((ingredient, index) => (
+                        <IngredientElement key={ingredient.uuid} ingredient={ingredient} index={index} moveCard={moveCard} />
+                    ))}
+                </ul>
+            }
+        </div>
     );
 };
 
 IngredientsWrapper.propTypes = {
-    dispatch: PropTypes.func.isRequired,
     ingredients: PropTypes.arrayOf(ingredientType)
 };
 

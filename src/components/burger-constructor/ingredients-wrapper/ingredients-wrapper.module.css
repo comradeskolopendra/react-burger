@@ -1,12 +1,13 @@
 .ingredientsWrapper {
     overflow-y: scroll;
-    max-height: calc(100vh - 490px);
+    max-height: calc(100vh - 520px);
     scrollbar-width: thin;
     display: grid;
     gap: 16px;
     margin: 0;
     padding: 0;
     list-style: none;
+    padding: 10px 0;
 }
 
 .ingredientsWrapper::-webkit-scrollbar {
@@ -16,11 +17,19 @@
 }
 
 .ingredientsWrapper::-webkit-scrollbar-thumb {
-    /* треккер скроллбара */
     background: #8585AD;
 }
 
-.ingredient {
+.nullIngredients {
     display: flex;
+    min-height: calc(100vh - 500px);
+    border-radius: 15px;
+    justify-content: center;
     align-items: center;
+    background: rgba(0, 0, 0, 0.17);
+    border: 1px solid rgba(255, 255, 255, 0.17)
+}
+
+.selectedIngredient {
+    border: 1px solid rgba(255, 255, 255, 0.5)
 }

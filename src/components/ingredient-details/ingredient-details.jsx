@@ -1,22 +1,22 @@
-import { useContext } from "react";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
+import { getStateCurrentIngredient } from '../../selectors/ingredients-selectors';
 
 import EnergyItem from "./energy-item/energy-item";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { ModalContext } from "../../context/context";
 
 import "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./ingredient-details.module.css";
 
-const IngredientDetails = ({ changeVisibility }) => {
-    const { currentIngredient } = useContext(ModalContext);
+const IngredientDetails = ({ onClose }) => {
+    const currentIngredient = useSelector(getStateCurrentIngredient);
     return (
         <section className={styles.modalBlock}>
             <div className={styles.wrapperHeading}>
                 <h3 className="text text_type_main-large">Детали игредиента</h3>
                 <button
                     className="closeButton"
-                    onClick={() => changeVisibility(false)}
+                    onClick={onClose}
                 >
                     <CloseIcon type={"primary"} />
                 </button>
@@ -55,7 +55,7 @@ const IngredientDetails = ({ changeVisibility }) => {
 };
 
 IngredientDetails.propTypes = {
-    changeVisibility: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired,
 };
 
 export default IngredientDetails;
