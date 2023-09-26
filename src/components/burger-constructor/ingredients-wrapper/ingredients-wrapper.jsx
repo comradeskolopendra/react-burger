@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { useDrop } from "react-dnd/dist/hooks";
 import IngredientElement from "./ingredient-element/ingredient-element";
-import { setConstructorIngredient, sortConstuctorIngredient } from "../../../services/store/ingredients";
+import { setConstructorIngredient, sortConstuctorIngredient } from "../../../services/store/constructor";
 import { ingredientType } from "../../../utils/types";
 
 import { v4 as uuid4 } from "uuid";

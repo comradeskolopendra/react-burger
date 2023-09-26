@@ -1,9 +1,8 @@
-import { useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
-import { setPrice, setConstructorBun } from "../../services/store/ingredients";
-import { getStateConstructorIngredients } from "../../selectors/ingredients-selectors";
+import { setConstructorBun } from "../../services/store/constructor";
+import { getStateSelectedBun, getStateSelectedIngredients } from "../../selectors/constructor-selectors";
 
 import IngredientsWrapper from "./ingredients-wrapper/ingredients-wrapper";
 import PriceInfo from "./price-info/price-info";
@@ -13,19 +12,8 @@ import BunWrapper from "./bun-wrapper/bun-wrapper";
 
 const BurgerConstructor = ({ onOpenModal }) => {
     const dispatch = useDispatch();
-    const constructorIngredients = useSelector(getStateConstructorIngredients);
-    const { selectedIngredients, selectedBun } = constructorIngredients;
-
-    const price = useMemo(() => {
-        return selectedIngredients.reduce((prev, cur) => {
-            return prev + (cur ? cur.price : 0)
-        }, 0) + (selectedBun ? selectedBun.price * 2 : 0)
-    }, [selectedIngredients, selectedBun])
-
-    useEffect(() => {
-        dispatch(setPrice(price));
-    }, [constructorIngredients, price, dispatch]);
-
+    const selectedBun = useSelector(getStateSelectedBun);
+    const selectedIngredients = useSelector(getStateSelectedIngredients);
 
     const [{ isHoverBun }, bunRef] = useDrop({
         accept: "bun",

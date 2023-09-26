@@ -8,6 +8,7 @@ import styles from "./ingredients-section.module.css";
 
 const IngredientsSection = React.forwardRef((props, ref) => {
     const { title, ingredients, onClick } = props;
+
     return (
         <div ref={ref}>
             <h3 className="text text_type_main-medium">{title}</h3>

@@ -12,9 +12,10 @@ import {
     setVisibleOrder,
 } from "../../services/store/modal";
 
-import { getStateIngredients, getStateIngredientsError, getStateIngredientsRequest, getStateConstructorIngredients } from '../../selectors/ingredients-selectors';
+import { getStateSelectedBun, getStateSelectedIngredients } from "../../selectors/constructor-selectors";
+import { getStateIngredients, getStateIngredientsError, getStateIngredientsRequest } from '../../selectors/ingredients-selectors';
 import { getStateOrderFailed } from '../../selectors/order-selectors';
-import { getStateVisibleOrder, getStateVisibleIngredient} from '../../selectors/modal-selectors';
+import { getStateVisibleOrder, getStateVisibleIngredient } from '../../selectors/modal-selectors';
 
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
@@ -31,7 +32,8 @@ function App() {
     const ingredients = useSelector(getStateIngredients);
     const ingredientsError = useSelector(getStateIngredientsError);
     const ingredientsRequest = useSelector(getStateIngredientsRequest);
-    const constructorIngredients = useSelector(getStateConstructorIngredients);
+    const selectedBun = useSelector(getStateSelectedBun);
+    const selectedIngredients = useSelector(getStateSelectedIngredients)
     const orderFailed = useSelector(getStateOrderFailed);
     const visibleOrder = useSelector(getStateVisibleOrder);
     const visibleIngredient = useSelector(getStateVisibleIngredient);
@@ -42,7 +44,6 @@ function App() {
     };
 
     const handleOrderClick = async () => {
-        const { selectedIngredients, selectedBun } = constructorIngredients;
 
         if (!selectedBun) {
             return;

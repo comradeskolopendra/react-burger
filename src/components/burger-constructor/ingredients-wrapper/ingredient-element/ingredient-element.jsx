@@ -2,7 +2,7 @@ import { useRef } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
-import { removeConstructorIngredient } from "../../../../services/store/ingredients";
+import { removeConstructorIngredient } from "../../../../services/store/constructor";
 import {
     DragIcon,
     ConstructorElement,

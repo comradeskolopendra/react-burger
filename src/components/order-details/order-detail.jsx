@@ -24,7 +24,7 @@ const OrderDetails = ({ onClose }) => {
             <p
                 className={`${styles.glowBigNumbers} mb-8 text text_type_digits-large`}
             >
-                {!orderRequest ? order.order.number : "0000"}
+                {!orderRequest ? order?.order?.number : "0000"}
             </p>
             <p className="text text_type_main-medium">идентификатор заказа</p>
             <img src={done} alt="done" className="mt-15 mb-15" />

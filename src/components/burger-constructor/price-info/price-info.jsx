@@ -1,6 +1,8 @@
+import { useMemo } from "react";
+
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-import { getStatePrice, getStateConstructorIngredients } from '../../../selectors/ingredients-selectors';
+import { getStateSelectedBun, getStateSelectedIngredients } from "../../../selectors/constructor-selectors";
 import {
     CurrencyIcon,
     Button,
@@ -8,9 +10,14 @@ import {
 import styles from "./price-info.module.css";
 
 const PriceInfo = ({ onOpenModal }) => {
-    const price = useSelector(getStatePrice);
-    const constructorIngredients = useSelector(getStateConstructorIngredients);
-    const {selectedBun} = constructorIngredients;
+    const selectedBun = useSelector(getStateSelectedBun);
+    const selectedIngredients = useSelector(getStateSelectedIngredients);
+
+    const price = useMemo(() => {
+        return selectedIngredients.reduce((prev, cur) => {
+            return prev + (cur ? cur.price : 0)
+        }, 0) + (selectedBun ? selectedBun.price * 2 : 0)
+    }, [selectedIngredients, selectedBun])
 
     return (
         <section className={styles.orderBlock}>

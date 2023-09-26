@@ -1,17 +1,19 @@
-import { useMemo } from "react";
 import PropTypes from "prop-types";
+import { useMemo, useEffect } from "react"
 import { useDrag } from "react-dnd";
-import { useSelector } from "react-redux";
-import { getStateConstructorIngredients } from '../../../../selectors/ingredients-selectors';
+
+import { getStateSelectedBun, getStateSelectedIngredients } from "../../../../selectors/constructor-selectors";
 
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { ingredientType } from '../../../../utils/types';
 import styles from "./ingredient-card.module.css";
+import { useSelector } from "react-redux";
 
 const IngredientCard = ({ ingredient, onClick }) => {
-    const constructorIngredients = useSelector(getStateConstructorIngredients);
-    const { selectedIngredients, selectedBun } = constructorIngredients;
+
+    const selectedIngredients = useSelector(getStateSelectedIngredients);
+    const selectedBun = useSelector(getStateSelectedBun);
 
     const [_, ingredientRef] = useDrag({
         type: ingredient.type === "bun" ? "bun" : "ingredients",
@@ -19,10 +21,8 @@ const IngredientCard = ({ ingredient, onClick }) => {
     })
 
     const count = useMemo(() => {
-        return [...selectedIngredients, selectedBun].filter(
-            (element) => element?._id === ingredient?._id
-        ).length;
-    }, [constructorIngredients]);
+        return [...selectedIngredients, selectedBun].filter(element => element?._id === ingredient?._id).length
+    }, [selectedBun, selectedIngredients])
 
     return (
         <div key={ingredient._id} ref={ingredientRef} onClick={() => onClick(ingredient)} className={styles.card}>
