@@ -1,6 +1,8 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 
+import { NavLink } from "react-router-dom";
+
 import styles from "./nav-link.module.css";
 import {
     BurgerIcon,
@@ -8,20 +10,23 @@ import {
     ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-const NavLink = ({ to, icon, title }) => {
-    const [active, setActive] = useState({ icon: "secondary", class: styles.textColorInactive });
+const CustomNavLink = ({ to, icon, title }) => {
+    const [active, setActive] = useState({
+        icon: "secondary",
+        class: styles.textColorInactive,
+    });
 
     const handlerOnMouseEnter = () => {
-        setActive({ icon: "primary", class: styles.textColorActive })
-    }
+        setActive({ icon: "primary", class: styles.textColorActive });
+    };
 
     const handlerOnMouseLeave = () => {
-        setActive({ icon: "secondary", class: styles.textColorInactive })
-    }
+        setActive({ icon: "secondary", class: styles.textColorInactive });
+    };
 
     return (
-        <a
-            href={to}
+        <NavLink
+            to={to}
             onMouseLeave={handlerOnMouseLeave}
             onMouseEnter={handlerOnMouseEnter}
             className={`${styles.link} text text_type_main-default ${active.class}`}
@@ -30,7 +35,7 @@ const NavLink = ({ to, icon, title }) => {
             {icon === "profile" && <ProfileIcon type={active.icon} />}
             {icon === "list" && <ListIcon type={active.icon} />}
             {title}
-        </a>
+        </NavLink>
     );
 };
 
@@ -40,4 +45,4 @@ NavLink.propTypes = {
     title: PropTypes.string.isRequired,
 };
 
-export default NavLink;
+export default CustomNavLink;

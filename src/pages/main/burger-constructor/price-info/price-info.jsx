@@ -2,7 +2,7 @@ import { useMemo } from "react";
 
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-import { getStateSelectedBun, getStateSelectedIngredients } from "../../../selectors/constructor-selectors";
+import { getStateSelectedBun, getStateSelectedIngredients } from '../../../../selectors/constructor-selectors';
 import {
     CurrencyIcon,
     Button,

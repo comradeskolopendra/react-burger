@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-import { getStateCurrentIngredient } from '../../selectors/ingredients-selectors';
+import { getStateCurrentIngredient } from '../../../selectors/ingredients-selectors';
 
 import EnergyItem from "./energy-item/energy-item";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";

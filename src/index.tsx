@@ -6,16 +6,19 @@ import { Provider } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { store } from "./services";
+import { BrowserRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+    document.getElementById("root") as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <DndProvider backend={HTML5Backend}>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </DndProvider>
-  </React.StrictMode>
+    <React.StrictMode>
+        <DndProvider backend={HTML5Backend}>
+            <BrowserRouter>
+                <Provider store={store}>
+                    <App />
+                </Provider>
+            </BrowserRouter>
+        </DndProvider>
+    </React.StrictMode>
 );

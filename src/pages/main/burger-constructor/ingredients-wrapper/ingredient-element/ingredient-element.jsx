@@ -2,12 +2,12 @@ import { useRef } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
-import { removeConstructorIngredient } from "../../../../services/store/constructor";
+import { removeConstructorIngredient } from '../../../../../services/store/constructor';
 import {
     DragIcon,
     ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { ingredientType } from "../../../../utils/types";
+import { ingredientType } from '../../../../../utils/types';
 import styles from "./ingredient-element.module.css";
 
 const IngredientElement = ({ ingredient, index, moveCard }) => {

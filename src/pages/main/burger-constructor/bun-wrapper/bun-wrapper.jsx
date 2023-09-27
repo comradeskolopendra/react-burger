@@ -1,6 +1,6 @@
 import styles from "./bun-wrapper.module.css";
 import PropTypes from "prop-types";
-import { ingredientType } from "../../../utils/types";
+import { ingredientType } from '../../../../utils/types';
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 
 const BunWrapper = ({ bunRef = null, side, bun, isHoverBun }) => {

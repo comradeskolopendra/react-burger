@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
-import { getStateOrderRequest, getStateOrder } from '../../selectors/order-selectors';
+import { getStateOrderRequest, getStateOrder } from '../../../selectors/order-selectors';
 import PropTypes from "prop-types"
 
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import done from "../../images/done.png";
+import done from "../../../images/done.png";
 import styles from "./order-details.module.css";
 
 const OrderDetails = ({ onClose }) => {

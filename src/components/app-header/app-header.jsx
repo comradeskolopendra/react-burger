@@ -1,20 +1,20 @@
 import { Logo } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from "./app-header.module.css";
-import NavLink from "./nav-link/nav-link";
+import CustomNavLink from "./nav-link/nav-link";
 
 const AppHeader = () => {
     return (
         <header>
             <nav className={`${styles.nav} mt-4 mb-4`}>
                 <div className={styles.sideWrapper}>
-                    <NavLink
+                    <CustomNavLink
                         to={"#"}
                         icon={"burger"}
                         title={"Конструктор"}
                     />
-                    <NavLink
-                        to={"#"}
+                    <CustomNavLink
+                        to={"/login"}
                         icon={"list"}
                         title={"Лента заказов"}
                     />
@@ -23,7 +23,7 @@ const AppHeader = () => {
                 <Logo />
 
                 <div className={styles.sideWrapper}>
-                    <NavLink
+                    <CustomNavLink
                         to={"#"}
                         icon={"profile"}
                         title={"Личный кабинет"}

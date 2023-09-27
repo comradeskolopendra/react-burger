@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
-import { setConstructorBun } from "../../services/store/constructor";
-import { getStateSelectedBun, getStateSelectedIngredients } from "../../selectors/constructor-selectors";
+import { setConstructorBun } from '../../../services/store/constructor';
+import { getStateSelectedBun, getStateSelectedIngredients } from '../../../selectors/constructor-selectors';
 
 import IngredientsWrapper from "./ingredients-wrapper/ingredients-wrapper";
 import PriceInfo from "./price-info/price-info";

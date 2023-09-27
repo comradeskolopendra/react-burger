@@ -1,8 +1,11 @@
 .ingredientsWrapper {
     overflow-y: scroll;
-    max-height: calc(100vh - 520px);
+    min-height: calc(100vh - 520px);
+    height: calc(100vh - 520px);
     scrollbar-width: thin;
     display: grid;
+    align-items: start;
+    grid-auto-rows: 80px;
     gap: 16px;
     margin: 0;
     padding: 0;

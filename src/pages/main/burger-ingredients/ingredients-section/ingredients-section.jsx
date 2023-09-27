@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import IngredientCard from "./ingredient-card/ingredient-card";
 
-import { ingredientType } from '../../../utils/types';
+import { ingredientType } from '../../../../utils/types';
 import styles from "./ingredients-section.module.css";
 
 const IngredientsSection = React.forwardRef((props, ref) => {

@@ -1,10 +1,12 @@
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { useDrop } from "react-dnd/dist/hooks";
 import IngredientElement from "./ingredient-element/ingredient-element";
-import { setConstructorIngredient, sortConstuctorIngredient } from "../../../services/store/constructor";
-import { ingredientType } from "../../../utils/types";
+
+import { sortConstuctorIngredient, setConstructorIngredient } from '../../../../services/store/constructor';
+
+import { ingredientType } from '../../../../utils/types';
 
 import { v4 as uuid4 } from "uuid";
 import styles from "./ingredients-wrapper.module.css";

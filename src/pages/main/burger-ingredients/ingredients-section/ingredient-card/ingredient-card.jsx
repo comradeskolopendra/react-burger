@@ -2,13 +2,14 @@ import PropTypes from "prop-types";
 import { useMemo, useEffect } from "react"
 import { useDrag } from "react-dnd";
 
-import { getStateSelectedBun, getStateSelectedIngredients } from "../../../../selectors/constructor-selectors";
+import { getStateSelectedBun, getStateSelectedIngredients } from '../../../../../selectors/constructor-selectors';
 
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { ingredientType } from '../../../../utils/types';
+import { ingredientType } from '../../../../../utils/types';
 import styles from "./ingredient-card.module.css";
 import { useSelector } from "react-redux";
+import { Link } from 'react-router-dom';
 
 const IngredientCard = ({ ingredient, onClick }) => {
 
@@ -25,7 +26,13 @@ const IngredientCard = ({ ingredient, onClick }) => {
     }, [selectedBun, selectedIngredients])
 
     return (
-        <div key={ingredient._id} ref={ingredientRef} onClick={() => onClick(ingredient)} className={styles.card}>
+        <Link
+            to={`/ingredients/${ingredient._id}`}
+            key={ingredient._id}
+            ref={ingredientRef}
+            onClick={() => onClick(ingredient)}
+            className={styles.card}
+        >
             <img
                 src={ingredient.image}
                 className={`${styles.ingredientImage} pl-4 pr-4`}
@@ -39,7 +46,7 @@ const IngredientCard = ({ ingredient, onClick }) => {
             </div>
             <p className="text text_type_main-default">{ingredient.name}</p>
             <Counter count={count} size="default" />
-        </div>
+        </Link>
     );
 };
 
