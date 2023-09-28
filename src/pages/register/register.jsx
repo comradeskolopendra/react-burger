@@ -1,4 +1,8 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+
+import { registerUserThunk } from "../../services/actions/auth";
 
 import {
     Button,
@@ -7,12 +11,33 @@ import {
 
 import styles from "./register.module.css";
 
+
 const RegisterPage = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [userInfo, setUserInfo] = useState({
+        email: "",
+        password: "",
+        name: ""
+    });
+
+    const handleChangeField = (event) => {
+        const { target: { name: fieldName, value: fieldValue } } = event;
+        console.log(userInfo)
+        setUserInfo((prevState) => ({
+            ...prevState,
+            [fieldName]: fieldValue
+        }))
+    }
+
+    const submitRegisterForm = (event) => {
+        event.preventDefault();
+        dispatch(registerUserThunk({ ...userInfo }))
+    }
 
     return (
         <section className={styles.wrapper}>
-            <form className={styles.form}>
+            <form className={styles.form} onSubmit={submitRegisterForm}>
                 <h3
                     className={`text text_type_main-medium mb-6 ${styles.header}`}
                 >
@@ -23,25 +48,34 @@ const RegisterPage = () => {
                     placeholder={"Имя"}
                     size={"default"}
                     extraClass={"mb-6"}
+                    name={"name"}
+                    value={userInfo.name}
+                    onChange={handleChangeField}
                 />
                 <Input
                     type={"text"}
                     placeholder={"E-mail"}
                     size={"default"}
                     extraClass={"mb-6"}
+                    name={"email"}
+                    value={userInfo.email}
+                    onChange={handleChangeField}
                 />
                 <Input
-                    type={"text"}
+                    type={"password"}
                     placeholder={"Пароль"}
                     size={"default"}
                     extraClass={"mb-6"}
                     icon={"ShowIcon"}
+                    name={"password"}
+                    value={userInfo.password}
+                    onChange={handleChangeField}
                 />
                 <Button
-                    htmlType="submit"
-                    type="primary"
-                    size="medium"
-                    extraClass="mb-20"
+                    htmlType={"submit"}
+                    type={"primary"}
+                    size={"medium"}
+                    extraClass={"mb-20"}
                 >
                     Зарегистрироваться
                 </Button>
