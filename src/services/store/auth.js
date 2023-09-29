@@ -1,14 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { registerUserThunk, resetPasswordThunk } from "../actions/auth";
+import {
+    loginUserThunk,
+    refreshTokenThunk,
+    registerUserThunk,
+    resetPasswordThunk,
+} from "../actions/auth";
 
 const initialState = {
+    user: {},
+
     registerRequest: false,
     registerError: false,
-    register: {},
 
     resetPasswordRequest: false,
     resetPasswordError: false,
-}
+
+    loginRequest: false,
+    loginError: false,
+};
 
 export const authSlice = createSlice({
     name: "auth",
@@ -20,8 +29,8 @@ export const authSlice = createSlice({
                     ...state,
                     registerError: true,
                     registerRequest: false,
-                    register: {}
-                }
+                    user: {},
+                };
                 return state;
             })
             .addCase(registerUserThunk.pending, (state) => {
@@ -29,8 +38,8 @@ export const authSlice = createSlice({
                     ...state,
                     registerRequest: true,
                     registerError: false,
-                    register: {}
-                }
+                    user: {},
+                };
                 return state;
             })
             .addCase(registerUserThunk.fulfilled, (state, action) => {
@@ -38,39 +47,84 @@ export const authSlice = createSlice({
                     ...state,
                     registerRequest: false,
                     registerError: false,
-                    register: { ...action.payload.user, accessToken: action.payload.accessToken }
-                }
+                    user: {
+                        ...action.payload.user,
+                        accessToken: action.payload.accessToken,
+                    },
+                };
                 return state;
             })
-
 
             .addCase(resetPasswordThunk.rejected, (state) => {
                 state = {
                     ...state,
                     resetPasswordError: true,
-                    resetPasswordRequest: false
-                }
+                    resetPasswordRequest: false,
+                };
                 return state;
             })
             .addCase(resetPasswordThunk.pending, (state) => {
                 state = {
                     ...state,
                     resetPasswordError: false,
-                    resetPasswordRequest: true
-                }
+                    resetPasswordRequest: true,
+                };
                 return state;
             })
             .addCase(resetPasswordThunk.fulfilled, (state) => {
                 state = {
                     ...state,
                     resetPasswordError: false,
-                    resetPasswordRequest: false
-                }
+                    resetPasswordRequest: false,
+                };
                 return state;
             })
-    }
-})
 
-export const { setUserInfo } = authSlice.actions;
+            .addCase(loginUserThunk.rejected, (state) => {
+                state = {
+                    ...state,
+                    loginError: true,
+                    loginRequest: false,
+                };
+
+                return state;
+            })
+            .addCase(loginUserThunk.pending, (state) => {
+                state = {
+                    ...state,
+                    loginError: false,
+                    loginRequest: true,
+                };
+
+                return state;
+            })
+            .addCase(loginUserThunk.fulfilled, (state, action) => {
+                state = {
+                    ...state,
+                    user: {
+                        ...action.payload.user,
+                        accessToken: action.payload.accessToken,
+                    },
+                    loginError: false,
+                    loginRequest: false,
+                };
+
+                return state;
+            })
+
+            .addCase(refreshTokenThunk.fulfilled, (state, action) => {
+                state = {
+                    ...state,
+
+                    user: {
+                        ...state.user,
+                        accessToken: action.payload.accessToken,
+                    },
+                };
+
+                return state;
+            });
+    },
+});
 
 export default authSlice.reducer;

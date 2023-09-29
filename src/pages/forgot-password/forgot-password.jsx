@@ -19,13 +19,15 @@ const ForgotPassword = () => {
 
     const submitResetPasswordForm = (event) => {
         event.preventDefault();
-        dispatch(resetPasswordThunk(email))
-    }
+        dispatch(resetPasswordThunk(email));
+    };
 
     const handleChangeEmail = (event) => {
-        const { target: { value } } = event;
-        setEmail(value)
-    }
+        const {
+            target: { value },
+        } = event;
+        setEmail(value);
+    };
 
     return (
         <section className={styles.wrapper}>
@@ -43,7 +45,11 @@ const ForgotPassword = () => {
                     value={email}
                     onChange={handleChangeEmail}
                 />
-                <Button htmlType="submit" extraClass={"mb-20"} onClick={submitResetPasswordForm}>
+                <Button
+                    htmlType="submit"
+                    extraClass={"mb-20"}
+                    onClick={submitResetPasswordForm}
+                >
                     Восстановить
                 </Button>
             </form>

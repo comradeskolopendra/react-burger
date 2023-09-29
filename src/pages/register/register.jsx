@@ -23,7 +23,6 @@ const RegisterPage = () => {
 
     const handleChangeField = (event) => {
         const { target: { name: fieldName, value: fieldValue } } = event;
-        console.log(userInfo)
         setUserInfo((prevState) => ({
             ...prevState,
             [fieldName]: fieldValue
@@ -32,7 +31,7 @@ const RegisterPage = () => {
 
     const submitRegisterForm = (event) => {
         event.preventDefault();
-        dispatch(registerUserThunk({ ...userInfo }))
+        dispatch(registerUserThunk(userInfo))
     }
 
     return (

@@ -8,18 +8,18 @@ const registerUserThunk = createAsyncThunk(
         const data = await request(`${BASE_URL}/auth/register`, {
             method: "POST",
             headers: {
-                'Content-Type': "application/json"
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify({ ...userInfo })
+            body: JSON.stringify({ ...userInfo }),
         });
 
         if (data && data.refreshToken) {
-            setCookie("token", data.refreshToken)
+            setCookie("token", data.refreshToken);
         }
 
         return data;
     }
-)
+);
 
 const resetPasswordThunk = createAsyncThunk(
     "normaapi/reset-password",
@@ -27,17 +27,55 @@ const resetPasswordThunk = createAsyncThunk(
         const data = await request(`${BASE_URL}/password-reset`, {
             method: "POST",
             headers: {
-                'Content-Type': "application/json"
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({ email }),
         });
 
-        if (data && data.success) {
-            console.log(data);
+        return data;
+    }
+);
+
+const loginUserThunk = createAsyncThunk("normaapi/login", async (userInfo) => {
+    const { email, password, callback } = userInfo;
+    const data = await request(`${BASE_URL}/auth/login`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+    });
+
+    if (typeof callback === "function" && data) {
+        callback();
+    }
+
+    return data;
+});
+
+const refreshTokenThunk = createAsyncThunk(
+    "normaapi/refresh-token",
+    async (token) => {
+        const data = await request(`${BASE_URL}/auth/token`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ token }),
+        });
+
+        if (data && data.refreshToken) {
+            setCookie("token", data.refreshToken);
+            // callback();
         }
 
         return data;
     }
-)
+);
 
-export { registerUserThunk, resetPasswordThunk };
+export {
+    registerUserThunk,
+    resetPasswordThunk,
+    loginUserThunk,
+    refreshTokenThunk,
+};

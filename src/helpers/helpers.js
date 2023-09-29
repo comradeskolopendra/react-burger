@@ -1,5 +1,7 @@
 const checkResponse = (res) => res.ok ? res.json() : new Error(`Ошибка: ${res.status}`);
 
+const checkToken = (message) => message === "JWT expired" ? true : false;
+
 const setCookie = (name, value, props) => {
     props = props || {};
     let exp = props.expires;

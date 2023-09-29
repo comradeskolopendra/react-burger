@@ -1,0 +1,13 @@
+.activeLink {
+    color: white;
+    text-decoration: none;
+}
+
+.link {
+    text-decoration: none;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+}

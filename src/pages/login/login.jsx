@@ -1,17 +1,49 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import styles from "./login.module.css";
+import { loginUserThunk } from "../../services/actions/auth";
 
 import {
     Input,
     Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useState } from "react";
 
 const LoginPage = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [userLoginForm, setUserLoginForm] = useState({
+        email: "",
+        password: "",
+    });
+
+    const handleChangeField = (event) => {
+        const {
+            target: { value, name },
+        } = event;
+
+        setUserLoginForm((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
+    };
+
+    const submitLoginForm = (event) => {
+        event.preventDefault();
+        dispatch(
+            loginUserThunk(
+                {
+                    email: userLoginForm.email,
+                    password: userLoginForm.password,
+                    callback: () => navigate("/profile", { replace: true })
+                }
+            )
+        );
+    };
 
     return (
         <section className={styles.wrapper}>
-            <form className={styles.form}>
+            <form className={styles.form} onSubmit={submitLoginForm}>
                 <h3
                     className={`text text_type_main-medium mb-6 ${styles.header}`}
                 >
@@ -22,13 +54,19 @@ const LoginPage = () => {
                     placeholder={"E-mail"}
                     size={"default"}
                     extraClass={"mb-6"}
+                    name={"email"}
+                    value={userLoginForm.email}
+                    onChange={handleChangeField}
                 />
                 <Input
-                    type={"text"}
+                    type={"password"}
                     placeholder={"Пароль"}
                     size={"default"}
                     extraClass={"mb-6"}
                     icon={"ShowIcon"}
+                    name={"password"}
+                    value={userLoginForm.password}
+                    onChange={handleChangeField}
                 />
                 <Button
                     htmlType="submit"
@@ -49,7 +87,7 @@ const LoginPage = () => {
                         type="secondary"
                         size="medium"
                         extraClass={styles.buttonSecondary}
-                        onClick={() => navigate("/register", {replace: true})}
+                        onClick={() => navigate("/register", { replace: true })}
                     >
                         Зарегистрироваться
                     </Button>
@@ -63,7 +101,9 @@ const LoginPage = () => {
                         type="secondary"
                         size="medium"
                         extraClass={styles.buttonSecondary}
-                        onClick={() => navigate("/forgot-password", {replace: true})}
+                        onClick={() =>
+                            navigate("/forgot-password", { replace: true })
+                        }
                     >
                         Восстановить пароль
                     </Button>
