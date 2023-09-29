@@ -2,6 +2,15 @@ const checkResponse = (res) => res.ok ? res.json() : new Error(`Ошибка: ${
 
 const checkToken = (message) => message === "JWT expired" ? true : false;
 
+const refetch = async (request) => {
+    try {
+        const data = await request;
+        if (!data.success) throw new Error("error");
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 const setCookie = (name, value, props) => {
     props = props || {};
     let exp = props.expires;
