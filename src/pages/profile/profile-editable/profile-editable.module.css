@@ -1,0 +1,9 @@
+.editableWrapper {
+    display: grid;
+    grid-auto-columns: auto;
+    gap: 24px;
+}
+
+.saveButton {
+    margin-left: auto;
+}

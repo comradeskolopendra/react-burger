@@ -9,7 +9,7 @@
 }
 
 .textColorActive {
-    color: var(--text-primary-color);
+    color: white;
     transition: all 0.1s ease-in;
 }
 

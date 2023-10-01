@@ -48,7 +48,6 @@ export const authSlice = createSlice({
                     registerRequest: false,
                     registerError: false,
                     user: {
-                        ...action.payload.user,
                         accessToken: action.payload.accessToken,
                     },
                 };
@@ -99,11 +98,13 @@ export const authSlice = createSlice({
                 return state;
             })
             .addCase(loginUserThunk.fulfilled, (state, action) => {
+                console.log(action.payload.user)
                 state = {
                     ...state,
                     user: {
                         ...action.payload.user,
-                        accessToken: action.payload.accessToken,
+                        password: action.payload.password,
+                        accessToken: action.payload.accessToken
                     },
                     loginError: false,
                     loginRequest: false,

@@ -34,11 +34,7 @@ function App() {
                 <Route path="/ingredients/:id" element={<IngredientPage />} />
                 <Route path="/profile" element={<ProfileWrapper />}>
                     <Route path="" index element={<ProfileEditable />} />
-                    <Route path="orders" element={<OrderHistory />}>
-                        <Route />
-                        <Route path="mock" element={<MockElement />} />
-                        <Route path=":id" element={<MockElement />} />
-                    </Route>
+                    <Route path="orders" element={<OrderHistory />} />
                     <Route path="quit" element={<QuitPage />} />
                 </Route>
                 <Route path="*" element={<NotFound404 />} />

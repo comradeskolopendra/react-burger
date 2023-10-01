@@ -50,7 +50,7 @@ const loginUserThunk = createAsyncThunk("normaapi/login", async (userInfo) => {
         callback();
     }
 
-    return data;
+    return { ...data, password };
 });
 
 const refreshTokenThunk = createAsyncThunk(

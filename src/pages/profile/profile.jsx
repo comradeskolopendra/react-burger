@@ -3,9 +3,9 @@ import styles from "./profile.module.css";
 
 const ProfileWrapper = () => {
     return (
-        <>
+        <section className={`${styles.contentWrapper} mt-30`}>
             <section>
-                <nav className={styles.nav}>
+                <nav className={`${styles.nav} pr-20`}>
                     <NavLink
                         to={""}
                         end
@@ -15,7 +15,7 @@ const ProfileWrapper = () => {
                                 : `text text_type_main-medium ${styles.link} text_color_inactive`
                         }
                     >
-                        Profile-editable
+                        Профиль
                     </NavLink>
 
                     <NavLink
@@ -27,7 +27,7 @@ const ProfileWrapper = () => {
                                 : `text text_type_main-medium ${styles.link} text_color_inactive`
                         }
                     >
-                        Order-history
+                        История заказов
                     </NavLink>
 
                     <NavLink
@@ -39,12 +39,12 @@ const ProfileWrapper = () => {
                                 : `text text_type_main-medium ${styles.link} text_color_inactive`
                         }
                     >
-                        Quit
+                        Выход
                     </NavLink>
                 </nav>
             </section>
             <Outlet />
-        </>
+        </section>
     );
 };
 
