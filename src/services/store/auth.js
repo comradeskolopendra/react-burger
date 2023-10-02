@@ -98,7 +98,7 @@ export const authSlice = createSlice({
                 return state;
             })
             .addCase(loginUserThunk.fulfilled, (state, action) => {
-                console.log(action.payload.user)
+                console.log(action.payload)
                 state = {
                     ...state,
                     user: {

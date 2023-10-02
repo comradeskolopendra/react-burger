@@ -1,15 +1,17 @@
-const checkResponse = (res) => res.ok ? res.json() : new Error(`Ошибка: ${res.status}`);
+const checkResponse = (res) => {
+    return res.ok ? res.json() : new Error(`Ошибка: ${res.status}`);
+};
 
-const checkToken = (message) => message === "JWT expired" ? true : false;
+const checkToken = (message) => (message === "JWT expired" ? true : false);
 
 const refetch = async (request) => {
     try {
         const data = await request;
         if (!data.success) throw new Error("error");
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
-}
+};
 
 const setCookie = (name, value, props) => {
     props = props || {};
@@ -37,8 +39,23 @@ const setCookie = (name, value, props) => {
     }
 
     document.cookie = updatedCookie;
-}
+};
 
-const request = (url, options = {}) => fetch(url, options).then(checkResponse);
+const getCookie = (name) => {
+    const matches = document.cookie.match(
+        new RegExp(
+            "(?:^|; )" +
+                name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
+                "=([^;]*)"
+        )
+    );
 
-export { request, checkResponse, setCookie };
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+};
+
+const request = (url, options = {}) =>
+    fetch(url, options)
+        .then(checkResponse)
+        .catch((error) => console.log(error));
+
+export { request, checkResponse, setCookie, getCookie };

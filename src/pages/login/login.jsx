@@ -1,82 +1,24 @@
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import styles from "./login.module.css";
-import { loginUserThunk } from "../../services/actions/auth";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-import {
-    Input,
-    Button,
-} from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState } from "react";
+import LoginForm from "./login-form/login-form";
+
+import styles from "./login.module.css";
+
+import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { getStateUser } from "../../selectors/profile-selector";
 
 const LoginPage = () => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const [userLoginForm, setUserLoginForm] = useState({
-        email: "",
-        password: "",
-    });
+    const user = useSelector(getStateUser);
 
-    const handleChangeField = (event) => {
-        const {
-            target: { value, name },
-        } = event;
-
-        setUserLoginForm((prevState) => ({
-            ...prevState,
-            [name]: value,
-        }));
-    };
-
-    const submitLoginForm = (event) => {
-        event.preventDefault();
-        dispatch(
-            loginUserThunk(
-                {
-                    email: userLoginForm.email,
-                    password: userLoginForm.password,
-                    callback: () => navigate("/profile", { replace: true })
-                }
-            )
-        );
-    };
+    if (Object.keys(user).length !== 0) {
+        return <Navigate to="/" replace />;
+    }
 
     return (
         <section className={styles.wrapper}>
-            <form className={styles.form} onSubmit={submitLoginForm}>
-                <h3
-                    className={`text text_type_main-medium mb-6 ${styles.header}`}
-                >
-                    Вход
-                </h3>
-                <Input
-                    type={"text"}
-                    placeholder={"E-mail"}
-                    size={"default"}
-                    extraClass={"mb-6"}
-                    name={"email"}
-                    value={userLoginForm.email}
-                    onChange={handleChangeField}
-                />
-                <Input
-                    type={"password"}
-                    placeholder={"Пароль"}
-                    size={"default"}
-                    extraClass={"mb-6"}
-                    icon={"ShowIcon"}
-                    name={"password"}
-                    value={userLoginForm.password}
-                    onChange={handleChangeField}
-                />
-                <Button
-                    htmlType="submit"
-                    type="primary"
-                    size="medium"
-                    extraClass="mb-20"
-                >
-                    Войти
-                </Button>
-            </form>
+            <LoginForm />
             <section>
                 <div className={`${styles.otherLinks} mb-4`}>
                     <p className="text text_type_main-default text_color_inactive">

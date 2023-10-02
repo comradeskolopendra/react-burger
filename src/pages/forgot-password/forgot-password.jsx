@@ -1,39 +1,24 @@
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-
-import { resetPasswordThunk } from "../../services/actions/auth";
+import { useNavigate, Navigate } from "react-router-dom";
+import { useSelector } from 'react-redux';
+import { getStateUser } from '../../selectors/profile-selector';
 
 import ForgotForm from "./forgot-form/forgot-form";
 
-import {
-    Button,
-    Input,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from "./forgot-password.module.css";
 
 const ForgotPassword = () => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const user = useSelector(getStateUser)
 
-    const [email, setEmail] = useState("");
-
-    const submitResetPasswordForm = (event) => {
-        event.preventDefault();
-        dispatch(resetPasswordThunk(email));
-    };
-
-    const handleChangeEmail = (event) => {
-        const {
-            target: { value },
-        } = event;
-        setEmail(value);
-    };
+    if (Object.keys(user).length !== 0) {
+        return <Navigate to="/" replace />;
+    }
 
     return (
         <section className={styles.wrapper}>
-            <ForgotForm submitResetPasswordForm={submitResetPasswordForm} email={email} handleChangeEmail={handleChangeEmail} />
+            <ForgotForm />
             <div className={`${styles.otherLinks} mb-4`}>
                 <p className="text text_type_main-default text_color_inactive">
                     Вспомнили пароль?

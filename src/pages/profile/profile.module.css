@@ -18,6 +18,10 @@
     padding: 10px 0;
 }
 
+.navWrapper {
+    max-width: 320px;
+}
+
 .nav {
     display: flex;
     flex-direction: column;

@@ -3,7 +3,8 @@ import ingredientsSlice from "./store/ingredients";
 import orderSlice from "./store/order";
 import modalSlice from "./store/modal";
 import constructorSlice from "./store/constructor";
-import auth from "./store/auth";
+import profileSlice from './store/profile';
+import authSlice from "./store/auth";
 import thunk from "redux-thunk";
 
 const rootReducer = combineReducers({
@@ -11,8 +12,9 @@ const rootReducer = combineReducers({
     order: orderSlice,
     modal: modalSlice,
     constructorData: constructorSlice,
-    auth: auth
-})
+    auth: authSlice,
+    profile: profileSlice
+});
 
 export const store = configureStore({
     devTools: true,

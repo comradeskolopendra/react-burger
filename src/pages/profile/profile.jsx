@@ -1,11 +1,13 @@
 import { Outlet, NavLink } from "react-router-dom";
+
 import styles from "./profile.module.css";
+
 
 const ProfileWrapper = () => {
     return (
         <section className={`${styles.contentWrapper} mt-30`}>
-            <section>
-                <nav className={`${styles.nav} pr-20`}>
+            <section className={`${styles.navWrapper} pr-20`}>
+                <nav className={`${styles.nav}`}>
                     <NavLink
                         to={""}
                         end
@@ -42,6 +44,14 @@ const ProfileWrapper = () => {
                         Выход
                     </NavLink>
                 </nav>
+                <div className={`mt-25`}>
+                    <p
+                        className={`text text_type_main-default text_color_inactive`}
+                    >
+                        В этом разделе вы можете изменить свои персональные
+                        данные
+                    </p>
+                </div>
             </section>
             <Outlet />
         </section>

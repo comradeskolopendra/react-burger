@@ -1,4 +1,6 @@
-import { Routes, Route, Navigate, useParams } from "react-router-dom";
+import { Routes, Route} from "react-router-dom";
+
+import ProtectedRoute from '../protected-route/protected-route';
 
 import AppHeader from "../app-header/app-header";
 import {
@@ -10,17 +12,11 @@ import {
     ProfileWrapper,
     ProfileEditable,
     OrderHistory,
+    QuitPage,
+    NotFound
 } from "../../pages";
 
 import "@ya.praktikum/react-developer-burger-ui-components";
-
-const MockElement = () => {
-    const { id } = useParams();
-    console.log(id);
-    return <>1231232312</>;
-};
-const NotFound404 = () => <>error page</>;
-const QuitPage = () => <Navigate to="/login" replace />;
 
 function App() {
     return (
@@ -37,7 +33,7 @@ function App() {
                     <Route path="orders" element={<OrderHistory />} />
                     <Route path="quit" element={<QuitPage />} />
                 </Route>
-                <Route path="*" element={<NotFound404 />} />
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </>
     );

@@ -1,8 +1,29 @@
+import { useState } from "react";
 import styles from "./forgot-form.module.css";
-import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useDispatch } from "react-redux";
+import {
+    Input,
+    Button,
+} from "@ya.praktikum/react-developer-burger-ui-components";
 
+import { resetPasswordThunk } from "../../../services/actions/auth";
 
-const ForgotForm = ({ submitResetPasswordForm, email, handleChangeEmail }) => {
+const ForgotForm = () => {
+    const dispatch = useDispatch();
+
+    const [email, setEmail] = useState("");
+
+    const submitResetPasswordForm = (event) => {
+        event.preventDefault();
+        dispatch(resetPasswordThunk(email));
+    };
+
+    const handleChangeEmail = (event) => {
+        const {
+            target: { value },
+        } = event;
+        setEmail(value);
+    };
     return (
         <>
             <form className={styles.form} onSubmit={submitResetPasswordForm}>
@@ -19,15 +40,12 @@ const ForgotForm = ({ submitResetPasswordForm, email, handleChangeEmail }) => {
                     value={email}
                     onChange={handleChangeEmail}
                 />
-                <Button
-                    htmlType="submit"
-                    extraClass={"mb-20"}
-                >
+                <Button htmlType="submit" extraClass={"mb-20"}>
                     Восстановить
                 </Button>
             </form>
         </>
     );
-}
+};
 
 export default ForgotForm;

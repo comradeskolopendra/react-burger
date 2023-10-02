@@ -6,6 +6,8 @@ import IngredientPage from './ingredient/ingredient';
 import RegisterPage from './register/register';
 import ProfileEditable from './profile/profile-editable/profile-editable';
 import OrderHistory from './profile/order-history/order-history';
+import QuitPage from './profile/quit/quit';
+import NotFound from './not-found/not-found';
 
 export {
     LoginPage,
@@ -15,5 +17,7 @@ export {
     IngredientPage,
     RegisterPage,
     ProfileEditable,
-    OrderHistory
+    OrderHistory,
+    QuitPage,
+    NotFound
 };

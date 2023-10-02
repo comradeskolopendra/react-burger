@@ -1,20 +1,29 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { BASE_URL } from "../../utils/constants";
+import { getUserInfoThunk } from "./profile";
 import { request, setCookie } from "../../helpers/helpers";
 
 const registerUserThunk = createAsyncThunk(
     "normaapi/register",
-    async (userInfo) => {
+    async (userInfo, { dispatch }) => {
+        const { password, email, name, callback } = userInfo;
         const data = await request(`${BASE_URL}/auth/register`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ ...userInfo }),
+            body: JSON.stringify({ password, email, name }),
         });
 
+        if (data.accessToken) {
+            data.accessToken = data.accessToken.split("Bearer ")[1];
+        }
+
         if (data && data.refreshToken) {
-            setCookie("token", data.refreshToken);
+            setCookie("refreshToken", data.refreshToken);
+            setCookie("accessToken", data.accessToken);
+            dispatch(getUserInfoThunk());
+            callback();
         }
 
         return data;
@@ -32,26 +41,39 @@ const resetPasswordThunk = createAsyncThunk(
             body: JSON.stringify({ email }),
         });
 
+        console.log(data);
+
         return data;
     }
 );
 
-const loginUserThunk = createAsyncThunk("normaapi/login", async (userInfo) => {
-    const { email, password, callback } = userInfo;
-    const data = await request(`${BASE_URL}/auth/login`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-    });
+const loginUserThunk = createAsyncThunk(
+    "normaapi/login",
+    async (userInfo, { dispatch }) => {
+        const { email, password, callback } = userInfo;
+        console.log(userInfo);
+        const data = await request(`${BASE_URL}/auth/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, password }),
+        });
 
-    if (typeof callback === "function" && data) {
-        callback();
+        if (data.accessToken) {
+            data.accessToken = data.accessToken.split("Bearer ")[1];
+        }
+
+        if (data && data.refreshToken) {
+            setCookie("refreshToken", data.refreshToken);
+            setCookie("accessToken", data.accessToken);
+            dispatch(getUserInfoThunk());
+            callback();
+        }
+
+        return { ...data };
     }
-
-    return { ...data, password };
-});
+);
 
 const refreshTokenThunk = createAsyncThunk(
     "normaapi/refresh-token",
@@ -65,8 +87,7 @@ const refreshTokenThunk = createAsyncThunk(
         });
 
         if (data && data.refreshToken) {
-            setCookie("token", data.refreshToken);
-            // callback();
+            setCookie("refreshToken", data.refreshToken);
         }
 
         return data;
