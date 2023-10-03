@@ -1,61 +1,45 @@
+import { BASE_URL } from "../utils/constants";
+
 const checkResponse = (res) => {
     return res.ok ? res.json() : new Error(`Ошибка: ${res.status}`);
 };
 
-const checkToken = (message) => (message === "JWT expired" ? true : false);
+const updateToken = async () => {
+    return await request(`${BASE_URL}/auth/token`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ token: localStorage.getItem("refreshToken") })
+    });
+}
 
-const refetch = async (request) => {
+const requestWithRefresh = async (url, options) => {
     try {
-        const data = await request;
-        if (!data.success) throw new Error("error");
+        console.log(url, options)
+        return await request(url, options);
     } catch (error) {
-        console.log(error);
-    }
-};
+        if (error.message === "jwt expired") {
+            const refreshData = await updateToken();
 
-const setCookie = (name, value, props) => {
-    props = props || {};
-    let exp = props.expires;
+            console.log(refreshData);
 
-    if (typeof exp === "number" && exp) {
-        const date = new Date();
-        date.setTime(date.getTime() + exp * 1000);
-        exp = props.expires = date;
-    }
+            if (!refreshData.success) {
+                return Promise.reject(refreshData);
+            }
 
-    if (exp && exp.toUTCString) {
-        props.expires = exp.toUTCString();
-    }
+            localStorage.setItem("accessToken", refreshData.accessToken);
+            localStorage.setItem("refreshToken", refreshData.refreshToken);
 
-    value = encodeURIComponent(value);
+            options.headers.authorization = refreshData.accessToken; // перезаписал токен;
 
-    let updatedCookie = name + "=" + value;
-    for (const propName in props) {
-        updatedCookie += "; " + propName;
-        const propValue = props[propName];
-        if (propValue !== true) {
-            updatedCookie += "=" + propValue;
+            return await request(url, options);
+        } else {
+            return Promise.reject(error)
         }
     }
+}
 
-    document.cookie = updatedCookie;
-};
+const request = (url, options = {}) => fetch(url, options).then(checkResponse);
 
-const getCookie = (name) => {
-    const matches = document.cookie.match(
-        new RegExp(
-            "(?:^|; )" +
-                name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
-                "=([^;]*)"
-        )
-    );
-
-    return matches ? decodeURIComponent(matches[1]) : undefined;
-};
-
-const request = (url, options = {}) =>
-    fetch(url, options)
-        .then(checkResponse)
-        .catch((error) => console.log(error));
-
-export { request, checkResponse, setCookie, getCookie };
+export { request, checkResponse, requestWithRefresh };

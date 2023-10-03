@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 import { registerUserThunk } from "../../../services/actions/auth";
 
@@ -13,7 +12,6 @@ import styles from "./register-form.module.css";
 
 const RegisterForm = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({
         name: "",
         email: "",
@@ -37,12 +35,7 @@ const RegisterForm = () => {
 
     const submitRegisterForm = (event) => {
         event.preventDefault();
-        dispatch(
-            registerUserThunk({
-                ...userInfo,
-                callback: () => navigate("/", { replace: true }),
-            })
-        );
+        dispatch(registerUserThunk(userInfo));
     };
 
     return (

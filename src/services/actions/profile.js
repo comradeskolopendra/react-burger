@@ -1,13 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getCookie, request } from "../../helpers/helpers";
+import { requestWithRefresh } from "../../helpers/helpers";
 import { BASE_URL } from "../../utils/constants";
 
 const getUserInfoThunk = createAsyncThunk("normaapi/user", async () => {
-    const data = await request(`${BASE_URL}/auth/user`, {
+    const data = await requestWithRefresh(`${BASE_URL}/auth/user`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + getCookie("accessToken"),
+            Authorization: localStorage.getItem("accessToken"),
         },
     });
 
@@ -17,11 +17,11 @@ const getUserInfoThunk = createAsyncThunk("normaapi/user", async () => {
 const changeUserInfoThunk = createAsyncThunk(
     "normaapi/patchUser",
     async (userInfo) => {
-        const data = await request(`${BASE_URL}/auth/user`, {
+        const data = await requestWithRefresh(`${BASE_URL}/auth/user`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: "Bearer " + getCookie("accessToken"),
+                Authorization: localStorage.getItem("accessToken"),
             },
             body: JSON.stringify({ ...userInfo }),
         });

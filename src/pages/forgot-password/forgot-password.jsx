@@ -1,6 +1,4 @@
-import { useNavigate, Navigate } from "react-router-dom";
-import { useSelector } from 'react-redux';
-import { getStateUser } from '../../selectors/profile-selector';
+import { useNavigate } from "react-router-dom";
 
 import ForgotForm from "./forgot-form/forgot-form";
 
@@ -10,11 +8,6 @@ import styles from "./forgot-password.module.css";
 
 const ForgotPassword = () => {
     const navigate = useNavigate();
-    const user = useSelector(getStateUser)
-
-    if (Object.keys(user).length !== 0) {
-        return <Navigate to="/" replace />;
-    }
 
     return (
         <section className={styles.wrapper}>

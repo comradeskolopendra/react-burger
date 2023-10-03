@@ -1,22 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
     loginUserThunk,
-    refreshTokenThunk,
     registerUserThunk,
     resetPasswordThunk,
+    logoutUserThunk
 } from "../actions/auth";
 
 const initialState = {
     user: {},
 
-    registerRequest: false,
-    registerError: false,
-
-    resetPasswordRequest: false,
-    resetPasswordError: false,
-
-    loginRequest: false,
-    loginError: false,
+    isRequest: false,
+    isError: false
 };
 
 export const authSlice = createSlice({
@@ -27,29 +21,26 @@ export const authSlice = createSlice({
             .addCase(registerUserThunk.rejected, (state) => {
                 state = {
                     ...state,
-                    registerError: true,
-                    registerRequest: false,
-                    user: {},
+                    isError: true,
+                    isRequest: false,
                 };
                 return state;
             })
             .addCase(registerUserThunk.pending, (state) => {
                 state = {
                     ...state,
-                    registerRequest: true,
-                    registerError: false,
-                    user: {},
+                    isRequest: true,
+                    isError: false,
                 };
                 return state;
             })
             .addCase(registerUserThunk.fulfilled, (state, action) => {
                 state = {
-                    ...state,
-                    registerRequest: false,
-                    registerError: false,
                     user: {
-                        accessToken: action.payload.accessToken,
+                        ...action.payload.user
                     },
+                    isRequest: false,
+                    isError: false,
                 };
                 return state;
             })
@@ -57,24 +48,24 @@ export const authSlice = createSlice({
             .addCase(resetPasswordThunk.rejected, (state) => {
                 state = {
                     ...state,
-                    resetPasswordError: true,
-                    resetPasswordRequest: false,
+                    isError: true,
+                    isRequest: false,
                 };
                 return state;
             })
             .addCase(resetPasswordThunk.pending, (state) => {
                 state = {
                     ...state,
-                    resetPasswordError: false,
-                    resetPasswordRequest: true,
+                    isError: false,
+                    isRequest: true,
                 };
                 return state;
             })
             .addCase(resetPasswordThunk.fulfilled, (state) => {
                 state = {
                     ...state,
-                    resetPasswordError: false,
-                    resetPasswordRequest: false,
+                    isError: false,
+                    isRequest: false,
                 };
                 return state;
             })
@@ -82,8 +73,8 @@ export const authSlice = createSlice({
             .addCase(loginUserThunk.rejected, (state) => {
                 state = {
                     ...state,
-                    loginError: true,
-                    loginRequest: false,
+                    isError: true,
+                    isRequest: false,
                 };
 
                 return state;
@@ -91,8 +82,8 @@ export const authSlice = createSlice({
             .addCase(loginUserThunk.pending, (state) => {
                 state = {
                     ...state,
-                    loginError: false,
-                    loginRequest: true,
+                    isError: false,
+                    isRequest: true,
                 };
 
                 return state;
@@ -100,31 +91,15 @@ export const authSlice = createSlice({
             .addCase(loginUserThunk.fulfilled, (state, action) => {
                 console.log(action.payload)
                 state = {
-                    ...state,
                     user: {
                         ...action.payload.user,
-                        password: action.payload.password,
-                        accessToken: action.payload.accessToken
                     },
-                    loginError: false,
-                    loginRequest: false,
+                    isError: false,
+                    isRequest: false,
                 };
 
                 return state;
             })
-
-            .addCase(refreshTokenThunk.fulfilled, (state, action) => {
-                state = {
-                    ...state,
-
-                    user: {
-                        ...state.user,
-                        accessToken: action.payload.accessToken,
-                    },
-                };
-
-                return state;
-            });
     },
 });
 

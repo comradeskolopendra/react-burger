@@ -1,20 +1,13 @@
-import { Navigate, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import LoginForm from "./login-form/login-form";
 
 import styles from "./login.module.css";
 
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { getStateUser } from "../../selectors/profile-selector";
 
 const LoginPage = () => {
     const navigate = useNavigate();
-    const user = useSelector(getStateUser);
-
-    if (Object.keys(user).length !== 0) {
-        return <Navigate to="/" replace />;
-    }
 
     return (
         <section className={styles.wrapper}>

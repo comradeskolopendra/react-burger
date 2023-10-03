@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { loginUserThunk } from '../../../services/actions/auth';
@@ -12,7 +11,6 @@ import {
 import styles from "./login-form.module.css";
 
 const LoginForm = () => {
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -42,7 +40,6 @@ const LoginForm = () => {
             loginUserThunk({
                 email: userInfo.email,
                 password: userInfo.password,
-                callback: () => navigate("/", { replace: true }),
             })
         );
     };

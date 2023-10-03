@@ -1,20 +1,13 @@
-import { useNavigate, Navigate } from "react-router-dom";
-import { useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 
 import RegisterForm from "./register-form/register-form";
 
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from "./register.module.css";
-import { getStateUser } from '../../selectors/profile-selector';
 
 const RegisterPage = () => {
     const navigate = useNavigate();
-    const user = useSelector(getStateUser);
-
-    if (Object.keys(user).length !== 0) {
-        return <Navigate to="/" replace />;
-    }
 
     return (
         <section className={styles.wrapper}>
