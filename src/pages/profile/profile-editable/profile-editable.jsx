@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+
+import { getUserInfoThunk } from '../../../services/actions/profile';
 
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 

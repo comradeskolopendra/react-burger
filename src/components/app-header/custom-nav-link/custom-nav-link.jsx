@@ -1,6 +1,4 @@
-import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { useLocation } from "react-router-dom";
 
 import { NavLink } from "react-router-dom";
 
@@ -12,19 +10,20 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 const CustomNavLink = ({ to, icon, title }) => {
-    const location = useLocation();
-
     return (
         <NavLink
             to={to}
             end
             className={({ isActive }) => {
-                return isActive ? `${styles.link} text text_type_main-default ${styles.textColorActive}` : `${styles.link} text text_type_main-default text_color_inactive`
+                return isActive
+                    ? `${styles.link} text text_type_main-default ${styles.activeLink}`
+                    : `${styles.link} text text_type_main-default text_color_inactive`;
             }}
+            state={{ from: { pathname: to } }}
         >
-            {icon === "burger" && <BurgerIcon type={location.pathname === to ? "primary" : "secondary"} />}
-            {icon === "profile" && <ProfileIcon type={location.pathname === to ? "primary" : "secondary"} />}
-            {icon === "list" && <ListIcon type={location.pathname === to ? "primary" : "secondary"} />}
+            {icon === "burger" && <BurgerIcon type={"secondary"} />}
+            {icon === "profile" && <ProfileIcon type={"secondary"} />}
+            {icon === "list" && <ListIcon type={"secondary"} />}
             {title}
         </NavLink>
     );

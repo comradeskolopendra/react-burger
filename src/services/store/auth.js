@@ -3,19 +3,28 @@ import {
     loginUserThunk,
     registerUserThunk,
     resetPasswordThunk,
-    logoutUserThunk
 } from "../actions/auth";
 
 const initialState = {
-    user: {},
-
     isRequest: false,
-    isError: false
+    isError: false,
+    isLoaded: false,
+    isAuthChecked: false,
 };
 
 export const authSlice = createSlice({
     name: "auth",
     initialState,
+    reducers: {
+        setAuthChecked(state, action) {
+            state = {
+                ...state,
+                isAuthChecked: action.payload,
+            };
+
+            return state;
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(registerUserThunk.rejected, (state) => {
@@ -36,9 +45,7 @@ export const authSlice = createSlice({
             })
             .addCase(registerUserThunk.fulfilled, (state, action) => {
                 state = {
-                    user: {
-                        ...action.payload.user
-                    },
+                    ...state,
                     isRequest: false,
                     isError: false,
                 };
@@ -89,18 +96,19 @@ export const authSlice = createSlice({
                 return state;
             })
             .addCase(loginUserThunk.fulfilled, (state, action) => {
-                console.log(action.payload)
+                console.log(action.payload);
                 state = {
-                    user: {
-                        ...action.payload.user,
-                    },
+                    ...state,
+                    isLoaded: true,
                     isError: false,
                     isRequest: false,
                 };
 
                 return state;
-            })
+            });
     },
 });
+
+export const { setAuthChecked } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -8,12 +8,11 @@
     transition: all 0.1s ease-in;
 }
 
-.textColorActive {
+.activeLink {
     color: white;
     transition: all 0.1s ease-in;
 }
 
-.textColorInactive {
-    color: var(--text-inactive-color);
-    transition: all 0.1s ease-in;
+.activeLink svg {
+    fill: #ffffff;
 }

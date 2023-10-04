@@ -1,8 +1,7 @@
-import { useEffect } from "react";
-
 import { useDispatch, useSelector } from "react-redux";
 
 import {
+    getStateCurrentIngredient,
     getStateIngredients,
     getStateIngredientsError,
     getStateIngredientsRequest,
@@ -14,7 +13,6 @@ import {
 import { getStateSelectedBun, getStateSelectedIngredients } from "../../selectors/constructor-selectors";
 import { getStateOrderFailed } from '../../selectors/order-selectors';
 
-import { getIngredientsThunk } from "../../services/actions/ingredients";
 import { createOrderThunk } from "../../services/actions/order";
 
 import { setCurrentIngredient } from "../../services/store/ingredients";
@@ -40,6 +38,7 @@ const MainPage = () => {
 
     const visibleIngredient = useSelector(getStateVisibleIngredient);
     const visibleOrder = useSelector(getStateVisibleOrder);
+    const currentIngredient = useSelector(getStateCurrentIngredient)
 
     const selectedBun = useSelector(getStateSelectedBun);
     const selectedIngredients = useSelector(getStateSelectedIngredients);
@@ -79,7 +78,11 @@ const MainPage = () => {
     };
 
     const modalIngredient = (
-        <Modal visible={visibleIngredient} onClose={handleCloseIngredientModal}>
+        <Modal
+            ingredient={currentIngredient}
+            visible={visibleIngredient}
+            onClose={handleCloseIngredientModal}
+        >
             <IngredientDetails onClose={handleCloseIngredientModal} />
         </Modal>
     );
@@ -89,10 +92,6 @@ const MainPage = () => {
             <OrderDetails onClose={handleCloseOrderModal} />
         </Modal>
     );
-
-    useEffect(() => {
-        dispatch(getIngredientsThunk());
-    }, []);
 
     return (
         <>

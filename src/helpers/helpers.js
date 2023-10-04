@@ -1,8 +1,6 @@
 import { BASE_URL } from "../utils/constants";
 
-const checkResponse = (res) => {
-    return res.ok ? res.json() : new Error(`Ошибка: ${res.status}`);
-};
+const checkResponse = (res) => res.ok ? res.json() : new Error(`Ошибка: ${res.status}`);
 
 const updateToken = async () => {
     return await request(`${BASE_URL}/auth/token`, {
@@ -19,6 +17,7 @@ const requestWithRefresh = async (url, options) => {
         console.log(url, options)
         return await request(url, options);
     } catch (error) {
+        console.log(error)
         if (error.message === "jwt expired") {
             const refreshData = await updateToken();
 

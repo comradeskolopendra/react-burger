@@ -2,7 +2,6 @@ import { Outlet, NavLink } from "react-router-dom";
 
 import styles from "./profile.module.css";
 
-
 const ProfileWrapper = () => {
     return (
         <section className={`${styles.contentWrapper} mt-30`}>

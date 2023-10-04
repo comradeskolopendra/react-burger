@@ -3,10 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { getUserInfoThunk, changeUserInfoThunk } from "../actions/profile";
 
 const initialState = {
-    user: {
-        name: "",
-        email: "",
-    },
+    user: null,
     userError: false,
     userRequest: false,
 };
@@ -14,20 +11,33 @@ const initialState = {
 export const profileSlice = createSlice({
     name: "profile",
     initialState,
+    reducers: {
+        clearUser(state, aciton) {
+            state = {
+                ...state,
+                user: null,
+            }
+
+            return state;
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(getUserInfoThunk.rejected, (state, action) => {
                 state = {
-                    ...state,
+                    user: null,
                     userError: true,
                     userRequest: false,
                 };
+
+                localStorage.removeItem("accessToken");
+                localStorage.removeItem("refreshToken");
 
                 return state;
             })
             .addCase(getUserInfoThunk.pending, (state, action) => {
                 state = {
-                    ...state,
+                    user: null,
                     userError: false,
                     userRequest: true,
                 };
@@ -47,7 +57,7 @@ export const profileSlice = createSlice({
 
             .addCase(changeUserInfoThunk.rejected, (state, action) => {
                 state = {
-                    ...state,
+                    user: null,
                     userError: true,
                     userRequest: true,
                 };
@@ -56,7 +66,7 @@ export const profileSlice = createSlice({
             })
             .addCase(changeUserInfoThunk.pending, (state, action) => {
                 state = {
-                    ...state,
+                    user: null,
                     userError: false,
                     userRequest: true,
                 };
@@ -75,5 +85,7 @@ export const profileSlice = createSlice({
             });
     },
 });
+
+export const {clearUser} = profileSlice.actions;
 
 export default profileSlice.reducer;
