@@ -13,30 +13,15 @@ import { useEffect, useMemo, useState } from "react";
 const IngredientDetails = ({ onClose }) => {
     const { id } = useParams();
     const ingredients = useSelector(getStateIngredients);
-    const [isLoading, setIsLoading] = useState(false)
-
-    useEffect(() => {
-        console.log(
-            ingredients,
-            id
-        )
-    })
 
     const selectedIngredient = useMemo(() => {
-        if (ingredients.length === 0) {
-            setIsLoading(true);
-            return null;
-        }
-
-        setIsLoading(false);
-
         return ingredients.find(element => element._id === id)
     }, [ingredients])
 
 
     return (
         <section className={styles.modalBlock}>
-            {isLoading && !selectedIngredient ? "Идет загрузка" : <>
+            {!selectedIngredient ? "Идет загрузка" : <>
                 <div className={styles.wrapperHeading}>
                     <h3 className="text text_type_main-large">Детали игредиента</h3>
                     <button
