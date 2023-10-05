@@ -42,7 +42,7 @@ const MainPage = () => {
 
     const selectedBun = useSelector(getStateSelectedBun);
     const selectedIngredients = useSelector(getStateSelectedIngredients);
-    
+
     const orderFailed = useSelector(getStateOrderFailed);
 
     const handleIngredientClick = (ingredient) => {
@@ -79,7 +79,6 @@ const MainPage = () => {
 
     const modalIngredient = (
         <Modal
-            ingredient={currentIngredient}
             visible={visibleIngredient}
             onClose={handleCloseIngredientModal}
         >

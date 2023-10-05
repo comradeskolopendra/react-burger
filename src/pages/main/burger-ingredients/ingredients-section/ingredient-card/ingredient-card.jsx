@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
-import { useMemo, useEffect } from "react"
+import { useLocation } from "react-router-dom";
+import { useMemo } from "react"
 import { useDrag } from "react-dnd";
 
 import { getStateSelectedBun, getStateSelectedIngredients } from '../../../../../selectors/constructor-selectors';
@@ -12,6 +13,7 @@ import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 
 const IngredientCard = ({ ingredient, onClick }) => {
+    const location = useLocation();
 
     const selectedIngredients = useSelector(getStateSelectedIngredients);
     const selectedBun = useSelector(getStateSelectedBun);
@@ -32,6 +34,7 @@ const IngredientCard = ({ ingredient, onClick }) => {
             ref={ingredientRef}
             onClick={() => onClick(ingredient)}
             className={styles.card}
+            state={{ background: location }}
         >
             <img
                 src={ingredient.image}

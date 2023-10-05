@@ -6,6 +6,7 @@ const getIngredientsThunk = createAsyncThunk(
     "normaapi/ingredients",
     async () => {
         const { data } = await request(`${BASE_URL}/ingredients`);
+
         return data;
     }
 )
