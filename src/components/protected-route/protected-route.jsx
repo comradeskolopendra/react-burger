@@ -13,7 +13,6 @@ const ProtectedRoute = ({ onlyUnAuth = false, component }) => {
         return <>isn`t checked</>;
     }
 
-    console.log(onlyUnAuth, user)
     // маршрут для неавторизованных, но есть данные о пользователе:
     if (onlyUnAuth && user) {
         
@@ -24,7 +23,6 @@ const ProtectedRoute = ({ onlyUnAuth = false, component }) => {
 
     // маршрут для авторизованных, но нет данных о пользователе:
     if (!onlyUnAuth && !user) {
-        console.log("test")
         return <Navigate to={"/login"} state={{ from: location }} />;
     }
 

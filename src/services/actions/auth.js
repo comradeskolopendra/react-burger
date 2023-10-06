@@ -1,25 +1,23 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { BASE_URL } from "../../utils/constants";
-import { getUserInfoThunk } from "./profile";
 import { request, requestWithRefresh } from "../../helpers/helpers";
-import { setAuthChecked } from "../store/auth";
-import { clearUser } from '../store/profile';
+import { clearUser, setUser } from '../store/profile';
 
 const registerUserThunk = createAsyncThunk(
     "normaapi/register",
-    async (userInfo) => {
-        const { password, email, name } = userInfo;
+    async (userInfo, {dispatch}) => {
         const data = await request(`${BASE_URL}/auth/register`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ password, email, name }),
+            body: JSON.stringify(userInfo),
         });
 
         if (data && data.refreshToken) {
             localStorage.setItem("refreshToken", data.refreshToken);
             localStorage.setItem("accessToken", data.accessToken);
+            dispatch(setUser(data));
         }
 
         return data;
@@ -41,19 +39,33 @@ const resetPasswordThunk = createAsyncThunk(
     }
 );
 
-const loginUserThunk = createAsyncThunk("normaapi/login", async (userInfo) => {
-    const { email, password } = userInfo;
+const changePasswordThunk = createAsyncThunk("normaapi/reset-password/reset",
+    async (resetInfo) => {
+        const data = await request(`${BASE_URL}/password-reset/reset`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(resetInfo)
+        })
+
+        return data;
+    }
+)
+
+const loginUserThunk = createAsyncThunk("normaapi/login", async (userInfo, {dispatch}) => {
     const data = await request(`${BASE_URL}/auth/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify(userInfo),
     });
 
     if (data && data.refreshToken) {
         localStorage.setItem("refreshToken", data.refreshToken);
         localStorage.setItem("accessToken", data.accessToken);
+        dispatch(setUser(data));
     }
 
     return data;
@@ -87,4 +99,5 @@ export {
     resetPasswordThunk,
     loginUserThunk,
     logoutUserThunk,
+    changePasswordThunk,
 };

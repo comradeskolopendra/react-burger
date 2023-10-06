@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+    changePasswordThunk,
     loginUserThunk,
     registerUserThunk,
     resetPasswordThunk,
@@ -10,6 +11,7 @@ const initialState = {
     isError: false,
     isLoaded: false,
     isAuthChecked: false,
+    isPasswordSuccessfullyChanged: false,
 };
 
 export const authSlice = createSlice({
@@ -96,12 +98,41 @@ export const authSlice = createSlice({
                 return state;
             })
             .addCase(loginUserThunk.fulfilled, (state, action) => {
-                console.log(action.payload);
                 state = {
                     ...state,
                     isLoaded: true,
                     isError: false,
                     isRequest: false,
+                };
+
+                return state;
+            })
+            .addCase(changePasswordThunk.rejected, (state, action) => {
+                state = {
+                    ...state,
+                    isPasswordSuccessfullyChanged: false,
+                    isRequest: false,
+                    isError: true,
+                };
+
+                return state;
+            })
+            .addCase(changePasswordThunk.pending, (state, action) => {
+                state = {
+                    ...state,
+                    isPasswordSuccessfullyChanged: false,
+                    isRequest: true,
+                    isError: false,
+                };
+
+                return state;
+            })
+            .addCase(changePasswordThunk.fulfilled, (state, action) => {
+                state = {
+                    ...state,
+                    isPasswordSuccessfullyChanged: true,
+                    isRequest: false,
+                    isError: false,
                 };
 
                 return state;

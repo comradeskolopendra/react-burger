@@ -26,6 +26,7 @@ import {
     QuitPage,
     NotFound,
     IngredientDetails,
+    ResetPassword,
 } from "../../pages";
 
 import "@ya.praktikum/react-developer-burger-ui-components";
@@ -77,6 +78,12 @@ function App() {
                     path="/forgot-password"
                     element={
                         <UnAuthProtectedRoute component={<ForgotPassword />} />
+                    }
+                />
+                <Route
+                    path="/reset-password"
+                    element={
+                        <UnAuthProtectedRoute component={<ResetPassword />} />
                     }
                 />
                 <Route

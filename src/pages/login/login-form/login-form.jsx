@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 
-import { loginUserThunk } from '../../../services/actions/auth';
+import { loginUserThunk } from "../../../services/actions/auth";
 
 import {
     Input,
@@ -14,14 +14,14 @@ const LoginForm = () => {
     const dispatch = useDispatch();
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-    const handlePasswordToggle = () => {
-        setIsPasswordVisible(!isPasswordVisible);
-    };
-
     const [userInfo, setUserInfo] = useState({
         email: "",
         password: "",
     });
+
+    const handlePasswordToggle = () => {
+        setIsPasswordVisible(!isPasswordVisible);
+    };
 
     const handleChangeField = (event) => {
         const {
