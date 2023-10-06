@@ -49,8 +49,8 @@ const ResetForm = () => {
 
     useSelector(() => {
         if (isPasswordSuccessfullyChanged) {
-            navigate("/login");
             localStorage.removeItem("resetPasswordAccess");
+            navigate("/login");
         }
     }, [isPasswordSuccessfullyChanged]);
 
