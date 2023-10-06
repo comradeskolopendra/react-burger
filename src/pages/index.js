@@ -7,6 +7,7 @@ import ProfileEditable from './profile/profile-editable/profile-editable';
 import OrderHistory from './profile/order-history/order-history';
 import QuitPage from './profile/quit/quit';
 import NotFound from './not-found/not-found';
+import IngredientDetails from './ingredient-details/ingredient-details';
 
 export {
     LoginPage,
@@ -17,5 +18,6 @@ export {
     ProfileEditable,
     OrderHistory,
     QuitPage,
-    NotFound
+    NotFound,
+    IngredientDetails,
 };

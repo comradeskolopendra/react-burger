@@ -12,6 +12,13 @@
     height: auto;
 }
 
+.pageBlock {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
 .wrapperHeading {
     display: flex;
     justify-content: space-between;

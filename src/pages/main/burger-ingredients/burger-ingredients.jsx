@@ -8,7 +8,7 @@ import TabsWrapper from "./tabs-wrapper/tabs-wrapper";
 
 import styles from "./burger-ingredients.module.css";
 
-const BurgerIngredients = ({ onOpenModal }) => {
+const BurgerIngredients = () => {
     const [current, setCurrent] = useState("buns");
     const bunRef = useRef(null);
     const sauceRef = useRef(null);
@@ -16,10 +16,6 @@ const BurgerIngredients = ({ onOpenModal }) => {
     const ingredientsRef = useRef(null);
 
     const ingredients = useSelector(getStateIngredients);
-
-    const handleOnClick = (ingredient) => {
-        onOpenModal(ingredient);
-    };
 
     const handleScroll = () => {
         if (sauceRef.current.getBoundingClientRect().top < 0) {
@@ -77,27 +73,28 @@ const BurgerIngredients = ({ onOpenModal }) => {
                 current={current}
                 updateCurrent={scrollToBlock}
             />
-            <section ref={ingredientsRef} className={styles.ingredients} onScroll={handleScroll}>
+            <section
+                ref={ingredientsRef}
+                className={styles.ingredients}
+                onScroll={handleScroll}
+            >
                 <IngredientsSection
-                    onClick={handleOnClick}
                     title={"Булки"}
                     ingredients={buns}
                     ref={bunRef}
                 />
                 <IngredientsSection
-                    onClick={handleOnClick}
                     title={"Соусы"}
                     ingredients={sauces}
                     ref={sauceRef}
                 />
                 <IngredientsSection
-                    onClick={handleOnClick}
                     title={"Начинки"}
                     ingredients={mains}
                     ref={mainRef}
                 />
             </section>
-        </div >
+        </div>
     );
 };
 

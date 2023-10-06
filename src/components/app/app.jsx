@@ -2,7 +2,7 @@ import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getIngredientsThunk } from '../../services/actions/ingredients';
+import { getIngredientsThunk } from "../../services/actions/ingredients";
 import {
     UnAuthProtectedRoute,
     AuthProtectedRoute,
@@ -11,6 +11,8 @@ import {
 import { setAuthChecked } from "../../services/store/auth";
 import { getStateIsLoaded } from "../../selectors/auth-selectors";
 import { getUserInfoThunk } from "../../services/actions/profile";
+
+import { setVisibleIngredient } from "../../services/store/modal";
 
 import AppHeader from "../app-header/app-header";
 import {
@@ -23,21 +25,17 @@ import {
     OrderHistory,
     QuitPage,
     NotFound,
+    IngredientDetails,
 } from "../../pages";
 
 import "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
-import IngredientDetails from "../../pages/main/ingredient-details/ingredient-details";
-import { getStateIngredients } from "../../selectors/ingredients-selectors";
-import { getStateVisibleIngredient } from "../../selectors/modal-selectors";
 
 function App() {
     const dispatch = useDispatch();
     const isLoaded = useSelector(getStateIsLoaded);
     const location = useLocation();
     const navigate = useNavigate();
-    const ingredients = useSelector(getStateIngredients);
-    const visibleIngredient = useSelector(getStateVisibleIngredient)
 
     // проверяем, перешел ли пользователь по ссылке, а не открыл в браузере окно
     const background = location.state && location.state.background;
@@ -51,14 +49,14 @@ function App() {
     }, [isLoaded]);
 
     const handleModalClose = () => {
-        // закрыаем модалку переходя на предудыщую страницу в истории.
+        dispatch(setVisibleIngredient(false));
+        // закрыаем модалку и переходим на предудыщую страницу в истории.
         navigate(-1); // На одну запись назад
     };
 
     useEffect(() => {
         dispatch(getIngredientsThunk());
-        console.log(ingredients)
-    }, [visibleIngredient]);
+    }, []);
 
     return (
         <>
@@ -81,7 +79,15 @@ function App() {
                         <UnAuthProtectedRoute component={<ForgotPassword />} />
                     }
                 />
-                <Route path="/ingredients/:id" element={<IngredientDetails />} />
+                <Route
+                    path="/ingredients/:id"
+                    element={
+                        <IngredientDetails
+                            type={"page"}
+                            onClose={handleModalClose}
+                        />
+                    }
+                />
                 <Route
                     path="/profile"
                     element={
@@ -118,7 +124,10 @@ function App() {
                         path="/ingredients/:id"
                         element={
                             <Modal onClose={handleModalClose}>
-                                <IngredientDetails />
+                                <IngredientDetails
+                                    onClose={handleModalClose}
+                                    type={"modal"}
+                                />
                             </Modal>
                         }
                     />
