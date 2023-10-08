@@ -5,7 +5,7 @@ import { clearUser, setUser } from '../store/profile';
 
 const registerUserThunk = createAsyncThunk(
     "normaapi/register",
-    async (userInfo, {dispatch}) => {
+    async (userInfo, { dispatch }) => {
         const data = await request(`${BASE_URL}/auth/register`, {
             method: "POST",
             headers: {
@@ -53,7 +53,7 @@ const changePasswordThunk = createAsyncThunk("normaapi/reset-password/reset",
     }
 )
 
-const loginUserThunk = createAsyncThunk("normaapi/login", async (userInfo, {dispatch}) => {
+const loginUserThunk = createAsyncThunk("normaapi/login", async (userInfo, { dispatch }) => {
     const data = await request(`${BASE_URL}/auth/login`, {
         method: "POST",
         headers: {
@@ -74,7 +74,7 @@ const loginUserThunk = createAsyncThunk("normaapi/login", async (userInfo, {disp
 const logoutUserThunk = createAsyncThunk(
     "normaapi/logout",
     async (_args, { dispatch }) => {
-        const data = await requestWithRefresh(`${BASE_URL}/auth/logout`, {
+        const data = await request(`${BASE_URL}/auth/logout`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

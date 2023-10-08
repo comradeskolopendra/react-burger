@@ -42,12 +42,12 @@ function App() {
     const background = location.state && location.state.background;
 
     useEffect(() => {
-        if (isLoaded) {
+        if (isLoaded || localStorage.getItem("accessToken")) {
             dispatch(getUserInfoThunk());
         }
 
         dispatch(setAuthChecked(true));
-    }, [isLoaded]);
+    }, [isLoaded, localStorage.getItem("accessToken")]);
 
     const handleModalClose = () => {
         dispatch(setVisibleIngredient(false));
