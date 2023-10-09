@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { loginUserThunk } from "../../../services/actions/auth";
 
@@ -9,9 +9,11 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from "./login-form.module.css";
+import { getStateIsError } from "../../../selectors/auth-selectors";
 
 const LoginForm = () => {
     const dispatch = useDispatch();
+    const isErrorAuth = useSelector(getStateIsError);
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
     const [userInfo, setUserInfo] = useState({
@@ -45,7 +47,7 @@ const LoginForm = () => {
     };
 
     return (
-        <form className={styles.form} onSubmit={submitLoginForm}>
+        <form className={`${styles.form} mb-20`} onSubmit={submitLoginForm}>
             <h3 className={`text text_type_main-medium mb-6 ${styles.header}`}>
                 Вход
             </h3>
@@ -69,12 +71,14 @@ const LoginForm = () => {
                 value={userInfo.password}
                 onChange={handleChangeField}
             />
-            <Button
-                htmlType="submit"
-                type="primary"
-                size="medium"
-                extraClass="mb-20"
-            >
+            {isErrorAuth ? (
+                <p className="text text_type_main-small mb-6">
+                    Вы ввели неправильный логин или пароль!
+                </p>
+            ) : (
+                ""
+            )}
+            <Button htmlType="submit" type="primary" size="medium">
                 Войти
             </Button>
         </form>

@@ -84,8 +84,6 @@ const logoutUserThunk = createAsyncThunk(
             }),
         });
 
-        console.log(data);
-
         if (data.success) {
             localStorage.removeItem("refreshToken");
             localStorage.removeItem("accessToken");

@@ -34,8 +34,6 @@ const EditableInput = ({
             callback(true);
         }
 
-        console.log(value, changeTracker)
-
         if (onChange && typeof onChange === "function") {
             onChange((prevState) => ({ ...prevState, [name]: value }));
         }
