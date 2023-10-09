@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
     changePasswordThunk,
     loginUserThunk,
+    logoutUserThunk,
     registerUserThunk,
     resetPasswordThunk,
 } from "../actions/auth";
@@ -136,7 +137,16 @@ export const authSlice = createSlice({
                 };
 
                 return state;
-            });
+            })
+
+            .addCase(logoutUserThunk.fulfilled, (state, action) => {
+                state = {
+                    ...state,
+                    isLoaded: false,
+                };
+
+                return state;
+            })
     },
 });
 

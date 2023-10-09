@@ -18,14 +18,21 @@ const ProfileEditable = () => {
     const [values, setValues] = useState({
         name: user.name,
         email: user.email,
+        password: ""
     });
 
     const handleOnReject = () => {
-        setValues({ ...user });
+        setValues({ ...user, password: "" });
+        setIsChanged(false)
     };
 
     const handleOnSubmit = (event) => {
         event.preventDefault();
+        const {name, email, password} = values;
+        if (password === "") {
+            return dispatch(changeUserInfoThunk({name, email}));
+        }
+
         dispatch(changeUserInfoThunk(values));
     };
 
@@ -53,8 +60,11 @@ const ProfileEditable = () => {
             />
             <EditableInput
                 placeholder={"Пароль"}
+                initialValue={values.password}
                 initialType={"password"}
-                initialValue={"123456"}
+                onChange={setValues}
+                name={"password"}
+                changeTracker={""}
                 icon={"EditIcon"}
                 disabled
                 callback={setIsChanged}

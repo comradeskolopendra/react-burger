@@ -1,24 +1,28 @@
 import { BASE_URL } from "../utils/constants";
 
-const checkResponse = (res) => res.ok ? res.json() : new Error(`Ошибка: ${res.status}`);
+const checkResponse = (res) => {
+    console.log(res);
+    return res.ok ? res.json() : new Error(`Ошибка: ${res.status}`);
+};
 
 const updateToken = async () => {
+    console.log("token");
     return await request(`${BASE_URL}/auth/token`, {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         },
-        body: JSON.stringify({ token: localStorage.getItem("refreshToken") })
+        body: JSON.stringify({ token: localStorage.getItem("refreshToken") }),
     });
-}
+};
 
 const requestWithRefresh = async (url, options) => {
     try {
-        console.log(url, options)
+        console.log(url, options);
         return await request(url, options);
     } catch (error) {
-        console.log(error)
-        if (error.message === "jwt expired") {
+        console.log("error", error);
+        if (error.status) {
             const refreshData = await updateToken();
 
             console.log(refreshData);
@@ -27,6 +31,8 @@ const requestWithRefresh = async (url, options) => {
                 return Promise.reject(refreshData);
             }
 
+            console.log(localStorage);
+
             localStorage.setItem("accessToken", refreshData.accessToken);
             localStorage.setItem("refreshToken", refreshData.refreshToken);
 
@@ -34,10 +40,10 @@ const requestWithRefresh = async (url, options) => {
 
             return await request(url, options);
         } else {
-            return Promise.reject(error)
+            return Promise.reject(error);
         }
     }
-}
+};
 
 const request = (url, options = {}) => fetch(url, options).then(checkResponse);
 

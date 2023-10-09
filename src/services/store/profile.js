@@ -84,6 +84,7 @@ export const profileSlice = createSlice({
             })
             .addCase(changeUserInfoThunk.fulfilled, (state, action) => {
                 const { user } = action.payload;
+                console.log(user);
                 state = {
                     user: { ...user },
                     userError: false,

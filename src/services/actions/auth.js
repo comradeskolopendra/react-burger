@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { BASE_URL } from "../../utils/constants";
-import { request, requestWithRefresh } from "../../helpers/helpers";
+import { request } from "../../helpers/helpers";
 import { clearUser, setUser } from '../store/profile';
 
 const registerUserThunk = createAsyncThunk(
@@ -83,6 +83,8 @@ const logoutUserThunk = createAsyncThunk(
                 token: localStorage.getItem("refreshToken"),
             }),
         });
+
+        console.log(data);
 
         if (data.success) {
             localStorage.removeItem("refreshToken");
