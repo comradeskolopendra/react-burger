@@ -35,7 +35,6 @@ const IngredientsSection = React.forwardRef((props, ref) => {
 IngredientsSection.propTypes = {
     title: PropTypes.string,
     ingredients: PropTypes.arrayOf(ingredientType).isRequired,
-    onClick: PropTypes.func.isRequired,
 };
 
 export default IngredientsSection;

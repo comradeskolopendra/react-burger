@@ -9,17 +9,16 @@ import {
     ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-const CustomNavLink = ({ to, icon, title }) => {
+const CustomNavLink = ({ to, icon, title, end }) => {
     return (
         <NavLink
             to={to}
-            end
-            className={({ isActive }) => {
-                return isActive
-                    ? `${styles.link} text text_type_main-default ${styles.activeLink}`
-                    : `${styles.link} text text_type_main-default text_color_inactive`;
-            }}
+            className={({ isActive }) => isActive
+                ? `${styles.link} text text_type_main-default ${styles.activeLink}`
+                : `${styles.link} text text_type_main-default text_color_inactive`
+            }
             state={{ from: { pathname: to } }}
+            end={end}
         >
             {icon === "burger" && <BurgerIcon type={"secondary"} />}
             {icon === "profile" && <ProfileIcon type={"secondary"} />}
@@ -29,10 +28,11 @@ const CustomNavLink = ({ to, icon, title }) => {
     );
 };
 
-NavLink.propTypes = {
+CustomNavLink.propTypes = {
     to: PropTypes.string.isRequired,
     icon: PropTypes.string,
     title: PropTypes.string.isRequired,
+    end: PropTypes.bool.isRequired
 };
 
 export default CustomNavLink;

@@ -98,8 +98,4 @@ const BurgerIngredients = () => {
     );
 };
 
-BurgerIngredients.propTypes = {
-    onOpenModal: PropTypes.func.isRequired,
-};
-
 export default BurgerIngredients;

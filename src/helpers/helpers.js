@@ -4,12 +4,10 @@ const checkResponse = (res) =>
     res.ok
         ? res.json()
         : res.json().then((error) => {
-              console.log(error);
-              throw new Error(error.message);
-          });
+            throw new Error(error.message);
+        });
 
 const updateToken = async () => {
-    console.log("token");
     return await request(`${BASE_URL}/auth/token`, {
         method: "POST",
         headers: {
@@ -21,11 +19,10 @@ const updateToken = async () => {
 
 const requestWithRefresh = async (url, options) => {
     try {
-        console.log(url, options);
         return await request(url, options);
     } catch (error) {
         console.log("test");
-        console.log("error", error);
+        console.log("error", error, error.message);
         if (error.message === "jwt expired") {
             const refreshData = await updateToken();
 

@@ -12,11 +12,13 @@ const AppHeader = () => {
                         to={"/"}
                         icon={"burger"}
                         title={"Конструктор"}
+                        end={true}
                     />
                     <CustomNavLink
                         to={"/lenta"}
                         icon={"list"}
                         title={"Лента заказов"}
+                        end={true}
                     />
                 </div>
 
@@ -27,6 +29,7 @@ const AppHeader = () => {
                         to={"/profile"}
                         icon={"profile"}
                         title={"Личный кабинет"}
+                        end={false}
                     />
                 </div>
             </nav>
