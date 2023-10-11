@@ -5,12 +5,9 @@ import { BASE_URL } from "../../utils/constants";
 const getIngredientsThunk = createAsyncThunk(
     "normaapi/ingredients",
     async () => {
-        try {
-            const { data } = await request(`${BASE_URL}/ingredients`);
-            return data;
-        } catch (error) {
-            console.error(error);
-        }
+        const { data } = await request(`${BASE_URL}/ingredients`);
+
+        return data;
     }
 )
 
