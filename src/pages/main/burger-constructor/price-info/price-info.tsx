@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { IIngredient, IUser, TConstructorIngredient } from "../../../../utils/types";
 
 interface IPriceInfo {
-    onOpenModal: (...args: any) => any;
+    onOpenModal: () => void;
 }
 
 const PriceInfo: FC<IPriceInfo> = ({ onOpenModal }) => {
@@ -29,7 +29,7 @@ const PriceInfo: FC<IPriceInfo> = ({ onOpenModal }) => {
 
     const handleOrder = () => {
         if (user) {
-            return onOpenModal(true)
+            return onOpenModal()
         }
 
         return navigate("/login")

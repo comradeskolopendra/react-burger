@@ -4,8 +4,6 @@ import IngredientCard from "./ingredient-card/ingredient-card";
 
 import { IIngredient } from '../../../../utils/types';
 import styles from "./ingredients-section.module.css";
-import { useDispatch } from 'react-redux';
-import { setVisibleIngredient } from '../../../../services/store/modal';
 
 interface IIngredientsSection {
     title: string;
@@ -14,11 +12,6 @@ interface IIngredientsSection {
 }
 
 const IngredientsSection = React.forwardRef<HTMLDivElement, IIngredientsSection>(({ title, ingredients }, ref) => {
-    const dispatch = useDispatch();
-
-    const handleOnClick = () => {
-        dispatch(setVisibleIngredient(true))
-    };
 
     return (
         <div ref={ref}>
@@ -26,7 +19,6 @@ const IngredientsSection = React.forwardRef<HTMLDivElement, IIngredientsSection>
             <div className={`${styles.wrapper} pl-4 pr-4 pt-6 pb-10`}>
                 {ingredients.map((ingredient) => (
                     <IngredientCard
-                        onClick={handleOnClick}
                         key={ingredient._id}
                         ingredient={ingredient}
                     />

@@ -11,7 +11,7 @@ import { getStateIngredients } from "../../selectors/ingredients-selectors";
 import { FC, useMemo } from "react";
 
 interface IIngredientsDetails {
-    onClose: (...args: any) => any;
+    onClose: () => void;
     type: string;
 }
 

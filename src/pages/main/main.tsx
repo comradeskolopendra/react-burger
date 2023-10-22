@@ -39,7 +39,7 @@ const MainPage: FC = () => {
 
     const orderFailed: boolean = useSelector(getStateOrderFailed);
 
-    const handleOrderClick = async () => {
+    const handleOrderClick = () => {
         const ingredientIds = [...selectedIngredients, selectedBun].map(
             (element: IIngredient | TConstructorIngredient) => element._id
         );
@@ -51,7 +51,7 @@ const MainPage: FC = () => {
             return;
         }
 
-        return dispatch(setVisibleOrder(true));
+        dispatch(setVisibleOrder(true));
     };
 
     const handleCloseOrderModal = () => {

@@ -8,7 +8,7 @@ import done from "../../../images/done.png";
 import styles from "./order-details.module.css";
 
 interface IOrderDetails {
-    onClose: (...args: any) => any;
+    onClose: () => void;
 }
 
 interface IOrder {

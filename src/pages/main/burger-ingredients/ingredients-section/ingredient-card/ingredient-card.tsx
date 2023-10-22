@@ -14,10 +14,9 @@ import { Link } from 'react-router-dom';
 
 interface IIngredientCard {
     ingredient: IIngredient;
-    onClick: (...args: any) => any;
 }
 
-const IngredientCard: FC<IIngredientCard> = ({ ingredient, onClick }) => {
+const IngredientCard: FC<IIngredientCard> = ({ ingredient }) => {
     const location = useLocation();
 
     const selectedIngredients: TConstructorIngredient[] = useSelector(getStateSelectedIngredients);
@@ -37,7 +36,6 @@ const IngredientCard: FC<IIngredientCard> = ({ ingredient, onClick }) => {
             to={`/ingredients/${ingredient._id}`}
             key={ingredient._id}
             ref={ingredientRef}
-            onClick={() => onClick(ingredient)}
             className={styles.card}
             state={{ background: location }}
         >

@@ -12,7 +12,7 @@ import styles from "./ingredient-element.module.css";
 interface IIngredientElement {
     ingredient: TConstructorIngredient;
     index: number;
-    moveCard: (...args: any) => any;
+    moveCard: (dragIndex: number, hoverIndex: number) => void;
 }
 
 interface IDragableItem {
@@ -37,8 +37,6 @@ const IngredientElement: FC<IIngredientElement> = ({ ingredient, index, moveCard
             if (!ref.current) {
                 return;
             }
-
-            console.log(item);
 
             const dragIndex = (item as IDragableItem).index;
             const hoverIndex = index;

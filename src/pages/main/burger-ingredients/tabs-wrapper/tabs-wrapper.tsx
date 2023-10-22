@@ -11,7 +11,7 @@ interface ITab {
 interface ITabsWrapper {
     tabsInfo: ITab[];
     current: string;
-    updateCurrent: (...args: any) => any;
+    updateCurrent: (value: string) => void;
 }
 
 const TabsWrapper: FC<ITabsWrapper> = ({ tabsInfo, current, updateCurrent }) => {

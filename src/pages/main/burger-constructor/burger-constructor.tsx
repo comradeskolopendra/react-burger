@@ -12,7 +12,7 @@ import BunWrapper from "./bun-wrapper/bun-wrapper";
 import { IIngredient, TConstructorIngredient } from "../../../utils/types";
 
 interface IBurgerConstructor {
-    onOpenModal: (...args: any) => any;
+    onOpenModal: () => void;
 }
 
 const BurgerConstructor: FC<IBurgerConstructor> = ({ onOpenModal }) => {

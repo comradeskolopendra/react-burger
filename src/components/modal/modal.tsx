@@ -1,11 +1,11 @@
-import { ReactNode, useEffect, useRef, FC } from "react";
+import { ReactNode, useEffect, FC } from "react";
 import ReactDOM from "react-dom";
 
 import ModalOverlay from "../modal-overlay/modal-overlay";
 
 interface IModal {
     children: ReactNode;
-    onClose: (...args: any) => any;
+    onClose: () => void;
 }
 
 
