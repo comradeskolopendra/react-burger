@@ -1,6 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IIngredient, TConstructorIngredient } from '../../utils/types';
 
-const initialState = {
+type TConstructorState = {
+    selectedBun: IIngredient | null;
+    selectedIngredients: TConstructorIngredient[];
+};
+
+type TSortIngredients = {
+    hoverIndex: number;
+    dragIndex: number;
+}
+
+const initialState: TConstructorState = {
     selectedBun: null,
     selectedIngredients: []
 }
@@ -9,14 +20,14 @@ export const constructorSlice = createSlice({
     name: "constructor",
     initialState,
     reducers: {
-        clearConstructor(state, action) {
+        clearConstructor(state) {
             state.selectedBun = null;
             state.selectedIngredients = [];
 
             return state;
         },
 
-        setConstructorIngredient(state, action) {
+        setConstructorIngredient(state, action: PayloadAction<TConstructorIngredient>) {
             state = {
                 ...state,
                 selectedIngredients: [...state.selectedIngredients, action.payload],
@@ -25,7 +36,7 @@ export const constructorSlice = createSlice({
             return state;
         },
 
-        sortConstuctorIngredient(state, action) {
+        sortConstuctorIngredient(state, action: PayloadAction<TSortIngredients>) {
             const { hoverIndex, dragIndex } = action.payload;
             const ingredients = [...state.selectedIngredients];
 
@@ -39,7 +50,7 @@ export const constructorSlice = createSlice({
             return state;
         },
 
-        removeConstructorIngredient(state, action) {
+        removeConstructorIngredient(state, action: PayloadAction<string>) {
             state = {
                 ...state,
                 selectedIngredients: [...state.selectedIngredients].filter(element => element.uuid !== action.payload),
@@ -48,7 +59,7 @@ export const constructorSlice = createSlice({
             return state;
         },
 
-        setConstructorBun(state, action) {
+        setConstructorBun(state, action: PayloadAction<IIngredient>) {
             state = {
                 ...state,
                 selectedBun: action.payload,
