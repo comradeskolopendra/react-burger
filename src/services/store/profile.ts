@@ -1,8 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
-
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getUserInfoThunk, changeUserInfoThunk } from "../actions/profile";
+import { IUser } from "../../utils/types";
 
-const initialState = {
+interface IProfileState {
+    user: IUser | null;
+    userError: boolean;
+    userRequest: boolean;
+}
+
+const initialState: IProfileState = {
     user: null,
     userError: false,
     userRequest: false,
@@ -12,7 +18,7 @@ export const profileSlice = createSlice({
     name: "profile",
     initialState,
     reducers: {
-        clearUser(state, aciton) {
+        clearUser(state) {
             state = {
                 ...state,
                 user: null,
@@ -20,8 +26,8 @@ export const profileSlice = createSlice({
 
             return state;
         },
-        setUser(state, action) {
-            const { user } = action.payload;
+        setUser(state, action: PayloadAction<IUser>) {
+            const user = action.payload;
             state = {
                 ...state,
                 user: { ...user },
@@ -32,7 +38,7 @@ export const profileSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(getUserInfoThunk.rejected, (state, action) => {
+            .addCase(getUserInfoThunk.rejected, (state) => {
                 state = {
                     user: null,
                     userError: true,
@@ -44,7 +50,7 @@ export const profileSlice = createSlice({
 
                 return state;
             })
-            .addCase(getUserInfoThunk.pending, (state, action) => {
+            .addCase(getUserInfoThunk.pending, (state) => {
                 state = {
                     user: null,
                     userError: false,
@@ -54,7 +60,7 @@ export const profileSlice = createSlice({
                 return state;
             })
             .addCase(getUserInfoThunk.fulfilled, (state, action) => {
-                const { user } = action.payload;
+                const user = action.payload;
                 state = {
                     user: { ...user },
                     userError: false,
@@ -64,7 +70,7 @@ export const profileSlice = createSlice({
                 return state;
             })
 
-            .addCase(changeUserInfoThunk.rejected, (state, action) => {
+            .addCase(changeUserInfoThunk.rejected, (state) => {
                 state = {
                     user: null,
                     userError: true,
@@ -73,7 +79,7 @@ export const profileSlice = createSlice({
 
                 return state;
             })
-            .addCase(changeUserInfoThunk.pending, (state, action) => {
+            .addCase(changeUserInfoThunk.pending, (state) => {
                 state = {
                     user: null,
                     userError: false,
@@ -83,7 +89,7 @@ export const profileSlice = createSlice({
                 return state;
             })
             .addCase(changeUserInfoThunk.fulfilled, (state, action) => {
-                const { user } = action.payload;
+                const user = action.payload;
 
                 state = {
                     user: { ...user },

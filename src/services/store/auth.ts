@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
     changePasswordThunk,
     loginUserThunk,
@@ -7,7 +7,15 @@ import {
     resetPasswordThunk,
 } from "../actions/auth";
 
-const initialState = {
+interface IAuthState {
+    isRequest: boolean;
+    isError: boolean;
+    isLoaded: boolean;
+    isAuthChecked: boolean;
+    isPasswordSuccessfullyChanged: boolean;
+}
+
+const initialState: IAuthState = {
     isRequest: false,
     isError: false,
     isLoaded: false,
@@ -19,7 +27,7 @@ export const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        setAuthChecked(state, action) {
+        setAuthChecked(state, action: PayloadAction<boolean>) {
             state = {
                 ...state,
                 isAuthChecked: action.payload,
@@ -46,7 +54,7 @@ export const authSlice = createSlice({
                 };
                 return state;
             })
-            .addCase(registerUserThunk.fulfilled, (state, action) => {
+            .addCase(registerUserThunk.fulfilled, (state) => {
                 state = {
                     ...state,
                     isRequest: false,
@@ -98,7 +106,7 @@ export const authSlice = createSlice({
 
                 return state;
             })
-            .addCase(loginUserThunk.fulfilled, (state, action) => {
+            .addCase(loginUserThunk.fulfilled, (state) => {
                 state = {
                     ...state,
                     isLoaded: true,
@@ -108,7 +116,7 @@ export const authSlice = createSlice({
 
                 return state;
             })
-            .addCase(changePasswordThunk.rejected, (state, action) => {
+            .addCase(changePasswordThunk.rejected, (state) => {
                 state = {
                     ...state,
                     isPasswordSuccessfullyChanged: false,
@@ -118,7 +126,7 @@ export const authSlice = createSlice({
 
                 return state;
             })
-            .addCase(changePasswordThunk.pending, (state, action) => {
+            .addCase(changePasswordThunk.pending, (state) => {
                 state = {
                     ...state,
                     isPasswordSuccessfullyChanged: false,
@@ -128,7 +136,7 @@ export const authSlice = createSlice({
 
                 return state;
             })
-            .addCase(changePasswordThunk.fulfilled, (state, action) => {
+            .addCase(changePasswordThunk.fulfilled, (state) => {
                 state = {
                     ...state,
                     isPasswordSuccessfullyChanged: true,
@@ -139,9 +147,10 @@ export const authSlice = createSlice({
                 return state;
             })
 
-            .addCase(logoutUserThunk.fulfilled, (state, action) => {
+            .addCase(logoutUserThunk.fulfilled, (state) => {
                 state = {
                     ...state,
+                    isError: false,
                     isLoaded: false,
                 };
 

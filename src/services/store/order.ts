@@ -1,7 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { createOrderThunk } from "../actions/order";
 
-const initialState = {
+type TOrder = {
+    number?: number;
+}
+
+interface IOrderState {
+    order: TOrder;
+    orderRequest: boolean;
+    orderFailed: boolean;
+}
+
+const initialState: IOrderState = {
     order: {},
     orderRequest: false,
     orderFailed: false
@@ -11,14 +21,14 @@ export const orderSlice = createSlice({
     name: 'order',
     initialState,
     reducers: {
-        clearOrder(state, action) {
+        clearOrder(state) {
             state = initialState;
             return state;
         }
     },
     extraReducers: (builder) => {
         builder
-            .addCase(createOrderThunk.pending, (state, action) => {
+            .addCase(createOrderThunk.pending, (state) => {
                 state = {
                     ...state,
                     orderRequest: true,
@@ -27,7 +37,7 @@ export const orderSlice = createSlice({
 
                 return state;
             })
-            .addCase(createOrderThunk.rejected, (state, action) => {
+            .addCase(createOrderThunk.rejected, (state) => {
                 state = {
                     ...state,
                     orderRequest: false,
@@ -36,7 +46,7 @@ export const orderSlice = createSlice({
 
                 return state;
             })
-            .addCase(createOrderThunk.fulfilled, (state, action) => {
+            .addCase(createOrderThunk.fulfilled, (state, action: PayloadAction<TOrder>) => {
                 state = {
                     orderRequest: false,
                     orderFailed: false,

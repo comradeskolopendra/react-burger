@@ -1,6 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState = {
+interface IModalState {
+    visibleIngredient: boolean;
+    visibleOrder: boolean;
+}
+
+const initialState: IModalState = {
     visibleIngredient: false,
     visibleOrder: false,
 }
@@ -9,7 +14,7 @@ export const modalSlice = createSlice({
     name: "modal",
     initialState,
     reducers: {
-        setVisibleIngredient(state, action) {
+        setVisibleIngredient(state, action: PayloadAction<boolean>) {
             state = {
                 ...state,
                 visibleIngredient: action.payload
@@ -18,7 +23,7 @@ export const modalSlice = createSlice({
             return state;
         },
 
-        setVisibleOrder(state, action) {
+        setVisibleOrder(state, action: PayloadAction<boolean>) {
             state = {
                 ...state,
                 visibleOrder: action.payload

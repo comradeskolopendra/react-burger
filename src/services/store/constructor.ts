@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IIngredient, TConstructorIngredient } from '../../utils/types';
 
-type TConstructorState = {
+interface IConstructorState {
     selectedBun: IIngredient | null;
     selectedIngredients: TConstructorIngredient[];
 };
@@ -11,7 +11,7 @@ type TSortIngredients = {
     dragIndex: number;
 }
 
-const initialState: TConstructorState = {
+const initialState: IConstructorState = {
     selectedBun: null,
     selectedIngredients: []
 }

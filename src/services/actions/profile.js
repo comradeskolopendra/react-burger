@@ -17,7 +17,7 @@ const getUserInfoThunk = createAsyncThunk("normaapi/user", async () => {
 
 const changeUserInfoThunk = createAsyncThunk(
     "normaapi/patchUser",
-    async (userInfo, {dispatch}) => {
+    async (userInfo, { dispatch }) => {
         const data = await requestWithRefresh(`${BASE_URL}/auth/user`, {
             method: "PATCH",
             headers: {
@@ -27,11 +27,13 @@ const changeUserInfoThunk = createAsyncThunk(
             body: JSON.stringify(userInfo),
         });
 
+        const { user } = data;
+
         if (data && data.success) {
-            dispatch(setUser(data))
+            dispatch(setUser(user))
         }
 
-        return data;
+        return user;
     }
 );
 

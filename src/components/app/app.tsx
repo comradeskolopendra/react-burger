@@ -32,7 +32,7 @@ import {
 import "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 
-function App() {
+const App: FC = () => {
     const dispatch = useDispatch();
     const isLoaded: boolean = useSelector(getStateIsLoaded);
     const location = useLocation();

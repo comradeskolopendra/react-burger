@@ -1,30 +1,26 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { getIngredientsThunk } from "../actions/ingredients";
+import { IIngredient } from "../../utils/types";
 
-const initialState = {
+interface IIngredientsState {
+    ingredientsRequest: boolean;
+    ingredientsFailed: boolean;
+    ingredients: IIngredient[];
+};
+
+const initialState: IIngredientsState = {
     ingredientsRequest: false,
     ingredientsFailed: false,
     ingredients: [],
-
-    currentIngredient: null,
 };
 
 export const ingredientsSlice = createSlice({
     name: "ingredients",
     initialState,
-    reducers: {
-        setCurrentIngredient(state, action) {
-            state = {
-                ...state,
-                currentIngredient: action.payload,
-            };
-
-            return state;
-        },
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(getIngredientsThunk.pending, (state, action) => {
+            .addCase(getIngredientsThunk.pending, (state) => {
                 state = {
                     ...state,
                     ingredientsFailed: false,
@@ -33,7 +29,7 @@ export const ingredientsSlice = createSlice({
 
                 return state;
             })
-            .addCase(getIngredientsThunk.rejected, (state, action) => {
+            .addCase(getIngredientsThunk.rejected, (state) => {
                 state = {
                     ...state,
                     ingredientsFailed: true,
@@ -42,7 +38,7 @@ export const ingredientsSlice = createSlice({
 
                 return state;
             })
-            .addCase(getIngredientsThunk.fulfilled, (state, action) => {
+            .addCase(getIngredientsThunk.fulfilled, (state, action: PayloadAction<IIngredient[]>) => {
                 state = {
                     ...state,
                     ingredientsFailed: false,
@@ -54,9 +50,5 @@ export const ingredientsSlice = createSlice({
             });
     },
 });
-
-export const {
-    setCurrentIngredient
-} = ingredientsSlice.actions;
 
 export default ingredientsSlice.reducer;
