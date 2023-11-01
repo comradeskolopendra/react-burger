@@ -70,5 +70,6 @@ export const constructorSlice = createSlice({
     }
 })
 
+export type TConstructorActions = typeof constructorSlice.actions;
 export const { removeConstructorIngredient, setConstructorBun, setConstructorIngredient, sortConstuctorIngredient, clearConstructor } = constructorSlice.actions;
 export default constructorSlice.reducer;

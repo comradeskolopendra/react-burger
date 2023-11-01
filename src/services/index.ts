@@ -7,7 +7,7 @@ import profileSlice from './store/profile';
 import authSlice from "./store/auth";
 import thunk from "redux-thunk";
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
     ingredients: ingredientsSlice,
     order: orderSlice,
     modal: modalSlice,

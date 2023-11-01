@@ -102,6 +102,7 @@ export const profileSlice = createSlice({
     },
 });
 
+export type TProfileActions = typeof profileSlice.actions;
 export const { clearUser, setUser } = profileSlice.actions;
 
 export default profileSlice.reducer;

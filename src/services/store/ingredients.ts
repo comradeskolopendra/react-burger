@@ -51,4 +51,5 @@ export const ingredientsSlice = createSlice({
     },
 });
 
+export type TIngredientsActions = typeof ingredientsSlice.actions;
 export default ingredientsSlice.reducer;

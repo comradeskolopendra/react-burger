@@ -43,7 +43,6 @@ const App: FC = () => {
 
     useEffect(() => {
         if (isLoaded || localStorage.getItem("accessToken")) {
-            // @ts-ignore
             dispatch(getUserInfoThunk());
         }
 
@@ -57,7 +56,6 @@ const App: FC = () => {
     };
 
     useEffect(() => {
-        // @ts-ignore
         dispatch(getIngredientsThunk());
     }, []);
 

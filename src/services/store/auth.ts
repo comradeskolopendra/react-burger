@@ -159,6 +159,8 @@ export const authSlice = createSlice({
     },
 });
 
+
+export type TAuthActions = typeof authSlice.actions;
 export const { setAuthChecked } = authSlice.actions;
 
 export default authSlice.reducer;

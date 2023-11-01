@@ -1,10 +1,10 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAppAsyncThunk } from ".";
 import { requestWithRefresh } from "../../helpers/helpers";
 import { BASE_URL } from "../../utils/constants";
 import { setUser } from "../store/profile";
 import type { IUser } from "../../utils/types";
 
-const getUserInfoThunk = createAsyncThunk<IUser, unknown>(
+const getUserInfoThunk = createAppAsyncThunk<IUser, undefined>(
     "normaapi/user",
     async () => {
         const data = await requestWithRefresh(`${BASE_URL}/auth/user`, {
@@ -21,7 +21,7 @@ const getUserInfoThunk = createAsyncThunk<IUser, unknown>(
     }
 );
 
-const changeUserInfoThunk = createAsyncThunk<IUser, IUser>(
+const changeUserInfoThunk = createAppAsyncThunk<IUser, IUser>(
     "normaapi/patchUser",
     async (userInfo, { dispatch }) => {
         const data = await requestWithRefresh(`${BASE_URL}/auth/user`, {
@@ -34,8 +34,6 @@ const changeUserInfoThunk = createAsyncThunk<IUser, IUser>(
         });
 
         const { user } = data;
-
-        console.log(userInfo, data);
 
         if (data && data.success) {
             dispatch(setUser(user));
