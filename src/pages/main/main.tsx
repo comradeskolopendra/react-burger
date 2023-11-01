@@ -44,7 +44,6 @@ const MainPage: FC = () => {
             (element: TConstructorIngredient | IIngredient | null) => element!._id
         );
 
-        // @ts-ignore
         dispatch(createOrderThunk(ingredientIds));
 
         if (orderFailed) {

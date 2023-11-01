@@ -38,9 +38,7 @@ const LoginForm: FC = () => {
 
     const submitLoginForm = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // @ts-ignore
         dispatch(
-            // @ts-ignore
             loginUserThunk({
                 email: userInfo.email,
                 password: userInfo.password,

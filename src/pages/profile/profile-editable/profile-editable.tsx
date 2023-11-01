@@ -31,11 +31,9 @@ const ProfileEditable: FC = () => {
         event.preventDefault();
         const { name, email, password } = values;
         if (password === "") {
-            // @ts-ignore
             return dispatch(changeUserInfoThunk({ name, email }));
         }
 
-        // @ts-ignore
         dispatch(changeUserInfoThunk(values));
     };
 

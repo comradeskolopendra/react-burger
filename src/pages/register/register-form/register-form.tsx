@@ -35,7 +35,6 @@ const RegisterForm: FC = () => {
 
     const handleRegisterFormSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // @ts-ignore
         dispatch(registerUserThunk(userInfo));
     };
 

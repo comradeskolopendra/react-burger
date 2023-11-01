@@ -7,7 +7,6 @@ const QuitPage: FC = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        // @ts-ignore
         dispatch(logoutUserThunk());
     }, [])
 

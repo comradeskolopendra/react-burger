@@ -88,7 +88,7 @@ const loginUserThunk = createAppAsyncThunk<TAuthUserData, TLoginUser>(
     return data;
 });
 
-const logoutUserThunk = createAppAsyncThunk<unknown, unknown>(
+const logoutUserThunk = createAppAsyncThunk<unknown, undefined>(
     "normaapi/logout", async (_, { dispatch }) => {
     const data = await request(`${BASE_URL}/auth/logout`, {
         method: "POST",

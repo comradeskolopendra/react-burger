@@ -20,7 +20,6 @@ const ForgotForm: FC = () => {
 
     const submitResetPasswordForm = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // @ts-ignore
         dispatch(resetPasswordThunk(email));
 
         if (isError) {

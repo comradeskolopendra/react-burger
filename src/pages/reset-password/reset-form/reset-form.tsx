@@ -44,7 +44,6 @@ const ResetForm: FC = () => {
             return;
         }
 
-        // @ts-ignore
         dispatch(changePasswordThunk(formValues));
     };
 
