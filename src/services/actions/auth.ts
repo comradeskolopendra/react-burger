@@ -20,6 +20,11 @@ type TAuthUserData = {
     refreshToken: string;
 }
 
+type TChangePasswordData = {
+    password: string;
+    token: string;
+}
+
 
 const registerUserThunk = createAsyncThunk<TAuthUserData, TUserInfo, { dispatch: AppDispatch }>(
     "normaapi/register",
@@ -57,19 +62,15 @@ const resetPasswordThunk = createAsyncThunk<unknown, string>(
     }
 );
 
-const changePasswordThunk = createAsyncThunk("normaapi/reset-password/reset",
+const changePasswordThunk = createAsyncThunk<unknown, TChangePasswordData>("normaapi/reset-password/reset",
     async (resetInfo) => {
-        const data = await request(`${BASE_URL}/password-reset/reset`, {
+        await request(`${BASE_URL}/password-reset/reset`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(resetInfo)
         })
-
-        console.log(resetInfo, data)
-
-        return data;
     }
 )
 
@@ -108,8 +109,6 @@ const logoutUserThunk = createAsyncThunk<unknown, unknown, { dispatch: AppDispat
                 token: localStorage.getItem("refreshToken"),
             }),
         });
-
-        console.log(_, data);
 
         if (data.success) {
             localStorage.removeItem("refreshToken");

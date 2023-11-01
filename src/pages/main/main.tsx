@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from '../../services/hooks/hooks';
 
 import {
     getStateIngredients,
@@ -26,22 +26,22 @@ import styles from "./main.module.css";
 import { IIngredient, TConstructorIngredient } from "../../utils/types";
 
 const MainPage: FC = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const ingredients: IIngredient[] = useSelector(getStateIngredients);
-    const ingredientsRequest: boolean = useSelector(getStateIngredientsRequest);
-    const ingredientsError: boolean = useSelector(getStateIngredientsError);
+    const ingredients = useAppSelector(getStateIngredients);
+    const ingredientsRequest = useAppSelector(getStateIngredientsRequest);
+    const ingredientsError = useAppSelector(getStateIngredientsError);
 
-    const visibleOrder: boolean = useSelector(getStateVisibleOrder);
+    const visibleOrder = useAppSelector(getStateVisibleOrder);
 
-    const selectedBun: IIngredient = useSelector(getStateSelectedBun);
-    const selectedIngredients: TConstructorIngredient[] = useSelector(getStateSelectedIngredients);
+    const selectedBun = useAppSelector(getStateSelectedBun);
+    const selectedIngredients = useAppSelector(getStateSelectedIngredients);
 
-    const orderFailed: boolean = useSelector(getStateOrderFailed);
+    const orderFailed = useAppSelector(getStateOrderFailed);
 
     const handleOrderClick = () => {
         const ingredientIds = [...selectedIngredients, selectedBun].map(
-            (element: IIngredient | TConstructorIngredient) => element._id
+            (element: TConstructorIngredient | IIngredient | null) => element!._id
         );
 
         // @ts-ignore

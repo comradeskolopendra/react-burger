@@ -1,18 +1,15 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { createOrderThunk } from "../actions/order";
-
-type TOrder = {
-    number?: number;
-}
+import type { IOrder } from '../../utils/types';
 
 interface IOrderState {
-    order: TOrder;
+    order: IOrder | null;
     orderRequest: boolean;
     orderFailed: boolean;
 }
 
 const initialState: IOrderState = {
-    order: {},
+    order: null,
     orderRequest: false,
     orderFailed: false
 }
@@ -46,7 +43,7 @@ export const orderSlice = createSlice({
 
                 return state;
             })
-            .addCase(createOrderThunk.fulfilled, (state, action: PayloadAction<TOrder>) => {
+            .addCase(createOrderThunk.fulfilled, (state, action: PayloadAction<IOrder>) => {
                 state = {
                     orderRequest: false,
                     orderFailed: false,

@@ -7,9 +7,9 @@ import { getStateSelectedBun, getStateSelectedIngredients } from '../../../../..
 
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { IIngredient, TConstructorIngredient } from '../../../../../utils/types';
+import { IIngredient } from '../../../../../utils/types';
 import styles from "./ingredient-card.module.css";
-import { useSelector } from "react-redux";
+import { useAppSelector } from '../../../../../services/hooks/hooks';
 import { Link } from 'react-router-dom';
 
 interface IIngredientCard {
@@ -19,8 +19,8 @@ interface IIngredientCard {
 const IngredientCard: FC<IIngredientCard> = ({ ingredient }) => {
     const location = useLocation();
 
-    const selectedIngredients: TConstructorIngredient[] = useSelector(getStateSelectedIngredients);
-    const selectedBun: IIngredient = useSelector(getStateSelectedBun);
+    const selectedIngredients = useAppSelector(getStateSelectedIngredients);
+    const selectedBun = useAppSelector(getStateSelectedBun);
 
     const [_, ingredientRef] = useDrag({
         type: ingredient.type === "bun" ? "bun" : "ingredients",

@@ -3,6 +3,10 @@ export interface IUser {
     name: string;
 }
 
+export interface IOrder {
+    number?: number;
+}
+
 
 export interface IIngredient {
     __v: number;
