@@ -22,11 +22,12 @@ import {
     ForgotPassword,
     ProfileWrapper,
     ProfileEditable,
-    OrderHistory,
+    Order,
     QuitPage,
     NotFound,
     IngredientDetails,
     ResetPassword,
+    Feed
 } from "../../pages";
 
 import "@ya.praktikum/react-developer-burger-ui-components";
@@ -87,6 +88,12 @@ const App: FC = () => {
                     }
                 />
                 <Route
+                    path="/feed"
+                    element={
+                        <Feed />
+                    }
+                />
+                <Route
                     path="/ingredients/:id"
                     element={
                         <IngredientDetails
@@ -112,7 +119,7 @@ const App: FC = () => {
                     <Route
                         path="orders"
                         element={
-                            <AuthProtectedRoute component={<OrderHistory />} />
+                            <AuthProtectedRoute component={<Order />} />
                         }
                     />
                     <Route

@@ -16,7 +16,7 @@ const AppHeader: FC = () => {
                         end={true}
                     />
                     <CustomNavLink
-                        to={"/lenta"}
+                        to={"/feed"}
                         icon={"list"}
                         title={"Лента заказов"}
                         end={true}
