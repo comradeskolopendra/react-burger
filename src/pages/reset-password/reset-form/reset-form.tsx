@@ -1,5 +1,5 @@
 import { useState, FC, FormEvent, ChangeEvent, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppSelector, useAppDispatch } from '../../../services/hooks/hooks';
 import { useNavigate } from "react-router-dom";
 import {
     getStateIsError,
@@ -16,14 +16,14 @@ import { changePasswordThunk } from "../../../services/actions/auth";
 
 const ResetForm: FC = () => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [formValues, setFormValues] = useState({
         password: "",
         token: "",
     });
-    const isError: boolean = useSelector(getStateIsError);
-    const isPasswordSuccessfullyChanged: boolean = useSelector(
+    const isError = useAppSelector(getStateIsError);
+    const isPasswordSuccessfullyChanged = useAppSelector(
         getStateIsPasswordSuccessfullyChanged
     );
 

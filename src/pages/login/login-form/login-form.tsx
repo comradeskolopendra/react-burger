@@ -1,5 +1,5 @@
 import { ChangeEvent, FC, FormEvent, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from '../../../services/hooks/hooks';
 
 import { loginUserThunk } from "../../../services/actions/auth";
 
@@ -12,8 +12,8 @@ import styles from "./login-form.module.css";
 import { getStateIsError } from "../../../selectors/auth-selectors";
 
 const LoginForm: FC = () => {
-    const dispatch = useDispatch();
-    const isErrorAuth: boolean = useSelector(getStateIsError);
+    const dispatch = useAppDispatch();
+    const isErrorAuth = useAppSelector(getStateIsError);
     const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
 
     const [userInfo, setUserInfo] = useState({

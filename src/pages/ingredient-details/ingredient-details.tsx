@@ -6,7 +6,7 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./ingredient-details.module.css";
-import { useSelector } from "react-redux";
+import { useAppSelector } from '../../services/hooks/hooks';
 import { getStateIngredients } from "../../selectors/ingredients-selectors";
 import { FC, useMemo } from "react";
 
@@ -17,7 +17,7 @@ interface IIngredientsDetails {
 
 const IngredientDetails: FC<IIngredientsDetails> = ({ onClose, type }) => {
     const { id } = useParams();
-    const ingredients: IIngredient[] = useSelector(getStateIngredients);
+    const ingredients = useAppSelector(getStateIngredients);
 
     const selectedIngredient = useMemo(() => {
         return ingredients.find((element: IIngredient) => element._id === id);

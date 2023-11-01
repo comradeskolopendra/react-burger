@@ -1,7 +1,7 @@
 import { useState, FC, ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./forgot-form.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppSelector, useAppDispatch } from '../../../services/hooks/hooks';
 import {
     Input,
     Button,
@@ -13,10 +13,10 @@ import { resetPasswordThunk } from "../../../services/actions/auth";
 
 const ForgotForm: FC = () => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const [email, setEmail] = useState<string>("");
-    const isError: boolean = useSelector(getStateIsError);
+    const isError = useAppSelector(getStateIsError);
 
     const submitResetPasswordForm = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -28,7 +28,7 @@ const ForgotForm: FC = () => {
             return;
         }
 
-        localStorage.setItem("resetPasswordAccess", new Boolean(true).toString());
+        localStorage.setItem("resetPasswordAccess", "true");
 
         navigate("/reset-password");
     };

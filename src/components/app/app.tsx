@@ -1,6 +1,6 @@
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
-import { useEffect, FC, ReactElement } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, FC } from "react";
+import { useAppDispatch, useAppSelector } from '../../services/hooks/hooks';
 
 import { getIngredientsThunk } from "../../services/actions/ingredients";
 import {
@@ -33,8 +33,8 @@ import "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 
 const App: FC = () => {
-    const dispatch = useDispatch();
-    const isLoaded: boolean = useSelector(getStateIsLoaded);
+    const dispatch = useAppDispatch();
+    const isLoaded = useAppSelector(getStateIsLoaded);
     const location = useLocation();
     const navigate = useNavigate();
 

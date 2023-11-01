@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useAppSelector } from '../../../services/hooks/hooks';
 import { getStateIngredients } from '../../../selectors/ingredients-selectors';
 
 import IngredientsSection from "./ingredients-section/ingredients-section";
@@ -15,7 +15,7 @@ const BurgerIngredients = () => {
     const mainRef = useRef<HTMLDivElement>(null);
     const ingredientsRef = useRef<HTMLDivElement>(null);
 
-    const ingredients: IIngredient[] = useSelector(getStateIngredients);
+    const ingredients = useAppSelector(getStateIngredients);
 
     const handleScroll = () => {
         if (sauceRef.current!.getBoundingClientRect().top < 0) {
