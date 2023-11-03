@@ -7,6 +7,7 @@ import type {
     TModalActions,
     TOrderActions,
     TProfileActions,
+    TOrdersFeedActions
 } from "./store";
 
 export type AppActions =
@@ -15,7 +16,8 @@ export type AppActions =
     | ReturnType<TConstructorActions[keyof TConstructorActions]>
     | ReturnType<TModalActions[keyof TModalActions]>
     | ReturnType<TOrderActions[keyof TOrderActions]>
-    | ReturnType<TProfileActions[keyof TProfileActions]>;
+    | ReturnType<TProfileActions[keyof TProfileActions]>
+    | ReturnType<TOrdersFeedActions[keyof TOrdersFeedActions]>;
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppThunk<TReturn = void> = ThunkAction<
