@@ -7,8 +7,9 @@ import type {
     TModalActions,
     TOrderActions,
     TProfileActions,
-    TOrdersFeedActions
 } from "./store";
+
+import { TWSFeedActions } from "./actions/feed";
 
 export type AppActions =
     | ReturnType<TIngredientsActions[keyof TIngredientsActions]>
@@ -17,7 +18,24 @@ export type AppActions =
     | ReturnType<TModalActions[keyof TModalActions]>
     | ReturnType<TOrderActions[keyof TOrderActions]>
     | ReturnType<TProfileActions[keyof TProfileActions]>
-    | ReturnType<TOrdersFeedActions[keyof TOrdersFeedActions]>;
+    | TWSFeedActions;
+
+export interface IOrder {
+    _id: string;
+    createdAt: string;
+    ingredients: string[];
+    name: string;
+    number: number;
+    status: string;
+    updatedAt: string;
+}
+
+export interface IWSFeedMessage {
+    orders: IOrder[];
+    success: boolean;
+    total: number;
+    totalToday: number;
+}
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppThunk<TReturn = void> = ThunkAction<

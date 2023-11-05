@@ -32,7 +32,7 @@ import {
 
 import "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
-import { setWSConnect } from "../../services/store/ordersFeed";
+import { connect } from "../../services/actions/feed";
 
 const App: FC = () => {
     const dispatch = useAppDispatch();
@@ -59,7 +59,7 @@ const App: FC = () => {
 
     useEffect(() => {
         dispatch(getIngredientsThunk());
-        dispatch(setWSConnect("wss://norma.nomoreparties.space/orders/all"))
+        dispatch(connect("wss://norma.nomoreparties.space/orders/all"))
     }, []);
 
     return (

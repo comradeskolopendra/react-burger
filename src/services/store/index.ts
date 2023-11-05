@@ -4,7 +4,6 @@ import type { TIngredientsActions } from "./ingredients";
 import type { TModalActions } from "./modal";
 import type { TOrderActions } from "./order";
 import type { TProfileActions } from "./profile";
-import type { TOrdersFeedActions } from "./ordersFeed";
 
 export {
     TAuthActions,
@@ -13,5 +12,4 @@ export {
     TModalActions,
     TOrderActions,
     TProfileActions,
-    TOrdersFeedActions
 };
