@@ -34,6 +34,7 @@ export const modalSlice = createSlice({
     }
 })
 
-export type TModalActions = typeof modalSlice.actions;
+type TModalActionCreators = typeof modalSlice.actions;
+export type TModalActions = ReturnType<TModalActionCreators[keyof TModalActionCreators]>
 export const { setVisibleIngredient, setVisibleOrder } = modalSlice.actions;
 export default modalSlice.reducer;

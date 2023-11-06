@@ -30,7 +30,7 @@ const OrderCard: FC<IOrderCard> = ({
             </div>
             <div className="mt-6">
                 {ingredients.map((ingredient) => {
-                    return <IngredientCircle id={ingredient} key={} />;
+                    return <IngredientCircle id={ingredient} key={ingredient} />;
                 })}
             </div>
         </div>

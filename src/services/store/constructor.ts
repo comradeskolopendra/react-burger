@@ -70,6 +70,7 @@ export const constructorSlice = createSlice({
     }
 })
 
-export type TConstructorActions = typeof constructorSlice.actions;
+type TConstructorActionCreators = typeof constructorSlice.actions;
+export type TConstructorActions = ReturnType<TConstructorActionCreators[keyof TConstructorActionCreators]>
 export const { removeConstructorIngredient, setConstructorBun, setConstructorIngredient, sortConstuctorIngredient, clearConstructor } = constructorSlice.actions;
 export default constructorSlice.reducer;

@@ -55,6 +55,7 @@ export const orderSlice = createSlice({
     }
 })
 
-export type TOrderActions = typeof orderSlice.actions;
+type TOrderActionCreators = typeof orderSlice.actions;
+export type TOrderActions = ReturnType<TOrderActionCreators[keyof TOrderActionCreators]>;
 export const { clearOrder } = orderSlice.actions;
 export default orderSlice.reducer;

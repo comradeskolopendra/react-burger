@@ -160,7 +160,8 @@ export const authSlice = createSlice({
 });
 
 
-export type TAuthActions = typeof authSlice.actions;
+type TAuthActionCreators = typeof authSlice.actions;
+export type TAuthActions = ReturnType<TAuthActionCreators[keyof TAuthActionCreators]>
 export const { setAuthChecked } = authSlice.actions;
 
 export default authSlice.reducer;

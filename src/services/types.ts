@@ -1,5 +1,5 @@
 import { ThunkAction } from "redux-thunk";
-import { store } from "./";
+import { store, rootReducer } from "./";
 import type {
     TIngredientsActions,
     TAuthActions,
@@ -9,15 +9,16 @@ import type {
     TProfileActions,
 } from "./store";
 
+
 import { TWSFeedActions } from "./actions/feed";
 
 export type AppActions =
-    | ReturnType<TIngredientsActions[keyof TIngredientsActions]>
-    | ReturnType<TAuthActions[keyof TAuthActions]>
-    | ReturnType<TConstructorActions[keyof TConstructorActions]>
-    | ReturnType<TModalActions[keyof TModalActions]>
-    | ReturnType<TOrderActions[keyof TOrderActions]>
-    | ReturnType<TProfileActions[keyof TProfileActions]>
+    | TIngredientsActions
+    | TAuthActions
+    | TConstructorActions
+    | TModalActions
+    | TOrderActions
+    | TProfileActions
     | TWSFeedActions;
 
 export interface IOrder {
@@ -37,7 +38,7 @@ export interface IWSFeedMessage {
     totalToday: number;
 }
 
-export type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof rootReducer>;
 export type AppThunk<TReturn = void> = ThunkAction<
     TReturn,
     RootState,
