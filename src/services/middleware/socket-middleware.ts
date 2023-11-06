@@ -16,8 +16,8 @@ export type TWSActionTypes = {
     onMessage: ActionCreatorWithPayload<any>;
 };
 
-export const socketMiddleware = (wsActions: TWSActionTypes): Middleware<{}> => {
-    return (store: MiddlewareAPI<AppDispatch, RootState>) => {
+export const socketMiddleware = (wsActions: TWSActionTypes): Middleware<{}, RootState> => {
+    return (store) => {
         let socket: WebSocket | null = null;
         return (next) => (action) => {
             const { dispatch } = store;
