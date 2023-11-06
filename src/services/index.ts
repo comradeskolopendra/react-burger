@@ -1,4 +1,4 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 
 import ingredientsSlice from "./store/ingredients";
 import orderSlice from "./store/order";
@@ -35,5 +35,5 @@ const feedSocketMiddleware = socketMiddleware({
 export const store = configureStore({
     devTools: true,
     reducer: rootReducer,
-    middleware: [thunk, feedSocketMiddleware]
+    middleware: getDefaultMiddleware => getDefaultMiddleware().concat(feedSocketMiddleware)
 })
