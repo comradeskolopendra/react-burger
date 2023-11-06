@@ -1,6 +1,9 @@
 import type { Middleware, MiddlewareAPI } from "redux";
 import type { AppDispatch, RootState } from "../types";
-import { ActionCreatorWithPayload, ActionCreatorWithoutPayload } from "@reduxjs/toolkit";
+import {
+    ActionCreatorWithPayload,
+    ActionCreatorWithoutPayload,
+} from "@reduxjs/toolkit";
 
 export type TWSActionTypes = {
     wsConnect: ActionCreatorWithPayload<string>;
@@ -11,29 +14,27 @@ export type TWSActionTypes = {
     onClose: ActionCreatorWithoutPayload;
     onError: ActionCreatorWithPayload<string>;
     onMessage: ActionCreatorWithPayload<any>;
-}
+};
 
 export const socketMiddleware = (wsActions: TWSActionTypes): Middleware<{}> => {
-    return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
+    return (store: MiddlewareAPI<AppDispatch, RootState>) => {
         let socket: WebSocket | null = null;
         return (next) => (action) => {
             const { dispatch } = store;
             const { payload } = action;
-            console.log(wsActions.wsDisconnect)
-            const { wsConnect,
+            const {
+                wsConnect,
                 wsConnecting,
                 wsDisconnect,
                 wsSendMessage,
                 onClose,
                 onError,
                 onMessage,
-                onOpen }
-                = wsActions
-
-            console.log(wsDisconnect().type);
+                onOpen,
+            } = wsActions;
 
             if (wsConnect.match(action)) {
-                socket = new WebSocket(action.payload);
+                socket = new WebSocket(payload);
                 dispatch(wsConnecting());
             }
 
@@ -43,19 +44,22 @@ export const socketMiddleware = (wsActions: TWSActionTypes): Middleware<{}> => {
                 };
 
                 socket.onerror = (event: Event) => {
-                    dispatch(onError('Error'));
-                }
+                    dispatch(onError("Error"));
+                };
 
                 socket.onmessage = (event: MessageEvent) => {
                     const { data } = event;
+                    console.log(data);
                     const parsedData = JSON.parse(data);
 
                     dispatch(onMessage(parsedData));
-                }
+                };
 
                 socket.onclose = (event: CloseEvent) => {
+                    const { reason, code } = event;
+                    console.log({ reason, code });
                     dispatch(onClose());
-                }
+                };
 
                 if (wsSendMessage && wsSendMessage.match(action)) {
                     socket.send(JSON.stringify(payload));
@@ -67,8 +71,7 @@ export const socketMiddleware = (wsActions: TWSActionTypes): Middleware<{}> => {
                 }
             }
 
-
             next(action);
-        }
-    })
-} 
+        };
+    };
+};

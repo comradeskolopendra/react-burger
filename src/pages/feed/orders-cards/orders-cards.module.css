@@ -1,0 +1,10 @@
+.wrapper {
+    margin-top: 20px;
+    display: grid;
+    row-gap: 16px;
+    overflow-y: scroll;
+    max-height: calc(100vh - 200px);
+    scrollbar-width: thin;
+    padding: 8px;
+    box-sizing: border-box;
+}
