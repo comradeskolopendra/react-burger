@@ -21,7 +21,7 @@ export type AppActions =
     | TProfileActions
     | TWSFeedActions;
 
-export interface IOrder {
+export interface IFeedOrder {
     _id: string;
     createdAt: string;
     ingredients: string[];
@@ -32,7 +32,7 @@ export interface IOrder {
 }
 
 export interface IWSFeedMessage {
-    orders: IOrder[];
+    orders: IFeedOrder[];
     success: boolean;
     total: number;
     totalToday: number;

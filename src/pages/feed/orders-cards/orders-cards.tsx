@@ -3,9 +3,9 @@ import React, { FC } from "react";
 import OrderCard from "./order-card/order-card";
 
 import styles from "./orders-cards.module.css";
-import { IOrder } from "../../../services/types";
+import { IFeedOrder } from "../../../services/types";
 
-const OrdersCards: FC<{ orders: IOrder[] | null | undefined }> = ({ orders }) => {
+const OrdersCards: FC<{ orders: IFeedOrder[] | null | undefined }> = ({ orders }) => {
     return (
         <section className={styles.wrapper}>
             {orders &&
