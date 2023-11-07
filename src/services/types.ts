@@ -1,5 +1,5 @@
 import { ThunkAction } from "redux-thunk";
-import { store, rootReducer } from "./";
+import { rootReducer } from "./";
 import type {
     TIngredientsActions,
     TAuthActions,

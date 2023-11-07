@@ -1,5 +1,5 @@
-import type { Middleware, MiddlewareAPI } from "redux";
-import type { AppDispatch, RootState } from "../types";
+import type { Middleware } from "redux";
+import type {  RootState } from "../types";
 import {
     ActionCreatorWithPayload,
     ActionCreatorWithoutPayload,
@@ -49,7 +49,7 @@ export const socketMiddleware = (wsActions: TWSActionTypes): Middleware<{}, Root
 
                 socket.onmessage = (event: MessageEvent) => {
                     const { data } = event;
-                    console.log(data);
+                    console.log("get new message")
                     const parsedData = JSON.parse(data);
 
                     dispatch(onMessage(parsedData));

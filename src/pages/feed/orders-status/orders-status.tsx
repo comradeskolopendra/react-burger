@@ -1,6 +1,7 @@
 import { FC } from "react";
+import { IWSFeedMessage } from '../../../services/types';
 
-const OrdersStatus: FC = () => {
+const OrdersStatus: FC<{ message: IWSFeedMessage | null }> = ({ message }) => {
     return <>OrdersStatus</>;
 };
 

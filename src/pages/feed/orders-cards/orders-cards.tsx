@@ -1,22 +1,20 @@
 import React, { FC } from "react";
 
-import { useAppSelector } from "../../../services/hooks/hooks";
 import OrderCard from "./order-card/order-card";
 
 import styles from "./orders-cards.module.css";
+import { IOrder } from "../../../services/types";
 
-const OrdersCards: FC = () => {
-    const wsMessage = useAppSelector((store) => store.feed.wsMessage);
-
+const OrdersCards: FC<{ orders: IOrder[] | null | undefined }> = ({ orders }) => {
     return (
         <section className={styles.wrapper}>
-            {wsMessage &&
-                wsMessage.orders.map((order) => {
+            {orders &&
+                orders.map((order) => {
                     return (
                         <OrderCard
                             name={order.name}
                             number={order.number}
-                            ingredients={order.ingredients}
+                            ingredientsIds={order.ingredients}
                             updatedAt={order.updatedAt}
                         />
                     );
