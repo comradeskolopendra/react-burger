@@ -1,6 +1,6 @@
 import { createReducer } from "@reduxjs/toolkit";
 import type { IWSMessage } from "../../utils/types";
-import { wsClose, wsConnecting, wsError, wsOpen, wsMessage } from "../actions/feed";
+import { wsClose, wsConnecting, wsError, wsOpen, wsMessage } from "../actions/profile-orders";
 
 enum EWSStatus {
     OFFLINE = "OFFLINE",
@@ -11,19 +11,19 @@ enum EWSStatus {
 
 type TWSStatus = EWSStatus.CLOSING | EWSStatus.ONLINE | EWSStatus.OFFLINE | EWSStatus.CONNECTING
 
-interface IOrdersFeed {
+interface IProfileOrders {
     status: TWSStatus;
     wsMessage: IWSMessage | null;
     connectingError: string;
 }
 
-const initialState: IOrdersFeed = {
+const initialState: IProfileOrders = {
     status: EWSStatus.OFFLINE,
     wsMessage: null,
     connectingError: ""
 }
 
-const feedReducer = createReducer(initialState, (builder) => {
+const profileOrdersReducer = createReducer(initialState, (builder) => {
     builder
         .addCase(wsConnecting, (state) => {
             state = {
@@ -68,4 +68,4 @@ const feedReducer = createReducer(initialState, (builder) => {
         })
 });
 
-export default feedReducer;
+export default profileOrdersReducer;

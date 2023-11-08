@@ -8,9 +8,29 @@ import profileSlice from './store/profile';
 import authSlice from "./store/auth";
 import feedReducer from "./store/feed";
 
-import thunk from "redux-thunk";
 import { socketMiddleware } from "./middleware/socket-middleware";
-import { connect, disconnect, wsClose, wsConnecting, wsError, wsMessage, wsOpen } from "./actions/feed";
+import {
+    connect as feedConnect,
+    disconnect as feedDisconnect,
+    wsClose as feedWSClose,
+    wsConnecting as feedWSConnecting,
+    wsError as feedWSError,
+    wsMessage as feedWSMessage,
+    wsOpen as FEED_WS_OPEN
+}
+    from "./actions/feed";
+
+import {
+    connect as profileOrdersConnect,
+    disconnect as profileOrdersDisconnect,
+    wsClose as profileOrdersWSClose,
+    wsConnecting as profileOrdersWSConnecting,
+    wsError as profileOrdersWSError,
+    wsMessage as profileOrdersWSMessage,
+    wsOpen as profileOrdersWSOpen
+}
+    from "./actions/profile-orders";
+import profileOrdersReducer from "./store/profile-orders";
 
 export const rootReducer = combineReducers({
     ingredients: ingredientsSlice,
@@ -19,21 +39,32 @@ export const rootReducer = combineReducers({
     constructorData: constructorSlice,
     auth: authSlice,
     profile: profileSlice,
-    feed: feedReducer
+    feed: feedReducer,
+    profileOrders: profileOrdersReducer
 });
 
+const profileSocketMiddleware = socketMiddleware({
+    wsConnect: profileOrdersConnect,
+    wsDisconnect: profileOrdersDisconnect,
+    wsConnecting: profileOrdersWSConnecting,
+    onError: profileOrdersWSError,
+    onMessage: profileOrdersWSMessage,
+    onOpen: profileOrdersWSOpen,
+    onClose: profileOrdersWSClose
+})
+
 const feedSocketMiddleware = socketMiddleware({
-    wsConnect: connect,
-    wsDisconnect: disconnect,
-    wsConnecting: wsConnecting,
-    onError: wsError,
-    onMessage: wsMessage,
-    onOpen: wsOpen,
-    onClose: wsClose
+    wsConnect: feedConnect,
+    wsDisconnect: feedDisconnect,
+    wsConnecting: feedWSConnecting,
+    onError: feedWSError,
+    onMessage: feedWSMessage,
+    onOpen: FEED_WS_OPEN,
+    onClose: feedWSClose
 })
 
 export const store = configureStore({
     devTools: true,
     reducer: rootReducer,
-    middleware: getDefaultMiddleware => getDefaultMiddleware().concat(feedSocketMiddleware)
+    middleware: getDefaultMiddleware => getDefaultMiddleware().concat(feedSocketMiddleware, profileSocketMiddleware)
 })

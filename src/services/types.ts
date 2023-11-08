@@ -11,6 +11,7 @@ import type {
 
 
 import { TWSFeedActions } from "./actions/feed";
+import { TWSProfileOrdersActions } from "./actions/profile-orders";
 
 export type AppActions =
     | TIngredientsActions
@@ -19,24 +20,8 @@ export type AppActions =
     | TModalActions
     | TOrderActions
     | TProfileActions
-    | TWSFeedActions;
-
-export interface IFeedOrder {
-    _id: string;
-    createdAt: string;
-    ingredients: string[];
-    name: string;
-    number: number;
-    status: string;
-    updatedAt: string;
-}
-
-export interface IWSFeedMessage {
-    orders: IFeedOrder[];
-    success: boolean;
-    total: number;
-    totalToday: number;
-}
+    | TWSFeedActions
+    | TWSProfileOrdersActions;
 
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppThunk<TReturn = void> = ThunkAction<

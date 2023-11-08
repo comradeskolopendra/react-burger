@@ -4,17 +4,17 @@ import styles from "./order-titles.module.css";
 
 interface IOrderTitles {
     name: string | undefined;
-    orderId: string | undefined;
+    number: number | undefined;
     status: string | undefined;
 }
 
-const OrderTitles: FC<IOrderTitles> = ({ name, orderId, status }) => {
+const OrderTitles: FC<IOrderTitles> = ({ name, number, status }) => {
     return (
-        <div className={`mb-15`}>
+        <div className={`${styles.orderHeading} mb-15`}>
             <h3
                 className={`${styles.orderNumber} text text_type_digits-default pb-10`}
             >
-                #{orderId}
+                #{number}
             </h3>
             <h2 className={`text text_type_main-medium mb-3`}>{name}</h2>
             <p className={`${styles.success} text text_type_main-default`}>

@@ -1,5 +1,5 @@
 import type { Middleware } from "redux";
-import type {  RootState } from "../types";
+import type { RootState } from "../types";
 import {
     ActionCreatorWithPayload,
     ActionCreatorWithoutPayload,
@@ -35,11 +35,13 @@ export const socketMiddleware = (wsActions: TWSActionTypes): Middleware<{}, Root
 
             if (wsConnect.match(action)) {
                 socket = new WebSocket(payload);
+                console.log("socket opened")
                 dispatch(wsConnecting());
             }
 
             if (socket) {
                 socket.onopen = (event: Event) => {
+
                     dispatch(onOpen());
                 };
 

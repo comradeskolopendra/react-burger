@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { IFeedOrder } from '../../../services/types';
+import { IFeedOrder } from '../../../utils/types';
 import styles from "./orders-feed.module.css";
 import OrderStatus from "./order-status/order-status";
 import OrderStatistic from "./order-statistic/order-statistic";

@@ -1,9 +1,9 @@
 import React, { FC } from "react";
 
-import OrderCard from "./order-card/order-card";
+import OrderCard from "../../../components/order-card/order-card";
 
 import styles from "./orders-cards.module.css";
-import { IFeedOrder } from "../../../services/types";
+import type { IFeedOrder } from "../../../utils/types";
 
 const OrdersCards: FC<{ orders: IFeedOrder[] | null | undefined }> = ({ orders }) => {
     return (
@@ -16,6 +16,8 @@ const OrdersCards: FC<{ orders: IFeedOrder[] | null | undefined }> = ({ orders }
                             number={order.number}
                             ingredientsIds={order.ingredients}
                             updatedAt={order.updatedAt}
+                            linkId={order._id}
+                            from="feed"
                         />
                     );
                 })}

@@ -7,16 +7,16 @@ import OrderTitles from './order-titles/order-titles';
 import OrderFooter from "./order-footer/order-footer";
 import OrderComposition from './order-composition/order-composition';
 
-import styles from "./feed-order-info.module.css";
+import styles from "./selected-order-info.module.css";
 import { getStateIngredients } from "../../selectors/ingredients-selectors";
 
-const FeedOrderInfo: FC = () => {
+const SelectedOrderInfo: FC = () => {
     const { orderId } = useParams();
     const wsMessage = useAppSelector(getStateWSFeedMessage);
     const ingredients = useAppSelector(getStateIngredients)
 
     const orderById = useMemo(() => {
-        return wsMessage?.orders.find((order) => order.number === +orderId!);
+        return wsMessage?.orders.find((order) => order._id === orderId!);
     }, [orderId]);
 
     const orderPrice = useMemo(() => {
@@ -36,7 +36,7 @@ const FeedOrderInfo: FC = () => {
                 <>
                     <OrderTitles
                         name={orderById?.name}
-                        orderId={orderId}
+                        number={orderById.number}
                         status={orderById.status}
                     />
                     <OrderComposition
@@ -52,4 +52,4 @@ const FeedOrderInfo: FC = () => {
     );
 };
 
-export default FeedOrderInfo;
+export default SelectedOrderInfo;

@@ -1,7 +1,7 @@
 import { FC, useMemo } from "react";
 import { useAppSelector } from "../../../services/hooks/hooks";
 import styles from "./order-composition.module.css";
-import { IFeedOrder } from "../../../services/types";
+import { IFeedOrder } from "../../../utils/types";
 import { getStateIngredients } from "../../../selectors/ingredients-selectors";
 import CompositionRow from "./composition-row/composition-row";
 

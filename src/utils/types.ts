@@ -7,6 +7,23 @@ export interface IOrder {
     number?: number;
 }
 
+export interface IFeedOrder {
+    _id: string;
+    createdAt: string;
+    ingredients: string[];
+    name: string;
+    number: number;
+    status: string;
+    updatedAt: string;
+}
+
+export interface IWSMessage {
+    orders: IFeedOrder[];
+    success: boolean;
+    total: number;
+    totalToday: number;
+}
+
 
 export interface IIngredient {
     __v: number;

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import IngredientCircle from "../../../feed/orders-cards/order-card/ingredient-circle/ingredient-circle";
+import IngredientCircle from "../../../../components/ingredient-circle/ingredient-circle";
 import styles from "./composition-row.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 

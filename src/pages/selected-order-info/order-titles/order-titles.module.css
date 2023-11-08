@@ -1,8 +1,11 @@
 .orderNumber {
-    width: 100%;
     text-align: center;
 }
 
 .success {
     color: #0CC;
+}
+
+.orderHeading {
+    width: 100%;
 }

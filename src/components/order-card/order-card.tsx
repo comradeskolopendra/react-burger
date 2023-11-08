@@ -1,9 +1,10 @@
 import { FC, useMemo } from "react";
 import { Link } from 'react-router-dom';
 import styles from "./order-card.module.css";
-import IngredientCircle from "./ingredient-circle/ingredient-circle";
-import { useAppSelector } from "../../../../services/hooks/hooks";
-import { getStateIngredients } from '../../../../selectors/ingredients-selectors';
+import IngredientCircle from "../ingredient-circle/ingredient-circle";
+
+import { useAppSelector } from "../../services/hooks/hooks";
+import { getStateIngredients } from "../../selectors/ingredients-selectors";
 
 import { v4 as uuid } from "uuid";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -13,6 +14,8 @@ interface IOrderCard {
     ingredientsIds: string[];
     updatedAt: string;
     number: number;
+    linkId: string;
+    from: string;
 }
 
 const OrderCard: FC<IOrderCard> = ({
@@ -20,6 +23,8 @@ const OrderCard: FC<IOrderCard> = ({
     ingredientsIds,
     updatedAt,
     number,
+    linkId,
+    from
 }) => {
     const ingredients = useAppSelector(getStateIngredients);
 
@@ -43,7 +48,7 @@ const OrderCard: FC<IOrderCard> = ({
     }, []);
 
     return (
-        <Link to={`/feed/${number}`} className={styles.card}>
+        <Link to={`/${from}/${linkId}`} className={styles.card}>
             <div className={styles.cardHeading}>
                 <p className="text text_type_digits-default">#{number}</p>
                 <p className="text text_type_main-default text_color_inactive">
