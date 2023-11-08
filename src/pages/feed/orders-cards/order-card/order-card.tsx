@@ -1,7 +1,9 @@
 import { FC, useMemo } from "react";
+import { Link } from 'react-router-dom';
 import styles from "./order-card.module.css";
 import IngredientCircle from "./ingredient-circle/ingredient-circle";
 import { useAppSelector } from "../../../../services/hooks/hooks";
+import { getStateIngredients } from '../../../../selectors/ingredients-selectors';
 
 import { v4 as uuid } from "uuid";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -19,9 +21,7 @@ const OrderCard: FC<IOrderCard> = ({
     updatedAt,
     number,
 }) => {
-    const ingredients = useAppSelector(
-        (store) => store.ingredients.ingredients
-    );
+    const ingredients = useAppSelector(getStateIngredients);
 
     const { ingredientsData, restAmount } = useMemo(() => {
         const ingredientsData = ingredientsIds.slice(0, 6).map((id) => {
@@ -37,7 +37,7 @@ const OrderCard: FC<IOrderCard> = ({
     }, []);
 
     return (
-        <div className={styles.card}>
+        <Link to={`/feed/${number}`} className={styles.card}>
             <div className={styles.cardHeading}>
                 <p className="text text_type_digits-default">#{number}</p>
                 <p className="text text_type_main-default text_color_inactive">
@@ -68,7 +68,7 @@ const OrderCard: FC<IOrderCard> = ({
                     <CurrencyIcon type={"primary"} />
                 </div>
             </div>
-        </div>
+        </Link>
     );
 };
 

@@ -1,0 +1,10 @@
+.orderInfo {
+    height: calc(100vh - 88px);
+    width: 100%;
+    max-width: 640px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}

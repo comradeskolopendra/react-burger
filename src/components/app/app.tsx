@@ -1,6 +1,6 @@
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, FC } from "react";
-import { useAppDispatch, useAppSelector } from '../../services/hooks/hooks';
+import { useAppDispatch, useAppSelector } from "../../services/hooks/hooks";
 
 import { getIngredientsThunk } from "../../services/actions/ingredients";
 import {
@@ -27,7 +27,8 @@ import {
     NotFound,
     IngredientDetails,
     ResetPassword,
-    Feed
+    Feed,
+    FeedOrderInfo,
 } from "../../pages";
 
 import "@ya.praktikum/react-developer-burger-ui-components";
@@ -59,7 +60,7 @@ const App: FC = () => {
 
     useEffect(() => {
         dispatch(getIngredientsThunk());
-        dispatch(connect("wss://norma.nomoreparties.space/orders/all"))
+        dispatch(connect("wss://norma.nomoreparties.space/orders/all"));
     }, []);
 
     return (
@@ -89,12 +90,8 @@ const App: FC = () => {
                         <UnAuthProtectedRoute component={<ResetPassword />} />
                     }
                 />
-                <Route
-                    path="/feed"
-                    element={
-                        <Feed />
-                    }
-                />
+                <Route path="/feed" element={<Feed />} />
+                <Route path="/feed/:orderId" element={<FeedOrderInfo />} />
                 <Route
                     path="/ingredients/:id"
                     element={
@@ -120,9 +117,7 @@ const App: FC = () => {
                     />
                     <Route
                         path="orders"
-                        element={
-                            <AuthProtectedRoute component={<Order />} />
-                        }
+                        element={<AuthProtectedRoute component={<Order />} />}
                     />
                     <Route
                         path="quit"
@@ -151,6 +146,6 @@ const App: FC = () => {
             )}
         </>
     );
-}
+};
 
 export default App;

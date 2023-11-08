@@ -3,9 +3,10 @@ import styles from "./feed.module.css";
 import OrdersCards from "./orders-cards/orders-cards";
 import OrdersFeed from "./orders-feed/orders-feed";
 import { useAppSelector } from "../../services/hooks/hooks";
+import { getStateWSFeedMessage } from '../../selectors/feed-selectors';
 
 const Feed: FC = () => {
-    const wsMessage = useAppSelector((store) => store.feed.wsMessage);
+    const wsMessage = useAppSelector(getStateWSFeedMessage);
 
     const { doneOrders, notDoneOrders } = useMemo(() => {
         return {

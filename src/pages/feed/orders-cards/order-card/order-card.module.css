@@ -6,6 +6,8 @@
         0px 0px 2px 0px rgba(0, 0, 0, 0.06), 0px 4px 8px 0px rgba(0, 0, 0, 0.04);
     max-width: 590px;
     box-sizing: border-box;
+    text-decoration: none;
+    color: unset;
 }
 
 .cardHeading {

@@ -10,6 +10,7 @@ import NotFound from "./not-found/not-found";
 import IngredientDetails from "./ingredient-details/ingredient-details";
 import ResetPassword from "./reset-password/reset-password";
 import Feed from "./feed/feed";
+import FeedOrderInfo from './feed-order-info/feed-order-info';
 
 export {
     LoginPage,
@@ -23,5 +24,6 @@ export {
     NotFound,
     IngredientDetails,
     ResetPassword,
-    Feed
+    Feed,
+    FeedOrderInfo,
 };
