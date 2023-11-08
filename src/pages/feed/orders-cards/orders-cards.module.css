@@ -9,6 +9,7 @@
     padding-left: 0;
     max-width: 590px;
     box-sizing: border-box;
+    overflow-x: hidden
 }
 
 .wrapper::-webkit-scrollbar {

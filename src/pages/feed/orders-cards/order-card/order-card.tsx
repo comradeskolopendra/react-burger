@@ -23,7 +23,12 @@ const OrderCard: FC<IOrderCard> = ({
 }) => {
     const ingredients = useAppSelector(getStateIngredients);
 
-    const { ingredientsData, restAmount } = useMemo(() => {
+    const { ingredientsData, restAmount, allIngredients } = useMemo(() => {
+
+        const allIngredients = ingredientsIds.map((id) => {
+            return ingredients.find((ingredient) => ingredient._id === id);
+        })
+
         const ingredientsData = ingredientsIds.slice(0, 6).map((id) => {
             return ingredients.find((ingredient) => ingredient._id === id);
         });
@@ -33,6 +38,7 @@ const OrderCard: FC<IOrderCard> = ({
         return {
             ingredientsData: ingredientsData,
             restAmount: rest,
+            allIngredients: allIngredients
         };
     }, []);
 
@@ -64,7 +70,7 @@ const OrderCard: FC<IOrderCard> = ({
                 <div
                     className={`${styles.price} text text_type_digits-default`}
                 >
-                    {ingredientsData.reduce((acc, val) => acc + val!.price, 0)}
+                    {allIngredients.reduce((acc, val) => acc + val!.price, 0)}
                     <CurrencyIcon type={"primary"} />
                 </div>
             </div>

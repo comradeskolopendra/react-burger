@@ -9,26 +9,33 @@ const OrderComposition: FC<{ order: IFeedOrder | undefined }> = ({ order }) => {
     const ingredients = useAppSelector(getStateIngredients);
 
     const { orderIngredients } = useMemo(() => {
-        return {
-            orderIngredients: order?.ingredients.map((id) => {
-                const ingredient = ingredients.find((element) => element._id === id);
+        const result: any = {};
 
-                return ingredient;
+        order?.ingredients.forEach(id => {
+            if (Object.keys(result).includes(id)) {
+                result[id] += 1;
+            } else {
+                result[id] = 1;
             }
-            ),
-        };
+        })
+
+        return {
+            orderIngredients: Object.keys(result).map((item) => {
+                return { ...ingredients.find(element => element._id === item), amount: result[item] }
+            })
+        }
     }, []);
 
     return (
-        <div>
+        <div className={styles.wrapper}>
             <h3
-                className={`${styles.compositionTitle} mb-6 text text_type_main-medium`}
+                className={`${styles.compositionTitle} text text_type_main-medium`}
             >
                 Состав:
             </h3>
-            <section>
+            <section className={`${styles.ingredients} mt-6`}>
                 {orderIngredients!.map(ingredient => {
-                    return <CompositionRow name={ingredient?.name} price={ingredient?.price} amount={2} image={ingredient?.image_mobile} />
+                    return <CompositionRow name={ingredient?.name} price={ingredient?.price} amount={ingredient.amount} image={ingredient?.image_mobile} />
                 })}
             </section>
         </div>
