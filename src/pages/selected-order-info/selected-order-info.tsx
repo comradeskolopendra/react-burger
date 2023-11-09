@@ -49,6 +49,7 @@ const SelectedOrderInfo: FC<ISelectedOrderInfo> = ({ messageFromWS, type, onClos
             {orderById && (
                 <>
                     <OrderTitles
+                        type={type}
                         name={orderById?.name}
                         number={orderById.number}
                         status={orderById.status}
