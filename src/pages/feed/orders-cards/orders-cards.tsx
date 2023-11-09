@@ -16,8 +16,8 @@ const OrdersCards: FC<{ orders: IFeedOrder[] | null | undefined }> = ({ orders }
                             number={order.number}
                             ingredientsIds={order.ingredients}
                             updatedAt={order.updatedAt}
-                            linkId={order._id}
                             from="feed"
+                            status=""
                         />
                     );
                 })}

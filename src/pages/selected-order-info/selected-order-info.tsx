@@ -1,7 +1,6 @@
 import { FC, useMemo } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../services/hooks/hooks";
-import { getStateWSFeedMessage } from "../../selectors/feed-selectors";
 
 import OrderTitles from './order-titles/order-titles';
 import OrderFooter from "./order-footer/order-footer";
@@ -10,14 +9,22 @@ import OrderComposition from './order-composition/order-composition';
 import styles from "./selected-order-info.module.css";
 import { getStateIngredients } from "../../selectors/ingredients-selectors";
 
-const SelectedOrderInfo: FC = () => {
+import type { IWSMessage } from "../../utils/types";
+import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+
+interface ISelectedOrderInfo {
+    messageFromWS: IWSMessage | null;
+    type: "modal" | "page";
+    onClose: undefined | (() => void);
+}
+
+const SelectedOrderInfo: FC<ISelectedOrderInfo> = ({ messageFromWS, type, onClose }) => {
     const { orderId } = useParams();
-    const wsMessage = useAppSelector(getStateWSFeedMessage);
-    const ingredients = useAppSelector(getStateIngredients)
+    const ingredients = useAppSelector(getStateIngredients);
 
     const orderById = useMemo(() => {
-        return wsMessage?.orders.find((order) => order._id === orderId!);
-    }, [orderId]);
+        return messageFromWS?.orders.find((order) => order.number === +orderId!);
+    }, [orderId, messageFromWS]);
 
     const orderPrice = useMemo(() => {
         if (!orderById) {
@@ -30,7 +37,14 @@ const SelectedOrderInfo: FC = () => {
     }, [orderById])
 
     return (
-        <section className={styles.orderInfo}>
+        <section className={`${type === "page" ? styles.pageBlock : styles.modalBlock} ${styles.wrapper}`}>
+            {type === "modal" && (
+                <div className={styles.closeBlock}>
+                    <button className="closeButton" onClick={onClose}>
+                        <CloseIcon type="primary" />
+                    </button>
+                </div>
+            )}
             {!orderById && <h3>Идет загрузка</h3>}
             {orderById && (
                 <>

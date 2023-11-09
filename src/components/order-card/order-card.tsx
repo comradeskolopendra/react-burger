@@ -1,4 +1,5 @@
 import { FC, useMemo } from "react";
+import { useLocation } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import styles from "./order-card.module.css";
 import IngredientCircle from "../ingredient-circle/ingredient-circle";
@@ -14,8 +15,8 @@ interface IOrderCard {
     ingredientsIds: string[];
     updatedAt: string;
     number: number;
-    linkId: string;
     from: string;
+    status: string | undefined;
 }
 
 const OrderCard: FC<IOrderCard> = ({
@@ -23,16 +24,17 @@ const OrderCard: FC<IOrderCard> = ({
     ingredientsIds,
     updatedAt,
     number,
-    linkId,
-    from
+    from,
+    status
 }) => {
+    const location = useLocation();
     const ingredients = useAppSelector(getStateIngredients);
 
     const { ingredientsData, restAmount, allIngredients } = useMemo(() => {
 
         const allIngredients = ingredientsIds.map((id) => {
             return ingredients.find((ingredient) => ingredient._id === id);
-        })
+        }).filter((element) => element !== undefined);
 
         const ingredientsData = ingredientsIds.slice(0, 6).map((id) => {
             return ingredients.find((ingredient) => ingredient._id === id);
@@ -48,7 +50,7 @@ const OrderCard: FC<IOrderCard> = ({
     }, []);
 
     return (
-        <Link to={`/${from}/${linkId}`} className={styles.card}>
+        <Link to={`/${from}/${number}`} className={styles.card} state={{ background: location }}>
             <div className={styles.cardHeading}>
                 <p className="text text_type_digits-default">#{number}</p>
                 <p className="text text_type_main-default text_color_inactive">
@@ -57,6 +59,11 @@ const OrderCard: FC<IOrderCard> = ({
             </div>
             <div className="mt-6">
                 <p className="text text_type_main-medium">{name}</p>
+                <div className="mt-2">
+                    {status === "done" && <p className={`${styles.success} text text_type_main-default`}>Выполнен</p>}
+                    {status === "created" && <p className="text text_type_main-default">Создан</p>}
+                    {status === "pending" && <p className="text text_type_main-default">Готовится</p>}
+                </div>
             </div>
             <div className={`${styles.cardBottom} mt-6`}>
                 <div className={styles.cardIngredients}>
@@ -75,7 +82,7 @@ const OrderCard: FC<IOrderCard> = ({
                 <div
                     className={`${styles.price} text text_type_digits-default`}
                 >
-                    {allIngredients.reduce((acc, val) => acc + val!.price, 0)}
+                    {allIngredients ? allIngredients.reduce((acc, val) => acc + val!.price, 0) : 0}
                     <CurrencyIcon type={"primary"} />
                 </div>
             </div>

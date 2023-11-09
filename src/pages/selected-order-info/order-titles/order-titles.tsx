@@ -17,8 +17,8 @@ const OrderTitles: FC<IOrderTitles> = ({ name, number, status }) => {
                 #{number}
             </h3>
             <h2 className={`text text_type_main-medium mb-3`}>{name}</h2>
-            <p className={`${styles.success} text text_type_main-default`}>
-                Выполнен
+            <p className={`${status === "done" ? styles.success : ""} text text_type_main-default`}>
+                {status === "done" ? "Выполнен" : "В работе"}
             </p>
         </div>
     );

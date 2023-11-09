@@ -54,6 +54,8 @@ export const socketMiddleware = (wsActions: TWSActionTypes): Middleware<{}, Root
                     console.log("get new message")
                     const parsedData = JSON.parse(data);
 
+                    console.log(parsedData);
+
                     dispatch(onMessage(parsedData));
                 };
 

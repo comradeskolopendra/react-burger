@@ -8,18 +8,22 @@ import { getStateWSProfileOrdersMessage } from "../../../selectors/profile-order
 import styles from "./profile-orders.module.css";
 
 const ProfileOrders: FC = () => {
-    const ingredients = useAppSelector(getStateIngredients);
     const profileOrders = useAppSelector(getStateWSProfileOrdersMessage);
-
-    const orderIngredients = useMemo(() => {
-        // return profileOrders?.orders.map((id) => ingredients.find(element => element._id === id));
-    }, [profileOrders])
-
-    console.log(profileOrders)
 
     return (
         <div className={styles.orderCards}>
-
+            {
+                profileOrders?.orders.map((order) => {
+                    return <OrderCard
+                        ingredientsIds={order.ingredients}
+                        updatedAt={order.updatedAt}
+                        name={order.name}
+                        number={order.number}
+                        from={"profile/orders"}
+                        status={order.status}
+                    />
+                })
+            }
         </div>
     )
 };

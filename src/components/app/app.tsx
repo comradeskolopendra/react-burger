@@ -12,8 +12,6 @@ import { setAuthChecked } from "../../services/store/auth";
 import { getStateIsLoaded } from "../../selectors/auth-selectors";
 import { getUserInfoThunk } from "../../services/actions/profile";
 
-import { setVisibleIngredient } from "../../services/store/modal";
-
 import AppHeader from "../app-header/app-header";
 import {
     MainPage,
@@ -33,13 +31,21 @@ import {
 
 import "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
-import { connect } from "../../services/actions/feed";
+import { connect as profileOrdersConnection } from "../../services/actions/profile-orders";
+import { connect as feedConnection } from "../../services/actions/feed"
+import { getStateWSFeedMessage } from "../../selectors/feed-selectors";
+import { getStateWSProfileOrdersMessage } from "../../selectors/profile-orders-selectors";
+import { getStateUser } from "../../selectors/profile-selector";
 
 const App: FC = () => {
     const dispatch = useAppDispatch();
     const isLoaded = useAppSelector(getStateIsLoaded);
     const location = useLocation();
     const navigate = useNavigate();
+
+    const wsFeedMessage = useAppSelector(getStateWSFeedMessage);
+    const wsProfileOrdersMessage = useAppSelector(getStateWSProfileOrdersMessage);
+    const user = useAppSelector(getStateUser);
 
     // проверяем, перешел ли пользователь по ссылке, а не открыл в браузере окно
     const background = location.state && location.state.background;
@@ -53,14 +59,19 @@ const App: FC = () => {
     }, [isLoaded, localStorage.getItem("accessToken")]);
 
     const handleModalClose = () => {
-        dispatch(setVisibleIngredient(false));
-        // закрыаем модалку и переходим на предудыщую страницу в истории.
-        navigate(-1); // На одну запись назад
+        navigate(-1);
     };
 
     useEffect(() => {
+        const token = localStorage.getItem("accessToken")?.split(" ")[1];
+        if (token && user) {
+            dispatch(profileOrdersConnection(`wss://norma.nomoreparties.space/orders?token=${token}`))
+        }
+    }, [user])
+
+    useEffect(() => {
         dispatch(getIngredientsThunk());
-        dispatch(connect("wss://norma.nomoreparties.space/orders/all"));
+        dispatch(feedConnection("wss://norma.nomoreparties.space/orders/all"));
     }, []);
 
     return (
@@ -91,7 +102,7 @@ const App: FC = () => {
                     }
                 />
                 <Route path="/feed" element={<Feed />} />
-                <Route path="/feed/:orderId" element={<SelectedOrderInfo />} />
+                <Route path="/feed/:orderId" element={<SelectedOrderInfo messageFromWS={wsFeedMessage} type={"page"} onClose={undefined} />} />
                 <Route
                     path="/ingredients/:id"
                     element={
@@ -101,6 +112,12 @@ const App: FC = () => {
                         />
                     }
                 />
+
+                <Route
+                    path="/profile/orders/:orderId"
+                    element={<AuthProtectedRoute component={<SelectedOrderInfo messageFromWS={wsProfileOrdersMessage} type={"page"} onClose={undefined} />} />}
+                />
+
                 <Route
                     path="/profile"
                     element={
@@ -109,19 +126,11 @@ const App: FC = () => {
                 >
                     <Route
                         index
-                        element={
-                            <AuthProtectedRoute
-                                component={<ProfileEditable />}
-                            />
-                        }
+                        element={<AuthProtectedRoute component={<ProfileEditable />} />}
                     />
                     <Route
                         path="orders"
                         element={<AuthProtectedRoute component={<ProfileOrders />} />}
-                    />
-                    <Route
-                        path="orders/:orderId"
-                        element={<AuthProtectedRoute component={<></>} />}
                     />
                     <Route
                         path="quit"
@@ -144,6 +153,32 @@ const App: FC = () => {
                                     type={"modal"}
                                 />
                             </Modal>
+                        }
+                    />
+                    <Route
+                        path="/feed/:orderId"
+                        element={
+                            <Modal onClose={handleModalClose}>
+                                <SelectedOrderInfo
+                                    onClose={handleModalClose}
+                                    messageFromWS={wsFeedMessage}
+                                    type={"modal"}
+                                />
+                            </Modal>
+                        }
+                    />
+
+                    <Route
+                        path="/profile/orders/:orderId"
+                        element={<AuthProtectedRoute
+                            component={<Modal onClose={handleModalClose}>
+                                <SelectedOrderInfo
+                                    onClose={handleModalClose}
+                                    messageFromWS={wsProfileOrdersMessage}
+                                    type={"modal"}
+                                />
+                            </Modal>
+                            } />
                         }
                     />
                 </Routes>

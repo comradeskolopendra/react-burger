@@ -15,8 +15,8 @@ const OrdersFeed: FC<IOrdersStatus> = ({ totalAll, totalToday, doneOrders, notDo
     return (
         <section>
             <section className={styles.statuses}>
-                <OrderStatus title={"Готовы:"} orders={doneOrders} extraClass="mr-9" />
-                <OrderStatus title={"В работе:"} orders={notDoneOrders} extraClass="" />
+                <OrderStatus isDone={true} title={"Готовы:"} orders={doneOrders} extraClass="mr-9" />
+                <OrderStatus isDone={false} title={"В работе:"} orders={notDoneOrders} extraClass="" />
             </section>
             <section>
                 <OrderStatistic title={"Выполнено за все время:"} totalAmount={totalAll} />

@@ -1,26 +1,12 @@
 import { useLocation } from "react-router-dom";
 import { FC, useEffect, useState } from "react";
 import { Outlet, NavLink } from "react-router-dom";
-import { connect, disconnect } from "../../services/actions/profile-orders";
 
 import styles from "./profile.module.css";
-import { useAppDispatch } from "../../services/hooks/hooks";
 
 const ProfileWrapper: FC = () => {
     const [description, setDescription] = useState("В этом разделе вы можете изменить свои персональные данные")
     const location = useLocation();
-    const dispatch = useAppDispatch();
-    const token = localStorage.getItem("accessToken")?.split(" ")[1];
-
-    useEffect(() => {
-        console.log(`wss://norma.nomoreparties.space/orders?token=${token}`)
-        console.log(token)
-        dispatch(connect(`wss://norma.nomoreparties.space/orders?token=${token}`))
-
-        return () => {
-            dispatch(disconnect())
-        }
-    }, []);
 
     useEffect(() => {
         if (location.pathname === "/profile") {
@@ -50,7 +36,6 @@ const ProfileWrapper: FC = () => {
 
                     <NavLink
                         to={"orders"}
-                        end
                         className={({ isActive }) =>
                             isActive
                                 ? `text text_type_main-medium ${styles.activeLink}`
