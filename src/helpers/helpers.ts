@@ -1,22 +1,7 @@
 import { BASE_URL } from "../utils/constants";
-import type { TAuthUserData } from '../services/actions/auth';
-import type { IIngredient, IOrder, IUser } from '../utils/types';
+import { IIngredient, IOrder, IUser } from '../utils/types';
 
-interface IUpdateToken {
-    success: boolean;
-    accessToken: string;
-    refreshToken: string;
-}
-
-type TRequestsInterfaces =
-    | IUpdateToken
-    | TAuthUserData
-    | IIngredient[]
-    | IOrder
-    | IUser
-    | Response;
-
-const checkResponse = (res: Response): Promise<TRequestsInterfaces> => {
+const checkResponse = (res: Response): Promise<Response> => {
     return res.ok
         ? res.json()
         : res.json().then((error) => {
@@ -38,7 +23,7 @@ const updateToken = async (): Promise<any> => {
 const requestWithRefresh = async (
     url: string,
     options: any
-): Promise<TRequestsInterfaces> => {
+): Promise<any> => {
     try {
         return await request(url, options);
     } catch (error: any) {
@@ -53,8 +38,8 @@ const requestWithRefresh = async (
 
             console.log(localStorage);
 
-            localStorage.setItem("accessToken", refreshData.accessToken);
-            localStorage.setItem("refreshToken", refreshData.refreshToken);
+            localStorage.setItem("accessToken", refreshData.accessToken as string);
+            localStorage.setItem("refreshToken", refreshData.refreshToken as string);
 
             options.headers.authorization = refreshData.accessToken; // перезаписал токен;
 
@@ -65,6 +50,7 @@ const requestWithRefresh = async (
     }
 };
 
-const request = (url: string, options = {}): Promise<TRequestsInterfaces> => fetch(url, options).then(checkResponse);
+const request = (url: string, options = {}): Promise<any> =>
+    fetch(url, options).then(checkResponse);
 
 export { request, checkResponse, requestWithRefresh };
