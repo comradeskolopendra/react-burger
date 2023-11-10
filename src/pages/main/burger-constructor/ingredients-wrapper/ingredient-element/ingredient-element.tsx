@@ -1,5 +1,5 @@
 import { useRef, FC } from "react";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from '../../../../../services/hooks/hooks';
 import { useDrag, useDrop } from "react-dnd";
 import { removeConstructorIngredient } from '../../../../../services/store/constructor';
 import {
@@ -22,7 +22,7 @@ interface IDragableItem {
 
 const IngredientElement: FC<IIngredientElement> = ({ ingredient, index, moveCard }) => {
     const ref = useRef<HTMLLIElement>(null);
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const handleClose = (ingredient: TConstructorIngredient) => {
         dispatch(removeConstructorIngredient(ingredient.uuid));

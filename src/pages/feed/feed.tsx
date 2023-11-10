@@ -1,12 +1,22 @@
-import { FC, useMemo } from "react";
+import { FC, useMemo, useEffect } from "react";
 import styles from "./feed.module.css";
 import OrdersCards from "./orders-cards/orders-cards";
 import OrdersFeed from "./orders-feed/orders-feed";
-import { useAppSelector } from "../../services/hooks/hooks";
+import { useAppSelector, useAppDispatch } from "../../services/hooks/hooks";
+import { connect as feedConnect, disconnect as feedDisconnect } from '../../services/actions/feed';
 import { getStateWSFeedMessage } from '../../selectors/feed-selectors';
 
 const Feed: FC = () => {
+    const dispatch = useAppDispatch();
     const wsMessage = useAppSelector(getStateWSFeedMessage);
+
+    useEffect(() => {
+        dispatch(feedConnect("wss://norma.nomoreparties.space/orders/all"));
+
+        return () => {
+            dispatch(feedDisconnect());
+        };
+    }, [])
 
     const { doneOrders, notDoneOrders } = useMemo(() => {
         return {

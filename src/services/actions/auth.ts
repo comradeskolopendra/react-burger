@@ -10,9 +10,9 @@ type TUserInfo = {
     password: string;
 };
 
-type TLoginUser = Omit<TUserInfo, "name">;
+export type TLoginUser = Omit<TUserInfo, "name">;
 
-type TAuthUserData = {
+export type TAuthUserData = {
     success: boolean;
     user: IUser;
     accessToken: string;

@@ -34,8 +34,8 @@ const OrderComposition: FC<{ order: IFeedOrder | undefined }> = ({ order }) => {
                 Состав:
             </h3>
             <section className={`${styles.ingredients} mt-6`}>
-                {orderIngredients!.map(ingredient => {
-                    return <CompositionRow name={ingredient?.name} price={ingredient?.price} amount={ingredient.amount} image={ingredient?.image_mobile} />
+                {orderIngredients && orderIngredients.map(ingredient => {
+                    return <CompositionRow key={ingredient._id} name={ingredient?.name} price={ingredient?.price} amount={ingredient.amount} image={ingredient?.image_mobile} />
                 })}
             </section>
         </div>

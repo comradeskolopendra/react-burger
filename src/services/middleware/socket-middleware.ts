@@ -35,13 +35,11 @@ export const socketMiddleware = (wsActions: TWSActionTypes): Middleware<{}, Root
 
             if (wsConnect.match(action)) {
                 socket = new WebSocket(payload);
-                console.log("socket opened")
                 dispatch(wsConnecting());
             }
 
             if (socket) {
                 socket.onopen = (event: Event) => {
-
                     dispatch(onOpen());
                 };
 
@@ -51,17 +49,12 @@ export const socketMiddleware = (wsActions: TWSActionTypes): Middleware<{}, Root
 
                 socket.onmessage = (event: MessageEvent) => {
                     const { data } = event;
-                    console.log("get new message")
                     const parsedData = JSON.parse(data);
-
-                    console.log(parsedData);
 
                     dispatch(onMessage(parsedData));
                 };
 
                 socket.onclose = (event: CloseEvent) => {
-                    const { reason, code } = event;
-                    console.log({ reason, code });
                     dispatch(onClose());
                 };
 

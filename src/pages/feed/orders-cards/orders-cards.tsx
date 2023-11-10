@@ -12,6 +12,7 @@ const OrdersCards: FC<{ orders: IFeedOrder[] | null | undefined }> = ({ orders }
                 orders.map((order) => {
                     return (
                         <OrderCard
+                            key={order.number}
                             name={order.name}
                             number={order.number}
                             ingredientsIds={order.ingredients}

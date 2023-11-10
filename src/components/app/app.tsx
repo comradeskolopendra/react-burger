@@ -31,11 +31,8 @@ import {
 
 import "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
-import { connect as profileOrdersConnection } from "../../services/actions/profile-orders";
-import { connect as feedConnection } from "../../services/actions/feed"
 import { getStateWSFeedMessage } from "../../selectors/feed-selectors";
 import { getStateWSProfileOrdersMessage } from "../../selectors/profile-orders-selectors";
-import { getStateUser } from "../../selectors/profile-selector";
 
 const App: FC = () => {
     const dispatch = useAppDispatch();
@@ -45,7 +42,6 @@ const App: FC = () => {
 
     const wsFeedMessage = useAppSelector(getStateWSFeedMessage);
     const wsProfileOrdersMessage = useAppSelector(getStateWSProfileOrdersMessage);
-    const user = useAppSelector(getStateUser);
 
     // проверяем, перешел ли пользователь по ссылке, а не открыл в браузере окно
     const background = location.state && location.state.background;
@@ -63,15 +59,7 @@ const App: FC = () => {
     };
 
     useEffect(() => {
-        const token = localStorage.getItem("accessToken")?.split(" ")[1];
-        if (token && user) {
-            dispatch(profileOrdersConnection(`wss://norma.nomoreparties.space/orders?token=${token}`))
-        }
-    }, [user])
-
-    useEffect(() => {
         dispatch(getIngredientsThunk());
-        dispatch(feedConnection("wss://norma.nomoreparties.space/orders/all"));
     }, []);
 
     return (

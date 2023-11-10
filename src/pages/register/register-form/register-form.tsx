@@ -1,5 +1,5 @@
 import { useState, FC, ChangeEvent, FormEvent } from "react";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from '../../../services/hooks/hooks';
 
 import { registerUserThunk } from "../../../services/actions/auth";
 
@@ -11,7 +11,7 @@ import {
 import styles from "./register-form.module.css";
 
 const RegisterForm: FC = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const [userInfo, setUserInfo] = useState({
         name: "",
         email: "",
