@@ -31,4 +31,19 @@ export type AppThunk<TReturn = void> = ThunkAction<
     AppActions
 >;
 
+export interface IGetOrderByNumber {
+    success: boolean;
+    orders: {
+        _id: string;
+        ingredients: string[];
+        owner: string;
+        status: string;
+        name: string;
+        createdAt: string;
+        updatedAt: string;
+        number: number;
+        __v: number;
+    }[];
+}
+
 export type AppDispatch<TReturn = void> = (action: AppActions | AppThunk<TReturn>) => TReturn;

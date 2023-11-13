@@ -1,6 +1,6 @@
-import { FC, useMemo } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { useAppSelector } from "../../services/hooks/hooks";
+import { FC, useMemo, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useAppSelector, useAppDispatch } from "../../services/hooks/hooks";
 
 import OrderTitles from './order-titles/order-titles';
 import OrderFooter from "./order-footer/order-footer";
@@ -8,23 +8,31 @@ import OrderComposition from './order-composition/order-composition';
 
 import styles from "./selected-order-info.module.css";
 import { getStateIngredients } from "../../selectors/ingredients-selectors";
+import { getStateOrderByNumber } from '../../selectors/selected-order';
 
-import type { IWSMessage } from "../../utils/types";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { getOrderByNumber } from '../../services/actions/selected-order';
 
 interface ISelectedOrderInfo {
-    messageFromWS: IWSMessage | null;
     type: "modal" | "page";
     onClose: undefined | (() => void);
 }
 
-const SelectedOrderInfo: FC<ISelectedOrderInfo> = ({ messageFromWS, type, onClose }) => {
+const SelectedOrderInfo: FC<ISelectedOrderInfo> = ({ type, onClose }) => {
     const { orderId } = useParams();
+    const dispatch = useAppDispatch();
     const ingredients = useAppSelector(getStateIngredients);
+    const orderByNumber = useAppSelector(getStateOrderByNumber);
+
+    useEffect(() => {
+        dispatch(getOrderByNumber(+orderId!));
+    }, [])
 
     const orderById = useMemo(() => {
-        return messageFromWS?.orders.find((order) => order.number === +orderId!);
-    }, [orderId, messageFromWS]);
+        return orderByNumber?.orders.find(
+            (order) => order.number === +orderId!
+        );
+    }, [orderId, orderByNumber]);
 
     const orderPrice = useMemo(() => {
         if (!orderById) {
@@ -45,7 +53,7 @@ const SelectedOrderInfo: FC<ISelectedOrderInfo> = ({ messageFromWS, type, onClos
                     </button>
                 </div>
             )}
-            {!orderById && <h3>Идет загрузка</h3>}
+            {!orderById && <h3 className={`${styles.loadingTitle} text text_type_main-medium`}>Идет загрузка</h3>}
             {orderById && (
                 <>
                     <OrderTitles

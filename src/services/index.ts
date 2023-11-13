@@ -6,7 +6,9 @@ import modalSlice from "./store/modal";
 import constructorSlice from "./store/constructor";
 import profileSlice from './store/profile';
 import authSlice from "./store/auth";
+import selectedOrderSlice from "./store/selected-order";
 import feedReducer from "./store/feed";
+import profileOrdersReducer from "./store/profile-orders";
 
 import { socketMiddleware } from "./middleware/socket-middleware";
 import {
@@ -30,7 +32,7 @@ import {
     wsOpen as profileOrdersWSOpen
 }
     from "./actions/profile-orders";
-import profileOrdersReducer from "./store/profile-orders";
+
 
 export const rootReducer = combineReducers({
     ingredients: ingredientsSlice,
@@ -40,7 +42,8 @@ export const rootReducer = combineReducers({
     auth: authSlice,
     profile: profileSlice,
     feed: feedReducer,
-    profileOrders: profileOrdersReducer
+    profileOrders: profileOrdersReducer,
+    selectedOrder: selectedOrderSlice,
 });
 
 const profileSocketMiddleware = socketMiddleware({

@@ -33,3 +33,8 @@
     top: 40px;
     right: 40px;
 }
+
+.loadingTitle {
+    text-align: center;
+    width: 100%;
+}

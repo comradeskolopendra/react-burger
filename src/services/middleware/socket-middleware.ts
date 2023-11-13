@@ -5,6 +5,8 @@ import {
     ActionCreatorWithoutPayload,
 } from "@reduxjs/toolkit";
 
+import { getUserInfoThunk } from "../actions/profile";
+
 export type TWSActionTypes = {
     wsConnect: ActionCreatorWithPayload<string>;
     wsDisconnect: ActionCreatorWithoutPayload;
@@ -16,7 +18,9 @@ export type TWSActionTypes = {
     onMessage: ActionCreatorWithPayload<any>;
 };
 
-export const socketMiddleware = (wsActions: TWSActionTypes): Middleware<{}, RootState> => {
+export const socketMiddleware = (
+    wsActions: TWSActionTypes
+): Middleware<{}, RootState> => {
     return (store) => {
         let socket: WebSocket | null = null;
         return (next) => (action) => {
@@ -51,7 +55,11 @@ export const socketMiddleware = (wsActions: TWSActionTypes): Middleware<{}, Root
                     const { data } = event;
                     const parsedData = JSON.parse(data);
 
-                    dispatch(onMessage(parsedData));
+                    if (data.message === "Invalid or missing token") {
+                        dispatch(getUserInfoThunk());
+                    } else {
+                        dispatch(onMessage(parsedData));
+                    }
                 };
 
                 socket.onclose = (event: CloseEvent) => {

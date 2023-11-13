@@ -90,7 +90,7 @@ const App: FC = () => {
                     }
                 />
                 <Route path="/feed" element={<Feed />} />
-                <Route path="/feed/:orderId" element={<SelectedOrderInfo messageFromWS={wsFeedMessage} type={"page"} onClose={undefined} />} />
+                <Route path="/feed/:orderId" element={<SelectedOrderInfo type={"page"} onClose={undefined} />} />
                 <Route
                     path="/ingredients/:id"
                     element={
@@ -103,7 +103,7 @@ const App: FC = () => {
 
                 <Route
                     path="/profile/orders/:orderId"
-                    element={<AuthProtectedRoute component={<SelectedOrderInfo messageFromWS={wsProfileOrdersMessage} type={"page"} onClose={undefined} />} />}
+                    element={<AuthProtectedRoute component={<SelectedOrderInfo type={"page"} onClose={undefined} />} />}
                 />
 
                 <Route
@@ -149,7 +149,6 @@ const App: FC = () => {
                             <Modal onClose={handleModalClose}>
                                 <SelectedOrderInfo
                                     onClose={handleModalClose}
-                                    messageFromWS={wsFeedMessage}
                                     type={"modal"}
                                 />
                             </Modal>
@@ -162,7 +161,6 @@ const App: FC = () => {
                             component={<Modal onClose={handleModalClose}>
                                 <SelectedOrderInfo
                                     onClose={handleModalClose}
-                                    messageFromWS={wsProfileOrdersMessage}
                                     type={"modal"}
                                 />
                             </Modal>
