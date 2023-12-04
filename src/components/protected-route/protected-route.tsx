@@ -1,6 +1,6 @@
 import { FC, ReactElement } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useAppSelector } from '../../services/hooks/hooks';
 import { getStateUser } from "../../selectors/profile-selector";
 import { getStateAuthChecked } from "../../selectors/auth-selectors";
 import { IUser } from "../../utils/types";
@@ -15,8 +15,8 @@ interface ITypeRoutes {
 }
 
 const ProtectedRoute: FC<IProtectedRoute> = ({ onlyUnAuth = false, component }) => {
-    const user: IUser = useSelector(getStateUser);
-    const isAuthChecked: boolean = useSelector(getStateAuthChecked);
+    const user: IUser | null = useAppSelector(getStateUser);
+    const isAuthChecked: boolean = useAppSelector(getStateAuthChecked);
     const location = useLocation();
 
     // проверка не завершилась. ждем выполнения запроса.

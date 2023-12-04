@@ -1,8 +1,7 @@
 import { FC } from "react";
-import PropTypes from "prop-types";
 import { useCallback } from "react";
 
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from '../../../../services/hooks/hooks';
 import { useDrop } from "react-dnd/dist/hooks";
 import IngredientElement from "./ingredient-element/ingredient-element";
 
@@ -19,7 +18,7 @@ interface IIngredientsWrapper {
 
 const IngredientsWrapper: FC<IIngredientsWrapper> = ({ ingredients }) => {
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const [{ isHoverIngredient }, ingredientsRef] = useDrop({
         accept: "ingredients",

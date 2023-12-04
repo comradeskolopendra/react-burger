@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { useSelector } from "react-redux";
+import { useAppSelector } from '../../../services/hooks/hooks';
 import { getStateOrderRequest, getStateOrder } from '../../../selectors/order-selectors';
 
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -11,13 +11,9 @@ interface IOrderDetails {
     onClose: () => void;
 }
 
-interface IOrder {
-    order: { number: number };
-}
-
 const OrderDetails: FC<IOrderDetails> = ({ onClose }) => {
-    const order: IOrder = useSelector(getStateOrder);
-    const orderRequest: boolean = useSelector(getStateOrderRequest);
+    const order = useAppSelector(getStateOrder);
+    const orderRequest = useAppSelector(getStateOrderRequest);
 
     return (
         <div className={`${styles.modalBlock} pt-30 pb-30`}>
@@ -32,7 +28,7 @@ const OrderDetails: FC<IOrderDetails> = ({ onClose }) => {
             <p
                 className={`${styles.glowBigNumbers} mb-8 text text_type_digits-large`}
             >
-                {!orderRequest ? order?.order?.number : "0000"}
+                {!orderRequest ? order?.number : "0000"}
             </p>
             <p className="text text_type_main-medium">идентификатор заказа</p>
             <img src={`${done}`} alt="done" className="mt-15 mb-15" />

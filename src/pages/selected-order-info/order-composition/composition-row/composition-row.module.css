@@ -1,0 +1,20 @@
+.row {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.row:last-child {
+    margin-bottom: 0;
+}
+
+.rowLefside,
+.rowRightside {
+    display: flex;
+    align-items: center;
+}
+
+.title {
+    max-width: 320px;
+}

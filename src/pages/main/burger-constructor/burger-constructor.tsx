@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from '../../../services/hooks/hooks';
 import { useDrop } from "react-dnd";
 import { setConstructorBun } from '../../../services/store/constructor';
 import { getStateSelectedBun, getStateSelectedIngredients } from '../../../selectors/constructor-selectors';
@@ -9,16 +9,16 @@ import PriceInfo from "./price-info/price-info";
 
 import styles from "./burger-constructor.module.css";
 import BunWrapper from "./bun-wrapper/bun-wrapper";
-import { IIngredient, TConstructorIngredient } from "../../../utils/types";
+import { IIngredient } from "../../../utils/types";
 
 interface IBurgerConstructor {
     onOpenModal: () => void;
 }
 
 const BurgerConstructor: FC<IBurgerConstructor> = ({ onOpenModal }) => {
-    const dispatch = useDispatch();
-    const selectedBun: IIngredient = useSelector(getStateSelectedBun);
-    const selectedIngredients: TConstructorIngredient[] = useSelector(getStateSelectedIngredients);
+    const dispatch = useAppDispatch();
+    const selectedBun = useAppSelector(getStateSelectedBun);
+    const selectedIngredients = useAppSelector(getStateSelectedIngredients);
 
     const [{ isHoverBun }, bunRef] = useDrop({
         accept: "bun",

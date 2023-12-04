@@ -1,0 +1,22 @@
+.ingredients {
+    padding-right: 24px;
+    overflow-y: scroll;
+    max-height: 320px;
+    height: fit-content;
+    width: 100%;
+    scrollbar-width: thin;
+}
+
+.ingredients::-webkit-scrollbar {
+    width: 5px;
+    height: 8px;
+    background-color: #2F2F37;
+}
+
+.ingredients::-webkit-scrollbar-thumb {
+    background: #8585AD;
+}
+
+.wrapper {
+    width: 100%;
+}

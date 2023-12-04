@@ -1,5 +1,5 @@
 import { useState, FormEvent, FC } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from '../../../services/hooks/hooks';
 
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
@@ -13,17 +13,17 @@ import styles from "./profile-editable.module.css";
 import { IUser } from "../../../utils/types";
 
 const ProfileEditable: FC = () => {
-    const dispatch = useDispatch();
-    const user: IUser = useSelector(getStateUser);
+    const dispatch = useAppDispatch();
+    const user = useAppSelector(getStateUser);
     const [isChanged, setIsChanged] = useState(false);
     const [values, setValues] = useState({
-        name: user.name,
-        email: user.email,
+        name: user!.name,
+        email: user!.email,
         password: ""
     });
 
     const handleOnReject = () => {
-        setValues({ ...user, password: "" });
+        setValues({ ...user!, password: "" });
         setIsChanged(false)
     };
 
@@ -31,11 +31,9 @@ const ProfileEditable: FC = () => {
         event.preventDefault();
         const { name, email, password } = values;
         if (password === "") {
-            // @ts-ignore
             return dispatch(changeUserInfoThunk({ name, email }));
         }
 
-        // @ts-ignore
         dispatch(changeUserInfoThunk(values));
     };
 
@@ -45,7 +43,7 @@ const ProfileEditable: FC = () => {
                 placeholder={"Имя"}
                 initialValue={values.name}
                 onChange={setValues}
-                changeTracker={user.name}
+                changeTracker={user!.name}
                 name={"name"}
                 icon={"EditIcon"}
                 disabled
@@ -56,7 +54,7 @@ const ProfileEditable: FC = () => {
                 placeholder={"Логин"}
                 initialValue={values.email}
                 onChange={setValues}
-                changeTracker={user.email}
+                changeTracker={user!.email}
                 name={"email"}
                 icon={"EditIcon"}
                 disabled

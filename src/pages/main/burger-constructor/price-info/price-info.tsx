@@ -1,6 +1,6 @@
 import { useMemo, FC } from "react";
 
-import { useSelector } from "react-redux";
+import { useAppSelector } from '../../../../services/hooks/hooks';
 import { getStateSelectedBun, getStateSelectedIngredients } from '../../../../selectors/constructor-selectors';
 import {
     CurrencyIcon,
@@ -9,7 +9,7 @@ import {
 import styles from "./price-info.module.css";
 import { getStateUser } from '../../../../selectors/profile-selector';
 import { useNavigate } from 'react-router-dom';
-import { IIngredient, IUser, TConstructorIngredient } from "../../../../utils/types";
+import { TConstructorIngredient } from "../../../../utils/types";
 
 interface IPriceInfo {
     onOpenModal: () => void;
@@ -17,9 +17,9 @@ interface IPriceInfo {
 
 const PriceInfo: FC<IPriceInfo> = ({ onOpenModal }) => {
     const navigate = useNavigate();
-    const selectedBun: IIngredient = useSelector(getStateSelectedBun);
-    const selectedIngredients: TConstructorIngredient[] = useSelector(getStateSelectedIngredients);
-    const user: IUser = useSelector(getStateUser)
+    const selectedBun = useAppSelector(getStateSelectedBun);
+    const selectedIngredients = useAppSelector(getStateSelectedIngredients);
+    const user = useAppSelector(getStateUser);
 
     const price = useMemo(() => {
         return selectedIngredients.reduce((prev: number, cur: TConstructorIngredient) => {

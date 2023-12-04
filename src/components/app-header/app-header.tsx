@@ -4,7 +4,7 @@ import { Logo } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app-header.module.css";
 import CustomNavLink from "./custom-nav-link/custom-nav-link";
 
-const AppHeader: FC<unknown> = () => {
+const AppHeader: FC = () => {
     return (
         <header>
             <nav className={`${styles.nav} mt-4 mb-4`}>
@@ -16,7 +16,7 @@ const AppHeader: FC<unknown> = () => {
                         end={true}
                     />
                     <CustomNavLink
-                        to={"/lenta"}
+                        to={"/feed"}
                         icon={"list"}
                         title={"Лента заказов"}
                         end={true}
