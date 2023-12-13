@@ -31,10 +31,10 @@ const IngredientDetails: FC<IIngredientsDetails> = ({ onClose, type }) => {
                 <>
                     <div className={styles.wrapperHeading}>
                         <h3 className="text text_type_main-large">
-                            Детали игредиента
+                            Детали ингредиента
                         </h3>
                         {type === "modal" && (
-                            <button className="closeButton" onClick={onClose}>
+                            <button className="closeButton" data-testid="closeButton" onClick={onClose}>
                                 <CloseIcon type={"primary"} />
                             </button>
                         )}

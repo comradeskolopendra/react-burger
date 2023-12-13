@@ -22,7 +22,7 @@ const Modal: FC<IModal> = ({ children, onClose }) => {
     }, [])
 
     return ReactDOM.createPortal(
-        <div>
+        <div data-testid="modal">
             <ModalOverlay onClose={onClose} />
             {children}
         </div>,
