@@ -58,6 +58,7 @@
     "@types/uuid": "^9.0.6",
     "cypress": "^13.6.1",
     "gh-pages": "^6.1.0",
+    "jest": "^27.5.1",
     "react-test-renderer": "^18.2.0",
     "redux-mock-store": "^1.5.4"
   },

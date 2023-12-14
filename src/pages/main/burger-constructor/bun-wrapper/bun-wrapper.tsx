@@ -26,8 +26,9 @@ const BunWrapper: FC<IBunWrapper> = ({ bunRef = null, side, bun, isHoverBun }) =
                 <div
                     className={`${styles.nullIngredientsBun} ${isHoverBun ? styles.selectedIngredient : ""
                         } text text_type_main-small`}
+                    data-testid={"bun-place"}
                 >
-                    Попробуйте нажать или перетащить ингредиент!
+                    Попробуйте перетащить булку!
                 </div>
             )}
         </div>

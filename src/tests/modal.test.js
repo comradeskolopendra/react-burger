@@ -1,0 +1,4 @@
+
+describe("modal store", () => {
+    test()
+})

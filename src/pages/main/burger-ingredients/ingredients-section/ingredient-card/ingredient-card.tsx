@@ -38,6 +38,7 @@ const IngredientCard: FC<IIngredientCard> = ({ ingredient }) => {
             ref={ingredientRef}
             className={styles.card}
             state={{ background: location }}
+            data-testid="ingredients"
         >
             <img
                 src={ingredient.image}
