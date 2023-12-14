@@ -34,7 +34,7 @@ const IngredientDetails: FC<IIngredientsDetails> = ({ onClose, type }) => {
                             Детали ингредиента
                         </h3>
                         {type === "modal" && (
-                            <button className="closeButton" data-testid="closeButton" onClick={onClose}>
+                            <button className="closeButton" data-testid="ingredients-modal-close" onClick={onClose}>
                                 <CloseIcon type={"primary"} />
                             </button>
                         )}

@@ -13,14 +13,14 @@ describe("ingredient details", () => {
     it("should close modal by click close button", () => {
         cy.get("a").contains("Краторная булка N-200i").click();
 
-        cy.get(getStringIdByName("closeButton")).click();
+        cy.get(getStringIdByName("ingredients-modal-close")).click();
         cy.contains("Детали ингредиента").should("not.exist")
     });
 
     it("should close modal by click bg", () => {
         cy.get("a").contains("Краторная булка N-200i").click();
 
-        cy.get(getStringIdByName("overlay")).click({ force: true });
+        cy.get(getStringIdByName("overlay")).click(15, 15, { force: true });
         cy.contains("Детали ингредиента").should("not.exist")
     });
 

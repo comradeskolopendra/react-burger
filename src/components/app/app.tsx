@@ -40,9 +40,6 @@ const App: FC = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const wsFeedMessage = useAppSelector(getStateWSFeedMessage);
-    const wsProfileOrdersMessage = useAppSelector(getStateWSProfileOrdersMessage);
-
     // проверяем, перешел ли пользователь по ссылке, а не открыл в браузере окно
     const background = location.state && location.state.background;
 
