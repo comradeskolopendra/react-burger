@@ -1,6 +1,6 @@
 # Деплой на гитхаб. Ссылка:
 
-[https://comradeskolopendra.github.io/react-burger/](https://comradeskolopendra.github.io/react-burger/)
+[Проект](https://comradeskolopendra.github.io/react-burger/)
 
 # Getting Started with Create React App
 
