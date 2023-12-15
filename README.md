@@ -4,12 +4,15 @@ Stellar Burgers - захудалая космическая бургерная. 
 
 **Проектная работа Яндекс.Практикум**
 
+# Деплой на гитхаб
+Ссылка: [Проект](https://comradeskolopendra.github.io/react-burger/)
+
 # Стек технологий
-Стек технологий - React + TS + RTK + React-router + Jest + Cypress + Ya.Praktikum Burger UI Components:
-Для тестирования были использованы Jest и Cypress.
-Для управления глобальным состоянием - RTK.
-Для роутинга - React-router.
-И в качестве небольшой библиотеки компонентов - Ya.Praktikum Burger UI Components.
+Стек технологий - React + TS + RTK + React-router + Jest + Cypress + Ya.Praktikum Burger UI Components:  
+Для тестирования были использованы Jest и Cypress.  
+Для управления глобальным состоянием - RTK.  
+Для роутинга - React-router.  
+И в качестве небольшой библиотеки компонентов - Ya.Praktikum Burger UI Components.  
 
 # О приложении и настройке
 Приложение было создано при помощи CRA.
@@ -40,6 +43,3 @@ Jest-тесты проверяют бизнес-логику.
 
 ## Установка зависимостей
 Установить зависимости можно с помощью команды **npm install**, находясь в корне проекта.
-
-# Деплой на гитхаб. Ссылка:
-[Проект](https://comradeskolopendra.github.io/react-burger/)
