@@ -7,6 +7,7 @@ const getIngredientsThunk = createAppAsyncThunk<IIngredient[], undefined>(
     "normaapi/ingredients",
     async () => {
         const { data } = await request(`${BASE_URL}/ingredients`);
+        console.log(data);
         return data;
     }
 );

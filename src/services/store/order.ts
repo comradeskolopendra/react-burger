@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { createOrderThunk } from "../actions/order";
 import type { IOrder } from '../../utils/types';
 
-interface IOrderState {
+export interface IOrderState {
     order: IOrder | null;
     orderRequest: boolean;
     orderFailed: boolean;

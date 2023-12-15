@@ -7,7 +7,7 @@ import {
     resetPasswordThunk,
 } from "../actions/auth";
 
-interface IAuthState {
+export interface IAuthState {
     isRequest: boolean;
     isError: boolean;
     isLoaded: boolean;

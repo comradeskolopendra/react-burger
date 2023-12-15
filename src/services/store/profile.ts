@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getUserInfoThunk, changeUserInfoThunk } from "../actions/profile";
 import { IUser } from "../../utils/types";
 
-interface IProfileState {
+export interface IProfileState {
     user: IUser | null;
     userError: boolean;
     userRequest: boolean;

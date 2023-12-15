@@ -1,4 +1,4 @@
-import { FC, useMemo, useEffect, DetailedHTMLFactory, DetailedHTMLProps, HTMLAttributes } from "react";
+import { FC, useMemo, useEffect, DetailedHTMLProps, HTMLAttributes } from "react";
 import { useParams } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../services/hooks/hooks";
 

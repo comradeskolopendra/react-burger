@@ -1,18 +1,18 @@
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, FC } from "react";
-import { useAppDispatch, useAppSelector } from "../../services/hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../services/hooks/hooks";
 
-import { getIngredientsThunk } from "../../services/actions/ingredients";
+import { getIngredientsThunk } from "../services/actions/ingredients";
 import {
     UnAuthProtectedRoute,
     AuthProtectedRoute,
-} from "../protected-route/protected-route";
+} from "../components/protected-route/protected-route";
 
-import { setAuthChecked } from "../../services/store/auth";
-import { getStateIsLoaded } from "../../selectors/auth-selectors";
-import { getUserInfoThunk } from "../../services/actions/profile";
+import { setAuthChecked } from "../services/store/auth";
+import { getStateIsLoaded } from "../selectors/auth-selectors";
+import { getUserInfoThunk } from "../services/actions/profile";
 
-import AppHeader from "../app-header/app-header";
+import AppHeader from "../components/app-header/app-header";
 import {
     MainPage,
     LoginPage,
@@ -27,12 +27,12 @@ import {
     ResetPassword,
     Feed,
     SelectedOrderInfo,
-} from "../../pages";
+} from "../pages";
 
 import "@ya.praktikum/react-developer-burger-ui-components";
-import Modal from "../modal/modal";
-import { getStateWSFeedMessage } from "../../selectors/feed-selectors";
-import { getStateWSProfileOrdersMessage } from "../../selectors/profile-orders-selectors";
+import Modal from "../components/modal/modal";
+import { getStateWSFeedMessage } from "../selectors/feed-selectors";
+import { getStateWSProfileOrdersMessage } from "../selectors/profile-orders-selectors";
 
 const App: FC = () => {
     const dispatch = useAppDispatch();

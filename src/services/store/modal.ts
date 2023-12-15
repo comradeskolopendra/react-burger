@@ -1,12 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface IModalState {
-    visibleIngredient: boolean;
+export interface IModalState {
     visibleOrder: boolean;
 }
 
 const initialState: IModalState = {
-    visibleIngredient: false,
     visibleOrder: false,
 }
 

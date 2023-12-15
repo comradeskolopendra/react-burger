@@ -3,7 +3,7 @@ import type { IWSMessage } from "../../utils/types";
 import { wsClose, wsConnecting, wsError, wsOpen, wsMessage } from "../actions/feed";
 import { EWSStatus, TWSStatus } from "../types";
 
-interface IOrdersFeed {
+export interface IOrdersFeed {
     status: TWSStatus;
     wsMessage: IWSMessage | null;
     connectingError: string;

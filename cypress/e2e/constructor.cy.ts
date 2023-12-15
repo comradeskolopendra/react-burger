@@ -27,7 +27,7 @@ describe("dnd and order", () => {
         cy.contains("Попробуйте перетащить ингредиент!").should("not.exist")
     })
 
-    it("should relocate to loginc when not log", () => {
+    it("should relocate to login when not log", () => {
         cy.get(getStringIdByName("ingredients")).contains("Соус фирменный Space Sauce").trigger("dragstart");
         cy.get(getStringIdByName("ingredient-place")).trigger("drop");
 
