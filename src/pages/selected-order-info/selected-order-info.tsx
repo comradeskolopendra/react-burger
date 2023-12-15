@@ -8,7 +8,7 @@ import OrderComposition from './order-composition/order-composition';
 
 import styles from "./selected-order-info.module.css";
 import { getStateIngredients } from "../../selectors/ingredients-selectors";
-import { getStateOrderByNumber } from '../../selectors/selected-order';
+import { getStateOrderByNumber } from '../../selectors/selected-order-selectors';
 
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { getOrderByNumber } from '../../services/actions/selected-order';

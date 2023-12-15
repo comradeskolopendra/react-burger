@@ -24,6 +24,7 @@ import OrderDetails from "./order-details/order-detail";
 
 import styles from "./main.module.css";
 import { IIngredient, TConstructorIngredient } from "../../utils/types";
+import Loader from "../../components/loader/loader";
 
 const MainPage: FC = () => {
     const dispatch = useAppDispatch();
@@ -65,7 +66,7 @@ const MainPage: FC = () => {
 
     return (
         <>
-            {ingredientsRequest && "Идет загрузка"}
+            {ingredientsRequest && <Loader />}
             {ingredientsError && "Что-то пошло не так!"}
             {ingredients.length !== 0 &&
                 !ingredientsRequest &&

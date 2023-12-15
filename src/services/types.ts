@@ -46,4 +46,13 @@ export interface IGetOrderByNumber {
     }[];
 }
 
+export enum EWSStatus {
+    OFFLINE = "OFFLINE",
+    ONLINE = "ONLINE",
+    CONNECTING = "CONNECTING",
+    CLOSING = "CLOSING"
+}
+
+export type TWSStatus = EWSStatus.CLOSING | EWSStatus.ONLINE | EWSStatus.OFFLINE | EWSStatus.CONNECTING
+
 export type AppDispatch<TReturn = void> = (action: AppActions | AppThunk<TReturn>) => TReturn;
