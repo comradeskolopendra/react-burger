@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { getIngredientsThunk } from "../actions/ingredients";
 import { IIngredient } from "../../utils/types";
 
-interface IIngredientsState {
+export interface IIngredientsState {
     ingredientsRequest: boolean;
     ingredientsFailed: boolean;
     ingredients: IIngredient[];
@@ -22,7 +22,7 @@ export const ingredientsSlice = createSlice({
         builder
             .addCase(getIngredientsThunk.pending, (state) => {
                 state = {
-                    ...state,
+                    ingredients: [],
                     ingredientsFailed: false,
                     ingredientsRequest: true,
                 };
@@ -31,7 +31,7 @@ export const ingredientsSlice = createSlice({
             })
             .addCase(getIngredientsThunk.rejected, (state) => {
                 state = {
-                    ...state,
+                    ingredients: [],
                     ingredientsFailed: true,
                     ingredientsRequest: false,
                 };
@@ -40,7 +40,6 @@ export const ingredientsSlice = createSlice({
             })
             .addCase(getIngredientsThunk.fulfilled, (state, action: PayloadAction<IIngredient[]>) => {
                 state = {
-                    ...state,
                     ingredientsFailed: false,
                     ingredientsRequest: false,
                     ingredients: [...action.payload],

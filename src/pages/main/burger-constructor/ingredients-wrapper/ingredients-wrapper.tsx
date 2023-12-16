@@ -35,9 +35,9 @@ const IngredientsWrapper: FC<IIngredientsWrapper> = ({ ingredients }) => {
     }, [])
 
     return (
-        <div ref={ingredientsRef}>
+        <div ref={ingredientsRef} data-testid="ingredient-place">
             {ingredients.length === 0 ?
-                <div data-testid="ingredient-place" className={`${styles.nullIngredients} ${isHoverIngredient ? styles.selectedIngredient : ""} text text_type_main-small`}>
+                <div className={`${styles.nullIngredients} ${isHoverIngredient ? styles.selectedIngredient : ""} text text_type_main-small`}>
                     Попробуйте перетащить ингредиент!
                 </div>
                 :

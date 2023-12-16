@@ -18,8 +18,6 @@ const createOrderThunk = createAppAsyncThunk<IOrder, string[]>(
 
         const { order } = data;
 
-        console.log(data, order)
-
         dispatch(clearConstructor());
 
         return order;

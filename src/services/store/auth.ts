@@ -35,6 +35,14 @@ export const authSlice = createSlice({
 
             return state;
         },
+        removeSuccesfullyPasswordChange(state) {
+            state = {
+                ...state,
+                isPasswordSuccessfullyChanged: false
+            }
+
+            return state;
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -162,6 +170,6 @@ export const authSlice = createSlice({
 
 type TAuthActionCreators = typeof authSlice.actions;
 export type TAuthActions = ReturnType<TAuthActionCreators[keyof TAuthActionCreators]>
-export const { setAuthChecked } = authSlice.actions;
+export const { setAuthChecked, removeSuccesfullyPasswordChange } = authSlice.actions;
 
 export default authSlice.reducer;

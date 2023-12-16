@@ -77,7 +77,7 @@ const IngredientElement: FC<IIngredientElement> = ({ ingredient, index, moveCard
     drag(drop(ref))
 
     return (
-        <li ref={ref} className={styles.ingredient} data-handler-id={handlerId}>
+        <li ref={ref} className={styles.ingredient} data-handler-id={handlerId} data-testid="constructor-ingredient">
             <div className="mr-2">
                 <DragIcon type="primary" />
             </div>

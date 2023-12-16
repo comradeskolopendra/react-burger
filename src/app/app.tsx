@@ -31,8 +31,6 @@ import {
 
 import "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../components/modal/modal";
-import { getStateWSFeedMessage } from "../selectors/feed-selectors";
-import { getStateWSProfileOrdersMessage } from "../selectors/profile-orders-selectors";
 
 const App: FC = () => {
     const dispatch = useAppDispatch();

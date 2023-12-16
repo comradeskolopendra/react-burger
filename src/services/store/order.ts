@@ -27,7 +27,7 @@ export const orderSlice = createSlice({
         builder
             .addCase(createOrderThunk.pending, (state) => {
                 state = {
-                    ...state,
+                    order: null,
                     orderRequest: true,
                     orderFailed: false
                 }
@@ -36,7 +36,7 @@ export const orderSlice = createSlice({
             })
             .addCase(createOrderThunk.rejected, (state) => {
                 state = {
-                    ...state,
+                    order: null,
                     orderRequest: false,
                     orderFailed: true
                 }

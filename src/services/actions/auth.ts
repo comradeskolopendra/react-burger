@@ -82,10 +82,8 @@ const loginUserThunk = createAppAsyncThunk<TAuthUserData, TLoginUser>(
         if (data && data.refreshToken) {
             localStorage.setItem("refreshToken", data.refreshToken);
             localStorage.setItem("accessToken", data.accessToken);
-            dispatch(setUser(data));
+            dispatch(setUser(data.user));
         }
-
-        console.log(data);
 
         return data;
     });

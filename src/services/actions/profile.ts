@@ -23,7 +23,7 @@ const getUserInfoThunk = createAppAsyncThunk<IUser, undefined>(
 
 const changeUserInfoThunk = createAppAsyncThunk<IUser, IUser>(
     "normaapi/patchUser",
-    async (userInfo, { dispatch }) => {
+    async (userInfo) => {
         const data = await requestWithRefresh(`${BASE_URL}/auth/user`, {
             method: "PATCH",
             headers: {
@@ -35,8 +35,8 @@ const changeUserInfoThunk = createAppAsyncThunk<IUser, IUser>(
 
         const { user } = data;
 
-        if (data && data.success) {
-            dispatch(setUser(user));
+        if (!(data && data.success)) {
+            return;
         }
 
         return user;
