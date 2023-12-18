@@ -1,12 +1,11 @@
 import { BASE_URL } from "../utils/constants";
-import { IIngredient, IOrder, IUser } from '../utils/types';
 
 const checkResponse = (res: Response): Promise<Response> => {
     return res.ok
         ? res.json()
         : res.json().then((error) => {
-              throw new Error(error.message);
-          });
+            throw new Error(error.message);
+        });
 };
 
 
@@ -53,4 +52,8 @@ const requestWithRefresh = async (
 const request = (url: string, options = {}): Promise<any> =>
     fetch(url, options).then(checkResponse);
 
-export { request, checkResponse, requestWithRefresh };
+const getStringIdByName = (value: string): string => {
+    return `[data-testid=${value}]`
+};
+
+export { request, checkResponse, requestWithRefresh, getStringIdByName };

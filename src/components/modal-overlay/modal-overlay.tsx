@@ -7,7 +7,7 @@ interface IModalOverlay {
 
 const ModalOverlay: FC<IModalOverlay> = ({ onClose }) => {
     return (
-        <div className={styles.overlay} onClick={onClose} />
+        <div className={styles.overlay} onClick={onClose} data-testid="overlay" />
     );
 };
 

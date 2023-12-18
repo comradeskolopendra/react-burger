@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./components/app/app";
+import App from "./app/app";
 import "./index.css";
 import { Provider } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { store } from "./services";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, HashRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
@@ -14,11 +14,11 @@ const root = ReactDOM.createRoot(
 root.render(
     <React.StrictMode>
         <DndProvider backend={HTML5Backend}>
-            <BrowserRouter>
+            <HashRouter>
                 <Provider store={store}>
                     <App />
                 </Provider>
-            </BrowserRouter>
+            </HashRouter>
         </DndProvider>
     </React.StrictMode>
 );

@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getUserInfoThunk, changeUserInfoThunk } from "../actions/profile";
 import { IUser } from "../../utils/types";
 
-interface IProfileState {
+export interface IProfileState {
     user: IUser | null;
     userError: boolean;
     userRequest: boolean;
@@ -40,7 +40,7 @@ export const profileSlice = createSlice({
         builder
             .addCase(getUserInfoThunk.rejected, (state) => {
                 state = {
-                    user: null,
+                    ...state,
                     userError: true,
                     userRequest: false,
                 };
@@ -52,7 +52,7 @@ export const profileSlice = createSlice({
             })
             .addCase(getUserInfoThunk.pending, (state) => {
                 state = {
-                    user: null,
+                    ...state,
                     userError: false,
                     userRequest: true,
                 };
@@ -72,7 +72,7 @@ export const profileSlice = createSlice({
 
             .addCase(changeUserInfoThunk.rejected, (state) => {
                 state = {
-                    user: null,
+                    ...state,
                     userError: true,
                     userRequest: true,
                 };
@@ -81,7 +81,7 @@ export const profileSlice = createSlice({
             })
             .addCase(changeUserInfoThunk.pending, (state) => {
                 state = {
-                    user: null,
+                    ...state,
                     userError: false,
                     userRequest: true,
                 };

@@ -71,41 +71,41 @@ const changePasswordThunk = createAppAsyncThunk<unknown, TChangePasswordData>(
 
 const loginUserThunk = createAppAsyncThunk<TAuthUserData, TLoginUser>(
     "normaapi/login", async (userInfo, { dispatch }) => {
-    const data = await request(`${BASE_URL}/auth/login`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userInfo),
+        const data = await request(`${BASE_URL}/auth/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userInfo),
+        });
+
+        if (data && data.refreshToken) {
+            localStorage.setItem("refreshToken", data.refreshToken);
+            localStorage.setItem("accessToken", data.accessToken);
+            dispatch(setUser(data.user));
+        }
+
+        return data;
     });
-
-    if (data && data.refreshToken) {
-        localStorage.setItem("refreshToken", data.refreshToken);
-        localStorage.setItem("accessToken", data.accessToken);
-        dispatch(setUser(data));
-    }
-
-    return data;
-});
 
 const logoutUserThunk = createAppAsyncThunk<unknown, undefined>(
     "normaapi/logout", async (_, { dispatch }) => {
-    const data = await request(`${BASE_URL}/auth/logout`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            token: localStorage.getItem("refreshToken"),
-        }),
-    });
+        const data = await request(`${BASE_URL}/auth/logout`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                token: localStorage.getItem("refreshToken"),
+            }),
+        });
 
-    if (data.success) {
-        localStorage.removeItem("refreshToken");
-        localStorage.removeItem("accessToken");
-        dispatch(clearUser());
-    }
-});
+        if (data.success) {
+            localStorage.removeItem("refreshToken");
+            localStorage.removeItem("accessToken");
+            dispatch(clearUser());
+        }
+    });
 
 export {
     registerUserThunk,

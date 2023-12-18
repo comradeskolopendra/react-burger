@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { getOrderByNumber } from "../actions/selected-order";
 import { IGetOrderByNumber } from "../types";
 
-interface IInitialState {
+export interface IInitialState {
     data: IGetOrderByNumber;
     reqError: boolean;
     reqLoading: boolean;

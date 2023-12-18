@@ -1,13 +1,22 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import ResetForm from "./reset-form/reset-form";
 
 import styles from "./reset-password.module.css";
 
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useAppDispatch } from "../../services/hooks/hooks";
+import { removeSuccesfullyPasswordChange } from "../../services/store/auth";
 
 const ResetPassword: FC = () => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        return () => {
+            dispatch(removeSuccesfullyPasswordChange());
+        }
+    }, [])
 
     if (!localStorage.getItem("resetPasswordAccess")) {
         return <Navigate to={"/login"} replace />;

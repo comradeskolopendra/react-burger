@@ -10,7 +10,6 @@ import { changeUserInfoThunk } from "../../../services/actions/profile";
 import EditableInput from "../../../components/editable-input/editable-input";
 
 import styles from "./profile-editable.module.css";
-import { IUser } from "../../../utils/types";
 
 const ProfileEditable: FC = () => {
     const dispatch = useAppDispatch();
@@ -29,12 +28,14 @@ const ProfileEditable: FC = () => {
 
     const handleOnSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        setIsChanged(false);
         const { name, email, password } = values;
         if (password === "") {
             return dispatch(changeUserInfoThunk({ name, email }));
         }
 
         dispatch(changeUserInfoThunk(values));
+        setValues((prevState) => ({ ...prevState, password: "" }))
     };
 
     return (

@@ -1,17 +1,9 @@
 import { createReducer } from "@reduxjs/toolkit";
 import type { IWSMessage } from "../../utils/types";
 import { wsClose, wsConnecting, wsError, wsOpen, wsMessage } from "../actions/feed";
+import { EWSStatus, TWSStatus } from "../types";
 
-enum EWSStatus {
-    OFFLINE = "OFFLINE",
-    ONLINE = "ONLINE",
-    CONNECTING = "CONNECTING",
-    CLOSING = "CLOSING"
-}
-
-type TWSStatus = EWSStatus.CLOSING | EWSStatus.ONLINE | EWSStatus.OFFLINE | EWSStatus.CONNECTING
-
-interface IOrdersFeed {
+export interface IOrdersFeed {
     status: TWSStatus;
     wsMessage: IWSMessage | null;
     connectingError: string;

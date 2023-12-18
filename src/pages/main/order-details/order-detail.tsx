@@ -21,6 +21,7 @@ const OrderDetails: FC<IOrderDetails> = ({ onClose }) => {
                 <button
                     className="closeButton"
                     onClick={onClose}
+                    data-testid={"order-modal-close"}
                 >
                     <CloseIcon type="primary" />
                 </button>

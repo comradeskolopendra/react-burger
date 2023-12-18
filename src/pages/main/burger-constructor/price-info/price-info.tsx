@@ -48,6 +48,7 @@ const PriceInfo: FC<IPriceInfo> = ({ onOpenModal }) => {
                 type="primary"
                 size="large"
                 disabled={!selectedBun}
+                data-testid={"order"}
             >
                 Оформить заказ
             </Button>

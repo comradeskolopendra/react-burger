@@ -59,6 +59,7 @@ const LoginForm: FC = () => {
                 name={"email"}
                 value={userInfo.email}
                 onChange={handleChangeField}
+                data-testid="email"
             />
             <Input
                 type={isPasswordVisible ? "text" : "password"}
@@ -70,6 +71,7 @@ const LoginForm: FC = () => {
                 onIconClick={handlePasswordToggle}
                 value={userInfo.password}
                 onChange={handleChangeField}
+                data-testid="password"
             />
             {isErrorAuth ? (
                 <p className="text text_type_main-small mb-6">

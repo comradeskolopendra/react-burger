@@ -4,13 +4,17 @@ import OrderCard from "../../../components/order-card/order-card";
 
 import { connect as profileOrdersConnect, disconnect as profileOrdersDisconnect } from "../../../services/actions/profile-orders";
 
-import { getStateWSProfileOrdersMessage } from "../../../selectors/profile-orders-selectors";
+import { getStateWSProfileOrdersMessage, getStateWSProfileStatus } from "../../../selectors/profile-orders-selectors";
+
+import { EWSStatus, TWSStatus } from "../../../services/types";
 
 import styles from "./profile-orders.module.css";
+import Loader from "../../../components/loader/loader";
 
 const ProfileOrders: FC = () => {
-    const profileOrders = useAppSelector(getStateWSProfileOrdersMessage);
     const dispatch = useAppDispatch();
+    const profileOrders = useAppSelector(getStateWSProfileOrdersMessage);
+    const wsStatus = useAppSelector(getStateWSProfileStatus);
 
     useEffect(() => {
         const token = localStorage.getItem("accessToken")?.split(" ")[1];
@@ -26,21 +30,27 @@ const ProfileOrders: FC = () => {
     }, [])
 
     return (
-        <div className={styles.orderCards}>
-            {
-                profileOrders?.orders.map((order) => {
-                    return <OrderCard
-                        key={order.number}
-                        ingredientsIds={order.ingredients}
-                        updatedAt={order.updatedAt}
-                        name={order.name}
-                        number={order.number}
-                        from={"profile/orders"}
-                        status={order.status}
-                    />
-                })
+        <>
+            {wsStatus === EWSStatus.CONNECTING ?
+                (<Loader />)
+                :
+                <div className={styles.orderCards}>
+                    {
+                        profileOrders?.orders.map((order) => {
+                            return <OrderCard
+                                key={order.number}
+                                ingredientsIds={order.ingredients}
+                                updatedAt={order.updatedAt}
+                                name={order.name}
+                                number={order.number}
+                                from={"profile/orders"}
+                                status={order.status}
+                            />
+                        })
+                    }
+                </div>
             }
-        </div>
+        </>
     )
 };
 

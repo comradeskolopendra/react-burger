@@ -1,4 +1,4 @@
-import { FC, useMemo, useEffect } from "react";
+import { FC, useMemo, useEffect, DetailedHTMLProps, HTMLAttributes } from "react";
 import { useParams } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../services/hooks/hooks";
 
@@ -8,12 +8,12 @@ import OrderComposition from './order-composition/order-composition';
 
 import styles from "./selected-order-info.module.css";
 import { getStateIngredients } from "../../selectors/ingredients-selectors";
-import { getStateOrderByNumber } from '../../selectors/selected-order';
+import { getStateOrderByNumber } from '../../selectors/selected-order-selectors';
 
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { getOrderByNumber } from '../../services/actions/selected-order';
 
-interface ISelectedOrderInfo {
+interface ISelectedOrderInfo extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> {
     type: "modal" | "page";
     onClose: undefined | (() => void);
 }
